@@ -154,28 +154,60 @@ final class TemplateParser {
 	private static function escape_acf( $name, $post_id ) {
 		$raw = self::get_acf_raw( $name, $post_id );
 
-		if ( null === $raw || '' === $raw ) {
-			$raw = '';
+		if ( null === $raw || '' === $raw || array() === $raw ) {
+			return '';
 		}
 
-		// Détection du type ACF pour choisir l'échappement adapté.
-		$type = 'text';
-		if ( function_exists( 'get_field_object' ) ) {
-			$obj = get_field_object( $name, $post_id, false, false );
-			if ( is_array( $obj ) && isset( $obj['type'] ) ) {
-				$type = (string) $obj['type'];
+		// Détection du type + choices du champ.
+		$type    = 'text';
+		$choices = array();
+		if ( function_exists( 'acf_get_field' ) ) {
+			$obj = acf_get_field( $name );
+			if ( is_array( $obj ) ) {
+				if ( isset( $obj['type'] ) ) {
+					$type = (string) $obj['type'];
+				}
+				if ( isset( $obj['choices'] ) && is_array( $obj['choices'] ) ) {
+					$choices = $obj['choices'];
+				}
 			}
 		}
 
+		// Cas champs structurés avec clés attendues (google_map, image, file, link).
+		if ( is_array( $raw ) && ( isset( $raw['address'] ) || isset( $raw['url'] ) ) ) {
+			$raw = isset( $raw['address'] ) ? $raw['address'] : $raw['url'];
+		}
+
+		// Cas tableau de valeurs multiples (checkbox, select multi, relationship).
 		if ( is_array( $raw ) ) {
-			// Cas google_map / relations : on ne rend qu'une représentation safe.
-			if ( isset( $raw['address'] ) ) {
-				$raw = $raw['address'];
-			} elseif ( isset( $raw['url'] ) ) {
-				$raw = $raw['url'];
-			} else {
-				$raw = '';
+			$parts = array();
+			foreach ( $raw as $item ) {
+				// Return_format "Both (Array)" : chaque entrée = ['value'=>…, 'label'=>…].
+				if ( is_array( $item ) ) {
+					if ( isset( $item['label'] ) ) {
+						$parts[] = (string) $item['label'];
+					} elseif ( isset( $item['name'] ) ) {
+						$parts[] = (string) $item['name'];
+					} elseif ( isset( $item['ID'] ) ) {
+						$title = get_the_title( (int) $item['ID'] );
+						if ( '' !== $title ) {
+							$parts[] = $title;
+						}
+					}
+				} elseif ( is_scalar( $item ) ) {
+					$item_str = (string) $item;
+					$parts[]  = isset( $choices[ $item_str ] ) ? (string) $choices[ $item_str ] : $item_str;
+				} elseif ( is_object( $item ) && isset( $item->ID ) ) {
+					$title = get_the_title( (int) $item->ID );
+					if ( '' !== $title ) {
+						$parts[] = $title;
+					}
+				}
 			}
+			$raw = implode( ', ', $parts );
+		} elseif ( is_scalar( $raw ) && isset( $choices[ (string) $raw ] ) ) {
+			// Select/radio simple : remplace la clé par le label.
+			$raw = (string) $choices[ (string) $raw ];
 		}
 
 		$value = (string) $raw;
