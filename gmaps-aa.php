@@ -36,7 +36,10 @@ spl_autoload_register(
 		$relative = str_replace( '\\', '/', $relative );
 		$parts    = explode( '/', $relative );
 		$last     = array_pop( $parts );
-		$last     = strtolower( preg_replace( '/(?<!^)[A-Z]/', '-$0', $last ) );
+		// Insère un tiret avant une majuscule qui suit une minuscule/chiffre,
+		// ou avant une majuscule suivie d'une minuscule (fin d'acronyme).
+		$last     = preg_replace( '/(?<=[a-z0-9])[A-Z]|(?<=[A-Z])[A-Z](?=[a-z])/', '-$0', $last );
+		$last     = strtolower( $last );
 		$prefix   = empty( $parts ) ? '' : strtolower( implode( '/', $parts ) ) . '/';
 		$path     = GMAPS_AA_DIR . 'includes/' . $prefix . 'class-' . $last . '.php';
 
