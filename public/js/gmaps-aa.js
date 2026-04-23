@@ -61,9 +61,11 @@
 		var mapOptions = {
 			center: config.center,
 			zoom: config.zoom,
+			zoomControl: true,
 			streetViewControl: false,
 			mapTypeControl: false,
-			fullscreenControl: true
+			fullscreenControl: true,
+			gestureHandling: 'greedy'
 		};
 		if (config.style && config.style.length) {
 			mapOptions.styles = config.style;
