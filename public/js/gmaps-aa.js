@@ -50,6 +50,82 @@
 
 	function deg2rad(d) { return d * Math.PI / 180; }
 
+	// Popup personnalisée basée sur google.maps.OverlayView (DOM sous notre contrôle).
+	function createPopupClass() {
+		function Popup() {
+			google.maps.OverlayView.call(this);
+			this.position = null;
+			this.pixelOffset = { x: 0, y: -24 };
+
+			this.container = document.createElement('div');
+			this.container.className = 'gmaps-aa-popup';
+
+			this.closeBtn = document.createElement('button');
+			this.closeBtn.type = 'button';
+			this.closeBtn.className = 'gmaps-aa-popup-close';
+			this.closeBtn.setAttribute('aria-label', 'Fermer');
+			this.closeBtn.innerHTML = '&times;';
+
+			this.body = document.createElement('div');
+			this.body.className = 'gmaps-aa-popup-body';
+
+			this.container.appendChild(this.closeBtn);
+			this.container.appendChild(this.body);
+
+			var self = this;
+			this.closeBtn.addEventListener('click', function () { self.close(); });
+
+			// Évite que les clics/scroll dans la popup ne déclenchent la carte.
+			google.maps.OverlayView.preventMapHitsAndGesturesFrom(this.container);
+		}
+		Popup.prototype = Object.create(google.maps.OverlayView.prototype);
+
+		Popup.prototype.setContent = function (html) {
+			this.body.innerHTML = html || '';
+		};
+		Popup.prototype.setPixelOffset = function (offset) {
+			this.pixelOffset = offset || { x: 0, y: -24 };
+			this.draw();
+		};
+		Popup.prototype.setPosition = function (latLng) {
+			this.position = latLng;
+			this.draw();
+		};
+		Popup.prototype.open = function (options) {
+			options = options || {};
+			if (options.anchor && options.anchor.getPosition) {
+				this.position = options.anchor.getPosition();
+			}
+			if (options.map) {
+				this.setMap(options.map);
+			}
+		};
+		Popup.prototype.close = function () {
+			this.setMap(null);
+		};
+		Popup.prototype.onAdd = function () {
+			var panes = this.getPanes();
+			if (panes && panes.floatPane) {
+				panes.floatPane.appendChild(this.container);
+			}
+		};
+		Popup.prototype.onRemove = function () {
+			if (this.container.parentNode) {
+				this.container.parentNode.removeChild(this.container);
+			}
+		};
+		Popup.prototype.draw = function () {
+			if (!this.position) { return; }
+			var proj = this.getProjection();
+			if (!proj) { return; }
+			var px = proj.fromLatLngToDivPixel(this.position);
+			if (!px) { return; }
+			this.container.style.left = (px.x + this.pixelOffset.x) + 'px';
+			this.container.style.top = (px.y + this.pixelOffset.y) + 'px';
+		};
+		return Popup;
+	}
+
 	function initInstance(wrapper) {
 		var data = readData(wrapper);
 		if (!data || !data.config) { return; }
@@ -77,11 +153,19 @@
 		}
 
 		var map = new google.maps.Map(mapEl, mapOptions);
-		var infoWindow = new google.maps.InfoWindow();
 
 		var markerW = parseInt(config.markerWidth, 10) || 32;
 		var markerSize = new google.maps.Size(markerW, markerW);
 		var defaultIconUrl = config.defaultIconUrl || '';
+
+		var Popup = createPopupClass();
+		var popup = new Popup();
+		popup.setPixelOffset({ x: 0, y: -(markerW / 2 + 8) });
+
+		function openPopupOn(marker, point) {
+			popup.setContent(point.tooltip || '');
+			popup.open({ map: map, anchor: marker });
+		}
 
 		var markers = data.points.map(function (p) {
 			var opts = {
@@ -96,8 +180,7 @@
 			var marker = new google.maps.Marker(opts);
 			marker.__point = p;
 			marker.addListener('click', function () {
-				infoWindow.setContent(p.tooltip || '');
-				infoWindow.open({ map: map, anchor: marker });
+				openPopupOn(marker, p);
 			});
 			return marker;
 		});
@@ -169,8 +252,7 @@
 					map.setZoom(Math.max(map.getZoom(), 14));
 					var m = markers.find(function (mm) { return mm.__point.id === p.id; });
 					if (m) {
-						infoWindow.setContent(p.tooltip || '');
-						infoWindow.open({ map: map, anchor: m });
+						openPopupOn(m, p);
 					}
 				});
 				listEl.appendChild(w);

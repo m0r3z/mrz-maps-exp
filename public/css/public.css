@@ -27,3 +27,48 @@
 .gmaps-aa-pagination button { cursor: pointer; }
 .gmaps-aa-pagination button[disabled] { opacity: 0.4; cursor: not-allowed; }
 .gmaps-aa-data { display: none; }
+
+/* Popup personnalisée (OverlayView) */
+.gmaps-aa-popup {
+	position: absolute;
+	transform: translate(-50%, -100%);
+	background: #fff;
+	color: #222;
+	border-radius: 12px;
+	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+	padding: 28px 18px 14px;
+	min-width: 180px;
+	max-width: 280px;
+	font-size: 14px;
+	line-height: 1.45;
+	z-index: 3;
+}
+.gmaps-aa-popup::after {
+	content: '';
+	position: absolute;
+	left: 50%;
+	bottom: -8px;
+	width: 16px;
+	height: 8px;
+	background: #fff;
+	clip-path: polygon(0 0, 100% 0, 50% 100%);
+	transform: translateX(-50%);
+}
+.gmaps-aa-popup-close {
+	position: absolute;
+	top: 6px;
+	right: 6px;
+	width: 24px;
+	height: 24px;
+	padding: 0;
+	border: 0;
+	background: transparent;
+	color: #666;
+	font-size: 20px;
+	line-height: 1;
+	cursor: pointer;
+	border-radius: 50%;
+}
+.gmaps-aa-popup-close:hover { background: rgba(0, 0, 0, 0.06); color: #111; }
+.gmaps-aa-popup-body > *:first-child { margin-top: 0; }
+.gmaps-aa-popup-body > *:last-child { margin-bottom: 0; }
