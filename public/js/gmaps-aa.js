@@ -312,6 +312,15 @@
 		//   tax[taxonomy] = [termId, ...]       (ids numériques)
 		//   acf[fieldName] = [value, ...]       (valeurs string)
 		var currentFilters = { tax: {}, acf: {} };
+
+		// Logique par filtre (OR par défaut, AND si l'admin l'a choisi).
+		var filterLogic = { tax: {}, acf: {} };
+		(data.filters || []).forEach(function (f) {
+			var key = f.type === 'acf' ? f.field : f.taxonomy;
+			if (!key) { return; }
+			filterLogic[f.type][key] = f.logic === 'and' ? 'and' : 'or';
+		});
+
 		var searchCenter = null;
 		var searchRadiusKm = config.search && config.search.radius ? config.search.radius : 0;
 
@@ -323,17 +332,20 @@
 		}
 
 		function passesFilters(point) {
-			// Taxonomies — AND entre taxos, OR à l'intérieur.
+			// Taxonomies — AND entre taxos ; OR/AND intra selon la config du filtre.
 			for (var tax in currentFilters.tax) {
 				if (!currentFilters.tax.hasOwnProperty(tax)) { continue; }
 				var neededT = currentFilters.tax[tax];
 				if (!neededT || !neededT.length) { continue; }
 				var hasT = point.terms && point.terms[tax];
 				if (!hasT || !hasT.length) { return false; }
-				var okT = neededT.some(function (n) { return hasT.indexOf(n) !== -1; });
+				var logicT = filterLogic.tax[tax] === 'and' ? 'and' : 'or';
+				var okT = logicT === 'and'
+					? neededT.every(function (n) { return hasT.indexOf(n) !== -1; })
+					: neededT.some(function (n) { return hasT.indexOf(n) !== -1; });
 				if (!okT) { return false; }
 			}
-			// Champs ACF — AND entre champs, OR à l'intérieur.
+			// Champs ACF — AND entre champs ; OR/AND intra selon la config du filtre.
 			for (var field in currentFilters.acf) {
 				if (!currentFilters.acf.hasOwnProperty(field)) { continue; }
 				var neededA = currentFilters.acf[field];
@@ -341,7 +353,10 @@
 				var v = point.acfValues && point.acfValues[field];
 				if (v === undefined || v === null || v === '') { return false; }
 				var arr = (Array.isArray(v) ? v : [v]).map(String);
-				var okA = neededA.some(function (n) { return arr.indexOf(String(n)) !== -1; });
+				var logicA = filterLogic.acf[field] === 'and' ? 'and' : 'or';
+				var okA = logicA === 'and'
+					? neededA.every(function (n) { return arr.indexOf(String(n)) !== -1; })
+					: neededA.some(function (n) { return arr.indexOf(String(n)) !== -1; });
 				if (!okA) { return false; }
 			}
 			// Géographique.

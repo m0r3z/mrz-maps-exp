@@ -228,8 +228,9 @@ final class DataProvider {
 		$filters = array();
 
 		// Filtres par taxonomie.
-		$taxonomies = (array) $values['taxonomies'];
-		$modes      = (array) $values['taxo_modes'];
+		$taxonomies  = (array) $values['taxonomies'];
+		$modes       = (array) $values['taxo_modes'];
+		$tax_logics  = (array) $values['taxo_logic'];
 
 		foreach ( $taxonomies as $slug ) {
 			$tax_obj = get_taxonomy( $slug );
@@ -274,6 +275,7 @@ final class DataProvider {
 				'taxonomy' => $slug,
 				'label'    => $tax_obj->labels->singular_name,
 				'mode'     => isset( $modes[ $slug ] ) ? (string) $modes[ $slug ] : 'dropdown',
+				'logic'    => isset( $tax_logics[ $slug ] ) ? (string) $tax_logics[ $slug ] : 'or',
 				'options'  => $options,
 			);
 		}
@@ -328,6 +330,7 @@ final class DataProvider {
 				'field'   => $field,
 				'label'   => '' !== $spec['label'] ? $spec['label'] : $field,
 				'mode'    => $spec['mode'],
+				'logic'   => isset( $spec['logic'] ) ? (string) $spec['logic'] : 'or',
 				'options' => $options,
 			);
 		}

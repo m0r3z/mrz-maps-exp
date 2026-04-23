@@ -15,6 +15,10 @@ $modes_labels = array(
 	'radio'    => __( 'Boutons radio', 'gmaps-aa' ),
 	'checkbox' => __( 'Cases à cocher', 'gmaps-aa' ),
 );
+$logic_labels = array(
+	'or'  => __( 'OU', 'gmaps-aa' ),
+	'and' => __( 'ET', 'gmaps-aa' ),
+);
 
 $acf_filters = (array) $values['acf_filters'];
 ?>
@@ -55,6 +59,7 @@ $acf_filters = (array) $values['acf_filters'];
 		$mode        = isset( $values['taxo_modes'][ $slug ] ) ? $values['taxo_modes'][ $slug ] : 'dropdown';
 		$object_type = implode( ',', (array) $tax->object_type );
 		?>
+		<?php $logic = isset( $values['taxo_logic'][ $slug ] ) ? $values['taxo_logic'][ $slug ] : 'or'; ?>
 		<div class="gmaps-aa-taxo-row" data-object-types="<?php echo esc_attr( $object_type ); ?>">
 			<label>
 				<input type="checkbox" name="gmaps_aa[taxonomies][]" value="<?php echo esc_attr( $slug ); ?>" <?php checked( $checked ); ?> />
@@ -63,6 +68,13 @@ $acf_filters = (array) $values['acf_filters'];
 			<select name="gmaps_aa[taxo_modes][<?php echo esc_attr( $slug ); ?>]" class="gmaps-aa-taxo-mode">
 				<?php foreach ( $modes_labels as $value => $label ) : ?>
 					<option value="<?php echo esc_attr( $value ); ?>" <?php selected( $mode, $value ); ?>>
+						<?php echo esc_html( $label ); ?>
+					</option>
+				<?php endforeach; ?>
+			</select>
+			<select name="gmaps_aa[taxo_logic][<?php echo esc_attr( $slug ); ?>]" class="gmaps-aa-taxo-logic" title="<?php esc_attr_e( 'Combinaison entre cases cochées (sans effet en mode dropdown/radio)', 'gmaps-aa' ); ?>">
+				<?php foreach ( $logic_labels as $value => $label ) : ?>
+					<option value="<?php echo esc_attr( $value ); ?>" <?php selected( $logic, $value ); ?>>
 						<?php echo esc_html( $label ); ?>
 					</option>
 				<?php endforeach; ?>
@@ -82,9 +94,10 @@ $acf_filters = (array) $values['acf_filters'];
 <div class="gmaps-aa-acf-filters" data-next-index="<?php echo (int) count( $acf_filters ); ?>">
 	<?php foreach ( $acf_filters as $i => $row ) : ?>
 		<?php
-		$field = isset( $row['field'] ) ? $row['field'] : '';
-		$label = isset( $row['label'] ) ? $row['label'] : '';
-		$mode  = isset( $row['mode'] ) ? $row['mode'] : 'dropdown';
+		$field     = isset( $row['field'] ) ? $row['field'] : '';
+		$label     = isset( $row['label'] ) ? $row['label'] : '';
+		$mode      = isset( $row['mode'] ) ? $row['mode'] : 'dropdown';
+		$row_logic = isset( $row['logic'] ) ? $row['logic'] : 'or';
 		?>
 		<div class="gmaps-aa-acf-row" data-index="<?php echo (int) $i; ?>">
 			<label class="gmaps-aa-acf-col">
@@ -101,6 +114,16 @@ $acf_filters = (array) $values['acf_filters'];
 					<?php foreach ( $modes_labels as $value => $mlabel ) : ?>
 						<option value="<?php echo esc_attr( $value ); ?>" <?php selected( $mode, $value ); ?>>
 							<?php echo esc_html( $mlabel ); ?>
+						</option>
+					<?php endforeach; ?>
+				</select>
+			</label>
+			<label class="gmaps-aa-acf-col">
+				<span><?php esc_html_e( 'Logique', 'gmaps-aa' ); ?></span>
+				<select name="gmaps_aa[acf_filters][<?php echo (int) $i; ?>][logic]" title="<?php esc_attr_e( 'Combinaison entre cases cochées (sans effet en mode dropdown/radio)', 'gmaps-aa' ); ?>">
+					<?php foreach ( $logic_labels as $value => $llabel ) : ?>
+						<option value="<?php echo esc_attr( $value ); ?>" <?php selected( $row_logic, $value ); ?>>
+							<?php echo esc_html( $llabel ); ?>
 						</option>
 					<?php endforeach; ?>
 				</select>
@@ -129,6 +152,14 @@ $acf_filters = (array) $values['acf_filters'];
 			<select name="gmaps_aa[acf_filters][__INDEX__][mode]">
 				<?php foreach ( $modes_labels as $value => $mlabel ) : ?>
 					<option value="<?php echo esc_attr( $value ); ?>"><?php echo esc_html( $mlabel ); ?></option>
+				<?php endforeach; ?>
+			</select>
+		</label>
+		<label class="gmaps-aa-acf-col">
+			<span><?php esc_html_e( 'Logique', 'gmaps-aa' ); ?></span>
+			<select name="gmaps_aa[acf_filters][__INDEX__][logic]">
+				<?php foreach ( $logic_labels as $value => $llabel ) : ?>
+					<option value="<?php echo esc_attr( $value ); ?>"><?php echo esc_html( $llabel ); ?></option>
 				<?php endforeach; ?>
 			</select>
 		</label>

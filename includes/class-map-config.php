@@ -32,6 +32,9 @@ final class MapConfig {
 	public static function taxo_modes() {
 		return array( 'dropdown', 'radio', 'checkbox' );
 	}
+	public static function filter_logics() {
+		return array( 'or', 'and' );
+	}
 
 	public function register() {
 		add_action( 'add_meta_boxes', array( $this, 'add_metaboxes' ) );
@@ -78,6 +81,7 @@ final class MapConfig {
 			'acf_field'          => 'location',
 			'taxonomies'         => array(),
 			'taxo_modes'         => array(),
+			'taxo_logic'         => array(),
 			'acf_filters'        => array(),
 			'show_filter_counts' => 1,
 			'limit'              => 0,
@@ -191,6 +195,17 @@ final class MapConfig {
 		}
 		$clean['taxo_modes'] = $modes;
 
+		$logics = array();
+		if ( isset( $raw['taxo_logic'] ) && is_array( $raw['taxo_logic'] ) ) {
+			foreach ( $raw['taxo_logic'] as $slug => $logic ) {
+				$slug = sanitize_key( $slug );
+				if ( in_array( $slug, $taxo, true ) && in_array( $logic, self::filter_logics(), true ) ) {
+					$logics[ $slug ] = $logic;
+				}
+			}
+		}
+		$clean['taxo_logic'] = $logics;
+
 		// Filtres ACF.
 		$acf_filters = array();
 		if ( isset( $raw['acf_filters'] ) && is_array( $raw['acf_filters'] ) ) {
@@ -206,10 +221,14 @@ final class MapConfig {
 				$mode      = ( isset( $row['mode'] ) && in_array( $row['mode'], self::taxo_modes(), true ) )
 					? $row['mode']
 					: 'dropdown';
+				$logic     = ( isset( $row['logic'] ) && in_array( $row['logic'], self::filter_logics(), true ) )
+					? $row['logic']
+					: 'or';
 				$acf_filters[] = array(
 					'field' => $field,
 					'label' => sanitize_text_field( $label_raw ),
 					'mode'  => $mode,
+					'logic' => $logic,
 				);
 			}
 		}
