@@ -56,6 +56,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</td>
 		</tr>
 		<tr>
+			<th scope="row"><?php esc_html_e( 'Zoom desktop à la molette', 'gmaps-aa' ); ?></th>
+			<td>
+				<label>
+					<input type="checkbox" name="gmaps_aa[cooperative_zoom]" value="1" <?php checked( ! empty( $values['cooperative_zoom'] ) ); ?> />
+					<?php esc_html_e( 'Exiger Ctrl/Cmd + molette pour zoomer (affiche le message d\'aide sinon).', 'gmaps-aa' ); ?>
+				</label>
+				<p class="description"><?php esc_html_e( 'Décoche pour zoomer directement à la molette sans message. Le comportement tactile (mobile/tablette) n\'est pas affecté : toujours un doigt pour déplacer, pinch pour zoomer.', 'gmaps-aa' ); ?></p>
+			</td>
+		</tr>
+		<tr>
 			<th scope="row"><?php esc_html_e( 'Fit bounds après filtrage', 'gmaps-aa' ); ?></th>
 			<td>
 				<label>

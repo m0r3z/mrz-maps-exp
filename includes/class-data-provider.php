@@ -79,6 +79,7 @@ final class DataProvider {
 			'zoomMin'        => (int) $values['zoom_min'],
 			'zoomMax'        => (int) $values['zoom_max'],
 			'zoomSearch'     => (int) $values['zoom_search'],
+			'cooperativeZoom' => ! empty( $values['cooperative_zoom'] ),
 			'fitbounds'      => ! empty( $values['fitbounds'] ),
 			'showClearBtn'   => ! empty( $values['show_clear_btn'] ),
 			'clearBtnText'   => $clear_btn_text,

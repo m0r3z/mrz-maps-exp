@@ -134,9 +134,10 @@
 		var mapEl = wrapper.querySelector('.gmaps-aa-map');
 		if (!mapEl) { return; }
 
-		// Desktop : CTRL+molette pour zoomer (cooperative).
-		// Mobile / pointeur tactile : zoom direct (greedy).
+		// Mobile / tactile : toujours zoom direct (greedy).
+		// Desktop : cooperative (CTRL+molette + message) si activé, sinon greedy.
 		var isCoarsePointer = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+		var desktopMode = config.cooperativeZoom ? 'cooperative' : 'greedy';
 		var mapOptions = {
 			center: config.center,
 			zoom: config.zoom,
@@ -146,7 +147,7 @@
 			streetViewControl: false,
 			mapTypeControl: false,
 			fullscreenControl: true,
-			gestureHandling: isCoarsePointer ? 'greedy' : 'cooperative'
+			gestureHandling: isCoarsePointer ? 'greedy' : desktopMode
 		};
 		if (config.style && config.style.length) {
 			mapOptions.styles = config.style;
