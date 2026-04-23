@@ -113,6 +113,7 @@ final class MapConfig {
 			'marker_default_width' => 32,
 			'cluster_color'        => '#0073aa',
 			'primary_taxonomy'     => '',
+			'spiderfier'           => 1,
 		);
 
 		$out = array();
@@ -300,6 +301,7 @@ final class MapConfig {
 		$clean['primary_taxonomy']     = ( isset( $raw['primary_taxonomy'] ) && in_array( $raw['primary_taxonomy'], $all_tax, true ) )
 			? $raw['primary_taxonomy']
 			: '';
+		$clean['spiderfier']           = ! empty( $raw['spiderfier'] ) ? 1 : 0;
 
 		foreach ( $clean as $key => $value ) {
 			update_post_meta( $post_id, '_gmaps_aa_' . $key, $value );

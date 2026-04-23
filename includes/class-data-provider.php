@@ -103,6 +103,7 @@ final class DataProvider {
 			'markerWidth'      => (int) $values['marker_default_width'],
 			'clusterColor'     => (string) $values['cluster_color'],
 			'primaryTaxonomy'  => (string) $values['primary_taxonomy'],
+			'spiderfier'       => ! empty( $values['spiderfier'] ),
 			'perPage'          => (int) $values['per_page'],
 			'listClickAction'  => (string) $values['list_click_action'],
 			'centerOnCurrent'  => ! empty( $values['center_on_current'] ),

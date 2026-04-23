@@ -180,6 +180,21 @@
 			popup.open({ map: map, anchor: marker });
 		}
 
+		// Spiderfier : dépile les marqueurs superposés.
+		var oms = null;
+		if (config.spiderfier && typeof OverlappingMarkerSpiderfier !== 'undefined') {
+			oms = new OverlappingMarkerSpiderfier(map, {
+				markersWontMove: true,
+				markersWontHide: true,
+				keepSpiderfied: true,
+				circleSpiralSwitchover: 9,
+				legWeight: 2
+			});
+			oms.addListener('click', function (marker) {
+				openPopupOn(marker, marker.__point);
+			});
+		}
+
 		var markers = data.points.map(function (p) {
 			var opts = {
 				position: { lat: p.lat, lng: p.lng },
@@ -192,9 +207,13 @@
 			}
 			var marker = new google.maps.Marker(opts);
 			marker.__point = p;
-			marker.addListener('click', function () {
-				openPopupOn(marker, p);
-			});
+			if (oms) {
+				oms.addMarker(marker);
+			} else {
+				marker.addListener('click', function () {
+					openPopupOn(marker, p);
+				});
+			}
 			return marker;
 		});
 

@@ -70,6 +70,15 @@ if ( '' !== $primary_tax && taxonomy_exists( $primary_tax ) ) {
 			</td>
 		</tr>
 		<tr>
+			<th scope="row"><?php esc_html_e( 'Effet Spiderfier', 'gmaps-aa' ); ?></th>
+			<td>
+				<label>
+					<input type="checkbox" name="gmaps_aa[spiderfier]" value="1" <?php checked( ! empty( $values['spiderfier'] ) ); ?> />
+					<?php esc_html_e( 'Dépiler en éventail les marqueurs superposés lorsqu\'un groupe est cliqué (utile quand plusieurs posts partagent les mêmes coordonnées).', 'gmaps-aa' ); ?>
+				</label>
+			</td>
+		</tr>
+		<tr>
 			<th scope="row">
 				<label for="gmaps_aa_primary_taxonomy"><?php esc_html_e( 'Taxonomie des marqueurs', 'gmaps-aa' ); ?></label>
 			</th>
