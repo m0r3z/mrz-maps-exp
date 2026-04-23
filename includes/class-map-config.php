@@ -75,6 +75,7 @@ final class MapConfig {
 			'taxonomies'         => array(),
 			'taxo_modes'         => array(),
 			'acf_filters'        => array(),
+			'show_filter_counts' => 1,
 			'limit'              => 0,
 			'height'             => 500,
 			'zoom'               => 10,
@@ -194,6 +195,8 @@ final class MapConfig {
 			}
 		}
 		$clean['acf_filters'] = $acf_filters;
+
+		$clean['show_filter_counts'] = ! empty( $raw['show_filter_counts'] ) ? 1 : 0;
 
 		// Display.
 		$clean['height']         = isset( $raw['height'] ) ? max( 100, min( 2000, absint( $raw['height'] ) ) ) : 500;

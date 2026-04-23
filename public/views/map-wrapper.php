@@ -41,6 +41,17 @@ $filter_data_attrs = static function ( $filter ) {
 	}
 	return 'data-filter-type="tax" data-taxonomy="' . esc_attr( $filter['taxonomy'] ) . '"';
 };
+
+$show_counts = ! empty( $config['showFilterCounts'] );
+
+/**
+ * Retourne le libellé affiché pour une option de filtre (avec ou sans compteur).
+ */
+$format_option = static function ( $opt ) use ( $show_counts ) {
+	return $show_counts
+		? $opt['name'] . ' (' . $opt['count'] . ')'
+		: $opt['name'];
+};
 ?>
 <div id="<?php echo esc_attr( $uid ); ?>" class="<?php echo esc_attr( $wrapper_cls ); ?>" data-gmaps-aa="1">
 
@@ -80,7 +91,7 @@ $filter_data_attrs = static function ( $filter ) {
 									&& (int) $forced['term'] === (int) $opt['id'] );
 								?>
 								<option value="<?php echo esc_attr( $opt['id'] ); ?>" <?php selected( $is_forced ); ?>>
-									<?php echo esc_html( $opt['name'] . ' (' . $opt['count'] . ')' ); ?>
+									<?php echo esc_html( $format_option( $opt ) ); ?>
 								</option>
 							<?php endforeach; ?>
 						</select>
@@ -98,7 +109,7 @@ $filter_data_attrs = static function ( $filter ) {
 								?>
 								<label>
 									<input type="radio" name="<?php echo esc_attr( $uid . '-' . $fkey ); ?>" class="gmaps-aa-filter-input" <?php echo $dattr; // phpcs:ignore ?> value="<?php echo esc_attr( $opt['id'] ); ?>" <?php checked( $is_forced ); ?> />
-									<?php echo esc_html( $opt['name'] . ' (' . $opt['count'] . ')' ); ?>
+									<?php echo esc_html( $format_option( $opt ) ); ?>
 								</label>
 							<?php endforeach; ?>
 						</div>
@@ -112,7 +123,7 @@ $filter_data_attrs = static function ( $filter ) {
 								?>
 								<label>
 									<input type="checkbox" class="gmaps-aa-filter-input" <?php echo $dattr; // phpcs:ignore ?> value="<?php echo esc_attr( $opt['id'] ); ?>" <?php checked( $is_forced ); ?> />
-									<?php echo esc_html( $opt['name'] . ' (' . $opt['count'] . ')' ); ?>
+									<?php echo esc_html( $format_option( $opt ) ); ?>
 								</label>
 							<?php endforeach; ?>
 						</div>

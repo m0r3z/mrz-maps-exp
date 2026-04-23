@@ -19,6 +19,16 @@ $modes_labels = array(
 $acf_filters = (array) $values['acf_filters'];
 ?>
 
+<h3 class="gmaps-aa-section-title"><?php esc_html_e( 'Options globales', 'gmaps-aa' ); ?></h3>
+<p>
+	<label>
+		<input type="checkbox" name="gmaps_aa[show_filter_counts]" value="1" <?php checked( ! empty( $values['show_filter_counts'] ) ); ?> />
+		<?php esc_html_e( 'Afficher le nombre de résultats à côté de chaque option de filtre.', 'gmaps-aa' ); ?>
+	</label>
+</p>
+
+<hr />
+
 <h3 class="gmaps-aa-section-title"><?php esc_html_e( 'Filtres par taxonomie', 'gmaps-aa' ); ?></h3>
 
 <div class="gmaps-aa-taxo-list">

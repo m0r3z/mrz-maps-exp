@@ -92,9 +92,10 @@ final class DataProvider {
 				'radius'     => (int) $values['search_radius'],
 				'showCircle' => ! empty( $values['search_show_circle'] ),
 			),
-			'taxonomies'     => array_values( (array) $values['taxonomies'] ),
-			'taxoModes'      => (array) $values['taxo_modes'],
-			'defaultIconUrl' => GMAPS_AA_URL . 'assets/default-marker.svg',
+			'taxonomies'       => array_values( (array) $values['taxonomies'] ),
+			'taxoModes'        => (array) $values['taxo_modes'],
+			'showFilterCounts' => ! empty( $values['show_filter_counts'] ),
+			'defaultIconUrl'   => GMAPS_AA_URL . 'assets/default-marker.svg',
 		);
 	}
 
