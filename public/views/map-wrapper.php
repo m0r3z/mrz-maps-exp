@@ -47,6 +47,14 @@ $filter_data_attrs = static function ( $filter ) {
 	<?php if ( ! empty( $filters ) || ! empty( $config['search']['enabled'] ) ) : ?>
 		<div class="gmaps-aa-filters">
 
+			<?php if ( ! empty( $config['search']['enabled'] ) ) : ?>
+				<div class="gmaps-aa-filter gmaps-aa-filter-search">
+					<div class="gmaps-aa-filter-label"><?php esc_html_e( 'Rechercher', 'gmaps-aa' ); ?></div>
+					<input type="text" class="gmaps-aa-search" placeholder="<?php echo esc_attr( $data['i18n']['search_placeholder'] ); ?>" />
+					<button type="button" class="gmaps-aa-search-clear"><?php echo esc_html( $data['i18n']['clear'] ); ?></button>
+				</div>
+			<?php endif; ?>
+
 			<?php foreach ( $filters as $filter ) : ?>
 				<?php
 				// Masquer le filtre forcé via shortcode si demandé.
@@ -112,18 +120,6 @@ $filter_data_attrs = static function ( $filter ) {
 					<?php endif; ?>
 				</div>
 			<?php endforeach; ?>
-
-			<?php if ( ! empty( $config['search']['enabled'] ) ) : ?>
-				<div class="gmaps-aa-filter gmaps-aa-filter-search">
-					<div class="gmaps-aa-filter-label"><?php esc_html_e( 'Rechercher', 'gmaps-aa' ); ?></div>
-					<input type="text" class="gmaps-aa-search" placeholder="<?php echo esc_attr( $data['i18n']['search_placeholder'] ); ?>" />
-					<label>
-						<?php echo esc_html( $data['i18n']['radius_label'] ); ?>
-						<input type="number" class="gmaps-aa-radius" value="<?php echo esc_attr( (int) $config['search']['radius'] ); ?>" min="1" max="500" step="1" />
-					</label>
-					<button type="button" class="gmaps-aa-search-clear"><?php echo esc_html( $data['i18n']['clear'] ); ?></button>
-				</div>
-			<?php endif; ?>
 
 		</div>
 	<?php endif; ?>

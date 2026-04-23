@@ -227,10 +227,31 @@
 			}
 		});
 
-		// Recherche par adresse.
+		// Recherche par adresse (rayon géré en admin, pas d'UI utilisateur).
 		var searchInput = wrapper.querySelector('.gmaps-aa-search');
-		var radiusInput = wrapper.querySelector('.gmaps-aa-radius');
 		var clearBtn = wrapper.querySelector('.gmaps-aa-search-clear');
+
+		function clearSearch() {
+			searchCenter = null;
+			if (searchCircle) { searchCircle.setMap(null); searchCircle = null; }
+			if (searchInput) { searchInput.value = ''; }
+		}
+
+		function resetAllFilters() {
+			currentFilters.tax = {};
+			currentFilters.acf = {};
+			wrapper.querySelectorAll('.gmaps-aa-filter-input').forEach(function (input) {
+				if (input.type === 'checkbox') {
+					input.checked = false;
+				} else if (input.type === 'radio') {
+					input.checked = (input.value === '');
+				} else if (input.tagName === 'SELECT') {
+					input.value = '';
+				}
+			});
+			clearSearch();
+			applyFilters();
+		}
 
 		if (searchInput) {
 			var geocoder = new google.maps.Geocoder();
@@ -239,8 +260,7 @@
 			function runSearch() {
 				var addr = searchInput.value.trim();
 				if ('' === addr) {
-					searchCenter = null;
-					if (searchCircle) { searchCircle.setMap(null); searchCircle = null; }
+					clearSearch();
 					applyFilters();
 					return;
 				}
@@ -270,20 +290,10 @@
 				clearTimeout(debounceTimer);
 				debounceTimer = setTimeout(runSearch, 400);
 			});
+		}
 
-			if (radiusInput) {
-				radiusInput.addEventListener('change', function () {
-					searchRadiusKm = parseInt(radiusInput.value, 10) || 0;
-					if (searchCircle) { searchCircle.setRadius(searchRadiusKm * 1000); }
-					applyFilters();
-				});
-			}
-			if (clearBtn) {
-				clearBtn.addEventListener('click', function () {
-					searchInput.value = '';
-					runSearch();
-				});
-			}
+		if (clearBtn) {
+			clearBtn.addEventListener('click', resetAllFilters);
 		}
 
 		// Rendu initial.
