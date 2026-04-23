@@ -1,0 +1,16 @@
+/* gmaps-aa — layout minimal (aucun style cosmétique) */
+.gmaps-aa-wrapper { display: block; }
+.gmaps-aa-wrapper.gmaps-aa-filters-side { display: grid; grid-template-columns: 260px 1fr; gap: 16px; }
+.gmaps-aa-wrapper.gmaps-aa-filters-above .gmaps-aa-filters { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 12px; }
+.gmaps-aa-filters .gmaps-aa-filter { display: flex; flex-direction: column; gap: 4px; }
+.gmaps-aa-filter-label { font-weight: 600; }
+.gmaps-aa-filter-group { display: flex; flex-direction: column; gap: 2px; }
+.gmaps-aa-main { display: block; }
+.gmaps-aa-list-side .gmaps-aa-main { display: grid; grid-template-columns: 1fr 320px; gap: 16px; }
+.gmaps-aa-map { width: 100%; min-height: 300px; }
+.gmaps-aa-list { display: block; }
+.gmaps-aa-list-below .gmaps-aa-list { margin-top: 16px; }
+.gmaps-aa-listfmt-grid .gmaps-aa-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
+.gmaps-aa-listfmt-list .gmaps-aa-list { display: flex; flex-direction: column; gap: 8px; }
+.gmaps-aa-list-item-wrap { cursor: pointer; }
+.gmaps-aa-data { display: none; }

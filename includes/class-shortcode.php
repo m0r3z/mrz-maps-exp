@@ -1,0 +1,77 @@
+<?php
+/**
+ * Shortcode [gmaps_aa id="X"].
+ */
+
+namespace GmapsAA;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+final class Shortcode {
+
+	public function register() {
+		add_shortcode( 'gmaps_aa', array( $this, 'render' ) );
+	}
+
+	public function render( $atts ) {
+		$atts = shortcode_atts(
+			array(
+				'id'                 => 0,
+				'filter_taxonomy'    => '',
+				'filter_term'        => '',
+				'hide_forced_filter' => 'false',
+			),
+			$atts,
+			'gmaps_aa'
+		);
+
+		$map_id = absint( $atts['id'] );
+		if ( $map_id <= 0 || get_post_type( $map_id ) !== GMAPS_AA_CPT ) {
+			return '';
+		}
+
+		$data = DataProvider::get_map_data( $map_id );
+		if ( null === $data ) {
+			return '';
+		}
+
+		// Filtre forcé par shortcode.
+		$forced_tax  = sanitize_key( $atts['filter_taxonomy'] );
+		$forced_term = absint( $atts['filter_term'] );
+		$hide_forced = in_array( strtolower( (string) $atts['hide_forced_filter'] ), array( 'true', '1', 'yes' ), true );
+
+		$public_tax = array_keys( get_taxonomies( array( 'public' => true ), 'names' ) );
+		if ( '' !== $forced_tax && in_array( $forced_tax, $public_tax, true ) && $forced_term > 0 ) {
+			$data['points'] = array_values(
+				array_filter(
+					$data['points'],
+					function ( $p ) use ( $forced_tax, $forced_term ) {
+						return isset( $p['terms'][ $forced_tax ] )
+							&& in_array( $forced_term, $p['terms'][ $forced_tax ], true );
+					}
+				)
+			);
+			$data['forced'] = array(
+				'taxonomy' => $forced_tax,
+				'term'     => $forced_term,
+				'hide'     => $hide_forced,
+			);
+		}
+
+		$assets = new Assets();
+		if ( ! $assets->enqueue_for_shortcode() ) {
+			if ( current_user_can( 'edit_posts' ) ) {
+				return '<!-- gmaps-aa: clé API Google Maps manquante (visible uniquement par les rédacteurs) -->';
+			}
+			return '';
+		}
+
+		$uid = 'gmaps-aa-' . $map_id . '-' . wp_generate_uuid4();
+
+		ob_start();
+		include GMAPS_AA_DIR . 'public/views/map-wrapper.php';
+		return ob_get_clean();
+	}
+}
