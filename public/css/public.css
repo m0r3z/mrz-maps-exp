@@ -22,6 +22,8 @@
 .gmaps-aa-listfmt-grid .gmaps-aa-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
 .gmaps-aa-listfmt-list .gmaps-aa-list { display: flex; flex-direction: column; gap: 8px; }
 .gmaps-aa-list-item-wrap { cursor: pointer; }
+.gmaps-aa-list-item-wrap.gmaps-aa-list-item-inert { cursor: default; }
+a.gmaps-aa-list-item-wrap { display: block; color: inherit; text-decoration: none; }
 .gmaps-aa-list-wrap { display: flex; flex-direction: column; gap: 10px; }
 .gmaps-aa-pagination { display: flex; align-items: center; gap: 10px; justify-content: center; padding: 8px 0; }
 .gmaps-aa-pagination button { cursor: pointer; }

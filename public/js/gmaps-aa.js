@@ -243,18 +243,33 @@
 			} else {
 				slice = points;
 			}
+			var clickAction = config.listClickAction || 'tooltip';
 			slice.forEach(function (p) {
-				var w = document.createElement('div');
-				w.className = 'gmaps-aa-list-item-wrap';
+				var w;
+				if (clickAction === 'link' && p.url) {
+					w = document.createElement('a');
+					w.href = p.url;
+					w.className = 'gmaps-aa-list-item-wrap gmaps-aa-list-item-link';
+				} else {
+					w = document.createElement('div');
+					w.className = 'gmaps-aa-list-item-wrap';
+				}
 				w.innerHTML = p.listItem || '';
-				w.addEventListener('click', function () {
-					map.panTo({ lat: p.lat, lng: p.lng });
-					map.setZoom(Math.max(map.getZoom(), 14));
-					var m = markers.find(function (mm) { return mm.__point.id === p.id; });
-					if (m) {
-						openPopupOn(m, p);
-					}
-				});
+
+				if (clickAction === 'tooltip') {
+					w.addEventListener('click', function () {
+						map.panTo({ lat: p.lat, lng: p.lng });
+						map.setZoom(Math.max(map.getZoom(), 14));
+						var m = markers.find(function (mm) { return mm.__point.id === p.id; });
+						if (m) {
+							openPopupOn(m, p);
+						}
+					});
+				} else if (clickAction === 'none') {
+					w.classList.add('gmaps-aa-list-item-inert');
+				}
+				// 'link' : comportement natif <a href> (aucun handler JS).
+
 				listEl.appendChild(w);
 			});
 			updatePaginationUI();

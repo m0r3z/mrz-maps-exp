@@ -144,5 +144,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<?php endforeach; ?>
 			</td>
 		</tr>
+		<tr>
+			<th scope="row"><?php esc_html_e( 'Clic sur un item de la liste', 'gmaps-aa' ); ?></th>
+			<td>
+				<?php
+				$click_actions = array(
+					'tooltip' => __( 'Afficher la tooltip sur la carte', 'gmaps-aa' ),
+					'none'    => __( 'Ne rien faire', 'gmaps-aa' ),
+					'link'    => __( 'Ouvrir la page du post', 'gmaps-aa' ),
+				);
+				foreach ( $click_actions as $val => $label ) :
+					?>
+					<label style="display:block;margin-bottom:4px;">
+						<input type="radio" name="gmaps_aa[list_click_action]" value="<?php echo esc_attr( $val ); ?>" <?php checked( $values['list_click_action'], $val ); ?> />
+						<?php echo esc_html( $label ); ?>
+					</label>
+				<?php endforeach; ?>
+			</td>
+		</tr>
 	</tbody>
 </table>

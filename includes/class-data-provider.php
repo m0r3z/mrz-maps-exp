@@ -103,6 +103,7 @@ final class DataProvider {
 			'clusterColor'     => (string) $values['cluster_color'],
 			'primaryTaxonomy'  => (string) $values['primary_taxonomy'],
 			'perPage'          => (int) $values['per_page'],
+			'listClickAction'  => (string) $values['list_click_action'],
 		);
 	}
 
@@ -151,6 +152,7 @@ final class DataProvider {
 				'id'        => $post->ID,
 				'lat'       => $lat,
 				'lng'       => $lng,
+				'url'       => get_permalink( $post->ID ),
 				'address'   => isset( $raw['address'] ) ? (string) $raw['address'] : '',
 				'tooltip'   => TemplateParser::render( (string) $values['tpl_tooltip'], $post->ID ),
 				'listItem'  => TemplateParser::render( (string) $values['tpl_list'], $post->ID ),

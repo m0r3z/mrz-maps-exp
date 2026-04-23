@@ -26,6 +26,9 @@ final class MapConfig {
 	public static function list_formats() {
 		return array( 'list', 'grid' );
 	}
+	public static function list_click_actions() {
+		return array( 'tooltip', 'none', 'link' );
+	}
 	public static function taxo_modes() {
 		return array( 'dropdown', 'radio', 'checkbox' );
 	}
@@ -92,6 +95,7 @@ final class MapConfig {
 			'layout_filters'     => 'above',
 			'layout_list'        => 'below',
 			'list_format'        => 'list',
+			'list_click_action'  => 'tooltip',
 			'tpl_tooltip'        => "<div class=\"gmaps-aa-tooltip\">\n  <h6>{post_title}</h6>\n</div>",
 			'tpl_list'           => "<div class=\"gmaps-aa-list-item\">\n  <h6>{post_title}</h6>\n</div>",
 			'snazzy'             => '',
@@ -231,7 +235,8 @@ final class MapConfig {
 		$clean['center_lng']     = isset( $raw['center_lng'] ) ? self::clamp_float( (float) $raw['center_lng'], -180, 180 ) : 1.888334;
 		$clean['layout_filters'] = ( isset( $raw['layout_filters'] ) && in_array( $raw['layout_filters'], self::layouts_filters(), true ) ) ? $raw['layout_filters'] : 'above';
 		$clean['layout_list']    = ( isset( $raw['layout_list'] ) && in_array( $raw['layout_list'], self::layouts_list(), true ) ) ? $raw['layout_list'] : 'below';
-		$clean['list_format']    = ( isset( $raw['list_format'] ) && in_array( $raw['list_format'], self::list_formats(), true ) ) ? $raw['list_format'] : 'list';
+		$clean['list_format']       = ( isset( $raw['list_format'] ) && in_array( $raw['list_format'], self::list_formats(), true ) ) ? $raw['list_format'] : 'list';
+		$clean['list_click_action'] = ( isset( $raw['list_click_action'] ) && in_array( $raw['list_click_action'], self::list_click_actions(), true ) ) ? $raw['list_click_action'] : 'tooltip';
 
 		// Templates.
 		$allowed = self::allowed_html_for_templates();
