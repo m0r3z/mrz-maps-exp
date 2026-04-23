@@ -1,0 +1,7 @@
+/* gmaps-aa — admin styles (minimaux) */
+.gmaps-aa-table th { width: 220px; }
+.gmaps-aa-taxo-list { display: grid; gap: 6px; }
+.gmaps-aa-taxo-row { display: flex; align-items: center; gap: 10px; }
+.gmaps-aa-taxo-row.is-hidden { display: none; }
+.gmaps-aa-taxo-row .gmaps-aa-taxo-mode { min-width: 160px; }
+.gmaps-aa-picker { background: #f6f7f7; }
