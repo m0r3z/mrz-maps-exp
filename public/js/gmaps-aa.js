@@ -254,41 +254,60 @@
 		}
 
 		if (searchInput) {
+			function applySearchLocation(latLng) {
+				searchCenter = { lat: latLng.lat(), lng: latLng.lng() };
+				map.panTo(searchCenter);
+				if (searchCircle) { searchCircle.setMap(null); searchCircle = null; }
+				if (config.search.showCircle && searchRadiusKm > 0) {
+					searchCircle = new google.maps.Circle({
+						map: map,
+						center: searchCenter,
+						radius: searchRadiusKm * 1000,
+						fillOpacity: 0.1,
+						strokeWeight: 1
+					});
+				}
+				applyFilters();
+			}
+
+			// Autocomplétion Google Places (lib 'places' chargée via l'URL du loader).
+			var autocomplete = null;
+			if (google.maps.places && google.maps.places.Autocomplete) {
+				autocomplete = new google.maps.places.Autocomplete(searchInput, {
+					types: ['geocode'],
+					fields: ['geometry', 'formatted_address']
+				});
+				autocomplete.addListener('place_changed', function () {
+					var place = autocomplete.getPlace();
+					if (place && place.geometry && place.geometry.location) {
+						applySearchLocation(place.geometry.location);
+					}
+				});
+				// Empêche la soumission de formulaire à la touche Entrée dans certains thèmes.
+				searchInput.addEventListener('keydown', function (e) {
+					if (e.key === 'Enter') { e.preventDefault(); }
+				});
+			}
+
+			// Fallback geocode si le champ est vidé (ou si Autocomplete n'est pas dispo).
 			var geocoder = new google.maps.Geocoder();
 			var debounceTimer = null;
 
-			function runSearch() {
-				var addr = searchInput.value.trim();
-				if ('' === addr) {
+			searchInput.addEventListener('input', function () {
+				if (searchInput.value.trim() === '') {
 					clearSearch();
 					applyFilters();
 					return;
 				}
-				geocoder.geocode({ address: addr }, function (results, status) {
-					if (status !== 'OK' || !results || !results[0]) {
-						return;
-					}
-					var loc = results[0].geometry.location;
-					searchCenter = { lat: loc.lat(), lng: loc.lng() };
-					map.panTo(searchCenter);
-
-					if (searchCircle) { searchCircle.setMap(null); searchCircle = null; }
-					if (config.search.showCircle) {
-						searchCircle = new google.maps.Circle({
-							map: map,
-							center: searchCenter,
-							radius: searchRadiusKm * 1000,
-							fillOpacity: 0.1,
-							strokeWeight: 1
-						});
-					}
-					applyFilters();
-				});
-			}
-
-			searchInput.addEventListener('input', function () {
+				if (autocomplete) { return; }
 				clearTimeout(debounceTimer);
-				debounceTimer = setTimeout(runSearch, 400);
+				debounceTimer = setTimeout(function () {
+					geocoder.geocode({ address: searchInput.value.trim() }, function (results, status) {
+						if (status === 'OK' && results && results[0]) {
+							applySearchLocation(results[0].geometry.location);
+						}
+					});
+				}, 400);
 			});
 		}
 
