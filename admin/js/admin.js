@@ -72,6 +72,20 @@
 	// Callback global déclenché par le loader Google Maps.
 	window.gmapsAAAdminBoot = initPicker;
 
+	// Le sélecteur OU/ET n'a de sens qu'en mode « Cases à cocher ». On le masque
+	// pour les autres modes, en ligne taxonomie et en ligne filtre ACF.
+	function wireLogicToggle(row, modeSelector, logicElementResolver) {
+		var modeSel = row.querySelector(modeSelector);
+		if (!modeSel) { return; }
+		var target = logicElementResolver(row);
+		if (!target) { return; }
+		function update() {
+			target.style.display = modeSel.value === 'checkbox' ? '' : 'none';
+		}
+		modeSel.addEventListener('change', update);
+		update();
+	}
+
 	function initAcfRepeater() {
 		var wrap = document.querySelector('.gmaps-aa-acf-filters');
 		var tpl = document.getElementById('gmaps-aa-acf-row-template');
@@ -86,6 +100,15 @@
 					row.remove();
 				});
 			}
+			// Toggle du sélecteur OU/ET selon le mode.
+			wireLogicToggle(
+				row,
+				'select[name*="[mode]"]',
+				function (r) {
+					var logicSel = r.querySelector('select[name*="[logic]"]');
+					return logicSel ? logicSel.closest('.gmaps-aa-acf-col') : null;
+				}
+			);
 		}
 
 		wrap.querySelectorAll('.gmaps-aa-acf-row').forEach(bindRow);
@@ -100,6 +123,16 @@
 			wrap.appendChild(newRow);
 			bindRow(newRow);
 			wrap.setAttribute('data-next-index', String(nextIndex + 1));
+		});
+	}
+
+	function initTaxoLogicToggle() {
+		document.querySelectorAll('.gmaps-aa-taxo-row').forEach(function (row) {
+			wireLogicToggle(
+				row,
+				'.gmaps-aa-taxo-mode',
+				function (r) { return r.querySelector('.gmaps-aa-taxo-logic'); }
+			);
 		});
 	}
 
@@ -237,6 +270,7 @@
 			sel.addEventListener('change', updateTaxonomyVisibility);
 		}
 		initAcfRepeater();
+		initTaxoLogicToggle();
 		initMediaPickers();
 		initColorPicker();
 		initPrimaryTaxonomy();
