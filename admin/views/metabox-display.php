@@ -66,6 +66,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</td>
 		</tr>
 		<tr>
+			<th scope="row"><?php esc_html_e( 'Centrer sur le post courant', 'gmaps-aa' ); ?></th>
+			<td>
+				<label>
+					<input type="checkbox" name="gmaps_aa[center_on_current]" value="1" <?php checked( ! empty( $values['center_on_current'] ) ); ?> />
+					<?php esc_html_e( 'Si le shortcode est rendu sur une page single du post type source, centrer automatiquement la carte sur les coordonnées du post courant (zoom = « Zoom après recherche »).', 'gmaps-aa' ); ?>
+				</label>
+			</td>
+		</tr>
+		<tr>
 			<th scope="row"><?php esc_html_e( 'Fit bounds après filtrage', 'gmaps-aa' ); ?></th>
 			<td>
 				<label>

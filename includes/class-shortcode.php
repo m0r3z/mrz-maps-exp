@@ -60,6 +60,24 @@ final class Shortcode {
 			);
 		}
 
+		// Recentrage sur le post courant si l'option est activée dans l'admin
+		// et qu'on est sur une page single du post type source.
+		if ( ! empty( $data['config']['centerOnCurrent'] ) && is_singular() ) {
+			$current_id = get_queried_object_id();
+			if ( $current_id && get_post_type( $current_id ) === $data['config']['sourcePt'] ) {
+				foreach ( $data['points'] as $p ) {
+					if ( (int) $p['id'] === (int) $current_id ) {
+						$data['config']['center'] = array(
+							'lat' => (float) $p['lat'],
+							'lng' => (float) $p['lng'],
+						);
+						$data['config']['zoom'] = (int) $data['config']['zoomSearch'];
+						break;
+					}
+				}
+			}
+		}
+
 		$assets = new Assets();
 		if ( ! $assets->enqueue_for_shortcode() ) {
 			if ( current_user_can( 'edit_posts' ) ) {

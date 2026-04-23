@@ -93,6 +93,7 @@ final class MapConfig {
 			'zoom_search'        => 12,
 			'cooperative_zoom'   => 1,
 			'fitbounds'          => 1,
+			'center_on_current'  => 0,
 			'show_clear_btn'     => 1,
 			'clear_btn_text'     => '',
 			'center_lat'         => 46.603354,
@@ -248,8 +249,9 @@ final class MapConfig {
 			$clean['zoom_max'] = $tmp;
 		}
 		$clean['zoom_search']      = isset( $raw['zoom_search'] ) ? max( 1, min( 22, absint( $raw['zoom_search'] ) ) ) : 12;
-		$clean['cooperative_zoom'] = ! empty( $raw['cooperative_zoom'] ) ? 1 : 0;
-		$clean['fitbounds']        = ! empty( $raw['fitbounds'] ) ? 1 : 0;
+		$clean['cooperative_zoom']  = ! empty( $raw['cooperative_zoom'] ) ? 1 : 0;
+		$clean['fitbounds']         = ! empty( $raw['fitbounds'] ) ? 1 : 0;
+		$clean['center_on_current'] = ! empty( $raw['center_on_current'] ) ? 1 : 0;
 		$clean['show_clear_btn'] = ! empty( $raw['show_clear_btn'] ) ? 1 : 0;
 		$clean['clear_btn_text'] = isset( $raw['clear_btn_text'] ) ? sanitize_text_field( (string) $raw['clear_btn_text'] ) : '';
 		$clean['center_lat']     = isset( $raw['center_lat'] ) ? self::clamp_float( (float) $raw['center_lat'], -90, 90 ) : 46.603354;

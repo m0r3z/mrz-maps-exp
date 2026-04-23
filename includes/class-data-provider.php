@@ -105,6 +105,8 @@ final class DataProvider {
 			'primaryTaxonomy'  => (string) $values['primary_taxonomy'],
 			'perPage'          => (int) $values['per_page'],
 			'listClickAction'  => (string) $values['list_click_action'],
+			'centerOnCurrent'  => ! empty( $values['center_on_current'] ),
+			'sourcePt'         => (string) $values['source_pt'],
 		);
 	}
 
