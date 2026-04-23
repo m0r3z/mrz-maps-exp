@@ -39,6 +39,7 @@ final class MapConfig {
 
 	public function add_metaboxes() {
 		add_meta_box( 'gmaps_aa_source', __( 'Source des données', 'gmaps-aa' ), array( $this, 'render' ), GMAPS_AA_CPT, 'normal', 'high', array( 'view' => 'source' ) );
+		add_meta_box( 'gmaps_aa_filters', __( 'Filtres', 'gmaps-aa' ), array( $this, 'render' ), GMAPS_AA_CPT, 'normal', 'high', array( 'view' => 'filters' ) );
 		add_meta_box( 'gmaps_aa_display', __( 'Affichage', 'gmaps-aa' ), array( $this, 'render' ), GMAPS_AA_CPT, 'normal', 'high', array( 'view' => 'display' ) );
 		add_meta_box( 'gmaps_aa_templates', __( 'Templates HTML', 'gmaps-aa' ), array( $this, 'render' ), GMAPS_AA_CPT, 'normal', 'default', array( 'view' => 'templates' ) );
 		add_meta_box( 'gmaps_aa_style', __( 'Style de la carte', 'gmaps-aa' ), array( $this, 'render' ), GMAPS_AA_CPT, 'normal', 'default', array( 'view' => 'style' ) );
@@ -73,6 +74,7 @@ final class MapConfig {
 			'acf_field'          => 'location',
 			'taxonomies'         => array(),
 			'taxo_modes'         => array(),
+			'acf_filters'        => array(),
 			'limit'              => 0,
 			'height'             => 500,
 			'zoom'               => 10,
@@ -162,6 +164,30 @@ final class MapConfig {
 			}
 		}
 		$clean['taxo_modes'] = $modes;
+
+		// Filtres ACF.
+		$acf_filters = array();
+		if ( isset( $raw['acf_filters'] ) && is_array( $raw['acf_filters'] ) ) {
+			foreach ( $raw['acf_filters'] as $row ) {
+				if ( ! is_array( $row ) ) {
+					continue;
+				}
+				$field = isset( $row['field'] ) ? sanitize_key( $row['field'] ) : '';
+				if ( '' === $field ) {
+					continue;
+				}
+				$label_raw = isset( $row['label'] ) ? (string) $row['label'] : '';
+				$mode      = ( isset( $row['mode'] ) && in_array( $row['mode'], self::taxo_modes(), true ) )
+					? $row['mode']
+					: 'dropdown';
+				$acf_filters[] = array(
+					'field' => $field,
+					'label' => sanitize_text_field( $label_raw ),
+					'mode'  => $mode,
+				);
+			}
+		}
+		$clean['acf_filters'] = $acf_filters;
 
 		// Display.
 		$clean['height']         = isset( $raw['height'] ) ? max( 100, min( 2000, absint( $raw['height'] ) ) ) : 500;

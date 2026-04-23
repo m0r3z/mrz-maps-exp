@@ -10,18 +10,37 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$config       = $data['config'];
-$filters      = $data['filters'];
-$forced       = isset( $data['forced'] ) ? $data['forced'] : null;
-$layout_f     = $config['layoutFilters'];
-$layout_l     = $config['layoutList'];
-$list_format  = $config['listFormat'];
-$wrapper_cls  = sprintf(
+$config      = $data['config'];
+$filters     = $data['filters'];
+$forced      = isset( $data['forced'] ) ? $data['forced'] : null;
+$layout_f    = $config['layoutFilters'];
+$layout_l    = $config['layoutList'];
+$list_format = $config['listFormat'];
+$wrapper_cls = sprintf(
 	'gmaps-aa-wrapper gmaps-aa-filters-%s gmaps-aa-list-%s gmaps-aa-listfmt-%s',
 	$layout_f,
 	$layout_l,
 	$list_format
 );
+
+/**
+ * Retourne la clé unique d'un filtre (taxonomie ou champ ACF).
+ */
+$filter_key = static function ( $filter ) {
+	return 'acf' === $filter['type']
+		? 'acf:' . $filter['field']
+		: 'tax:' . $filter['taxonomy'];
+};
+
+/**
+ * Retourne les attributs data-* communs à un input de filtre.
+ */
+$filter_data_attrs = static function ( $filter ) {
+	if ( 'acf' === $filter['type'] ) {
+		return 'data-filter-type="acf" data-field="' . esc_attr( $filter['field'] ) . '"';
+	}
+	return 'data-filter-type="tax" data-taxonomy="' . esc_attr( $filter['taxonomy'] ) . '"';
+};
 ?>
 <div id="<?php echo esc_attr( $uid ); ?>" class="<?php echo esc_attr( $wrapper_cls ); ?>" data-gmaps-aa="1">
 
@@ -30,23 +49,28 @@ $wrapper_cls  = sprintf(
 
 			<?php foreach ( $filters as $filter ) : ?>
 				<?php
+				// Masquer le filtre forcé via shortcode si demandé.
 				$hide_this = false;
-				if ( $forced && $forced['taxonomy'] === $filter['taxonomy'] && $forced['hide'] ) {
+				if ( $forced && 'tax' === $filter['type'] && $forced['taxonomy'] === $filter['taxonomy'] && $forced['hide'] ) {
 					$hide_this = true;
 				}
 				if ( $hide_this ) {
 					continue;
 				}
+				$fkey  = $filter_key( $filter );
+				$dattr = $filter_data_attrs( $filter );
 				?>
-				<div class="gmaps-aa-filter gmaps-aa-filter-<?php echo esc_attr( $filter['mode'] ); ?>" data-taxonomy="<?php echo esc_attr( $filter['taxonomy'] ); ?>">
+				<div class="gmaps-aa-filter gmaps-aa-filter-<?php echo esc_attr( $filter['mode'] ); ?>" data-filter-key="<?php echo esc_attr( $fkey ); ?>">
 					<div class="gmaps-aa-filter-label"><?php echo esc_html( $filter['label'] ); ?></div>
 
 					<?php if ( 'dropdown' === $filter['mode'] ) : ?>
-						<select class="gmaps-aa-filter-input" data-taxonomy="<?php echo esc_attr( $filter['taxonomy'] ); ?>">
+						<select class="gmaps-aa-filter-input" <?php echo $dattr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped — attributs déjà échappés ?>>
 							<option value=""><?php esc_html_e( 'Tous', 'gmaps-aa' ); ?></option>
 							<?php foreach ( $filter['options'] as $opt ) : ?>
 								<?php
-								$is_forced = ( $forced && $forced['taxonomy'] === $filter['taxonomy'] && (int) $forced['term'] === $opt['id'] );
+								$is_forced = ( $forced && 'tax' === $filter['type']
+									&& $forced['taxonomy'] === $filter['taxonomy']
+									&& (int) $forced['term'] === (int) $opt['id'] );
 								?>
 								<option value="<?php echo esc_attr( $opt['id'] ); ?>" <?php selected( $is_forced ); ?>>
 									<?php echo esc_html( $opt['name'] . ' (' . $opt['count'] . ')' ); ?>
@@ -56,13 +80,17 @@ $wrapper_cls  = sprintf(
 					<?php elseif ( 'radio' === $filter['mode'] ) : ?>
 						<div class="gmaps-aa-filter-group">
 							<label>
-								<input type="radio" name="<?php echo esc_attr( $uid . '-' . $filter['taxonomy'] ); ?>" class="gmaps-aa-filter-input" data-taxonomy="<?php echo esc_attr( $filter['taxonomy'] ); ?>" value="" <?php checked( ! $forced || $forced['taxonomy'] !== $filter['taxonomy'] ); ?> />
+								<input type="radio" name="<?php echo esc_attr( $uid . '-' . $fkey ); ?>" class="gmaps-aa-filter-input" <?php echo $dattr; // phpcs:ignore ?> value="" <?php checked( ! $forced || 'tax' !== $filter['type'] || $forced['taxonomy'] !== $filter['taxonomy'] ); ?> />
 								<?php esc_html_e( 'Tous', 'gmaps-aa' ); ?>
 							</label>
 							<?php foreach ( $filter['options'] as $opt ) : ?>
-								<?php $is_forced = ( $forced && $forced['taxonomy'] === $filter['taxonomy'] && (int) $forced['term'] === $opt['id'] ); ?>
+								<?php
+								$is_forced = ( $forced && 'tax' === $filter['type']
+									&& $forced['taxonomy'] === $filter['taxonomy']
+									&& (int) $forced['term'] === (int) $opt['id'] );
+								?>
 								<label>
-									<input type="radio" name="<?php echo esc_attr( $uid . '-' . $filter['taxonomy'] ); ?>" class="gmaps-aa-filter-input" data-taxonomy="<?php echo esc_attr( $filter['taxonomy'] ); ?>" value="<?php echo esc_attr( $opt['id'] ); ?>" <?php checked( $is_forced ); ?> />
+									<input type="radio" name="<?php echo esc_attr( $uid . '-' . $fkey ); ?>" class="gmaps-aa-filter-input" <?php echo $dattr; // phpcs:ignore ?> value="<?php echo esc_attr( $opt['id'] ); ?>" <?php checked( $is_forced ); ?> />
 									<?php echo esc_html( $opt['name'] . ' (' . $opt['count'] . ')' ); ?>
 								</label>
 							<?php endforeach; ?>
@@ -70,9 +98,13 @@ $wrapper_cls  = sprintf(
 					<?php else : // checkbox ?>
 						<div class="gmaps-aa-filter-group">
 							<?php foreach ( $filter['options'] as $opt ) : ?>
-								<?php $is_forced = ( $forced && $forced['taxonomy'] === $filter['taxonomy'] && (int) $forced['term'] === $opt['id'] ); ?>
+								<?php
+								$is_forced = ( $forced && 'tax' === $filter['type']
+									&& $forced['taxonomy'] === $filter['taxonomy']
+									&& (int) $forced['term'] === (int) $opt['id'] );
+								?>
 								<label>
-									<input type="checkbox" class="gmaps-aa-filter-input" data-taxonomy="<?php echo esc_attr( $filter['taxonomy'] ); ?>" value="<?php echo esc_attr( $opt['id'] ); ?>" <?php checked( $is_forced ); ?> />
+									<input type="checkbox" class="gmaps-aa-filter-input" <?php echo $dattr; // phpcs:ignore ?> value="<?php echo esc_attr( $opt['id'] ); ?>" <?php checked( $is_forced ); ?> />
 									<?php echo esc_html( $opt['name'] . ' (' . $opt['count'] . ')' ); ?>
 								</label>
 							<?php endforeach; ?>

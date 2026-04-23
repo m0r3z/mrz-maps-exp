@@ -89,10 +89,11 @@ final class DataProvider {
 	}
 
 	private static function build_points( $values, &$data ) {
-		$source_pt  = $values['source_pt'];
-		$acf_field  = $values['acf_field'];
-		$taxonomies = (array) $values['taxonomies'];
-		$limit      = (int) $values['limit'];
+		$source_pt   = $values['source_pt'];
+		$acf_field   = $values['acf_field'];
+		$taxonomies  = (array) $values['taxonomies'];
+		$acf_filters = (array) $values['acf_filters'];
+		$limit       = (int) $values['limit'];
 
 		$args = array(
 			'post_type'              => $source_pt,
@@ -128,15 +129,40 @@ final class DataProvider {
 			}
 
 			$point = array(
-				'id'       => $post->ID,
-				'lat'      => $lat,
-				'lng'      => $lng,
-				'address'  => isset( $raw['address'] ) ? (string) $raw['address'] : '',
-				'tooltip'  => TemplateParser::render( (string) $values['tpl_tooltip'], $post->ID ),
-				'listItem' => TemplateParser::render( (string) $values['tpl_list'], $post->ID ),
-				'terms'    => array(),
-				'icon'     => '',
+				'id'        => $post->ID,
+				'lat'       => $lat,
+				'lng'       => $lng,
+				'address'   => isset( $raw['address'] ) ? (string) $raw['address'] : '',
+				'tooltip'   => TemplateParser::render( (string) $values['tpl_tooltip'], $post->ID ),
+				'listItem'  => TemplateParser::render( (string) $values['tpl_list'], $post->ID ),
+				'terms'     => array(),
+				'acfValues' => array(),
+				'icon'      => '',
 			);
+
+			// Valeurs des champs ACF utilisés comme filtres (valeur brute, non formatée).
+			foreach ( $acf_filters as $spec ) {
+				$name = $spec['field'];
+				if ( '' === $name ) {
+					continue;
+				}
+				$val = get_field( $name, $post->ID, false );
+				if ( null === $val || '' === $val ) {
+					continue;
+				}
+				if ( is_array( $val ) ) {
+					// Normalise en tableau de valeurs scalaires.
+					$flat = array();
+					foreach ( $val as $v ) {
+						if ( is_scalar( $v ) ) {
+							$flat[] = (string) $v;
+						}
+					}
+					$point['acfValues'][ $name ] = $flat;
+				} elseif ( is_scalar( $val ) ) {
+					$point['acfValues'][ $name ] = (string) $val;
+				}
+			}
 
 			// Terms + icône (priorité au premier terme ayant une icône).
 			foreach ( $taxonomies as $tax ) {
@@ -164,17 +190,18 @@ final class DataProvider {
 	}
 
 	private static function build_filters( $values, $points ) {
+		$filters = array();
+
+		// Filtres par taxonomie.
 		$taxonomies = (array) $values['taxonomies'];
 		$modes      = (array) $values['taxo_modes'];
 
-		$filters = array();
 		foreach ( $taxonomies as $slug ) {
 			$tax_obj = get_taxonomy( $slug );
 			if ( ! $tax_obj ) {
 				continue;
 			}
 
-			// Collecte les term IDs effectivement présents dans les points.
 			$used_ids = array();
 			foreach ( $points as $p ) {
 				if ( ! empty( $p['terms'][ $slug ] ) ) {
@@ -208,6 +235,7 @@ final class DataProvider {
 			}
 
 			$filters[] = array(
+				'type'     => 'tax',
 				'taxonomy' => $slug,
 				'label'    => $tax_obj->labels->singular_name,
 				'mode'     => isset( $modes[ $slug ] ) ? (string) $modes[ $slug ] : 'dropdown',
@@ -215,6 +243,88 @@ final class DataProvider {
 			);
 		}
 
+		// Filtres par champ ACF.
+		$acf_filters = (array) $values['acf_filters'];
+		foreach ( $acf_filters as $spec ) {
+			$field = $spec['field'];
+			if ( '' === $field ) {
+				continue;
+			}
+
+			$counts = array();
+			foreach ( $points as $p ) {
+				if ( ! isset( $p['acfValues'][ $field ] ) ) {
+					continue;
+				}
+				$v = $p['acfValues'][ $field ];
+				$vals = is_array( $v ) ? $v : array( (string) $v );
+				foreach ( $vals as $single ) {
+					$single = (string) $single;
+					if ( '' === $single ) {
+						continue;
+					}
+					$counts[ $single ] = isset( $counts[ $single ] ) ? $counts[ $single ] + 1 : 1;
+				}
+			}
+			if ( empty( $counts ) ) {
+				continue;
+			}
+
+			$choices = self::get_acf_choices( $field );
+
+			$options = array();
+			foreach ( $counts as $value => $count ) {
+				$options[] = array(
+					'id'    => (string) $value,
+					'name'  => isset( $choices[ $value ] ) ? (string) $choices[ $value ] : (string) $value,
+					'count' => (int) $count,
+				);
+			}
+
+			usort(
+				$options,
+				static function ( $a, $b ) {
+					return strcasecmp( $a['name'], $b['name'] );
+				}
+			);
+
+			$filters[] = array(
+				'type'    => 'acf',
+				'field'   => $field,
+				'label'   => '' !== $spec['label'] ? $spec['label'] : $field,
+				'mode'    => $spec['mode'],
+				'options' => $options,
+			);
+		}
+
 		return $filters;
+	}
+
+	/**
+	 * Récupère les choix (value => label) d'un champ ACF de type select/radio/checkbox.
+	 * Retourne un tableau vide si le champ n'a pas de choices définis.
+	 */
+	private static function get_acf_choices( $field_name ) {
+		static $cache = array();
+		if ( array_key_exists( $field_name, $cache ) ) {
+			return $cache[ $field_name ];
+		}
+		$choices = array();
+		if ( function_exists( 'acf_get_field' ) ) {
+			$obj = acf_get_field( $field_name );
+			if ( is_array( $obj ) && isset( $obj['choices'] ) && is_array( $obj['choices'] ) ) {
+				foreach ( $obj['choices'] as $key => $label ) {
+					$choices[ (string) $key ] = (string) $label;
+				}
+			}
+			if ( is_array( $obj ) && isset( $obj['type'] ) && 'true_false' === $obj['type'] ) {
+				$choices = array(
+					'1' => isset( $obj['ui_on_text'] ) && '' !== $obj['ui_on_text'] ? (string) $obj['ui_on_text'] : __( 'Oui', 'gmaps-aa' ),
+					'0' => isset( $obj['ui_off_text'] ) && '' !== $obj['ui_off_text'] ? (string) $obj['ui_off_text'] : __( 'Non', 'gmaps-aa' ),
+				);
+			}
+		}
+		$cache[ $field_name ] = $choices;
+		return $choices;
 	}
 }

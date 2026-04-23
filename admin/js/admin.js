@@ -72,12 +72,44 @@
 	// Callback global déclenché par le loader Google Maps.
 	window.gmapsAAAdminBoot = initPicker;
 
+	function initAcfRepeater() {
+		var wrap = document.querySelector('.gmaps-aa-acf-filters');
+		var tpl = document.getElementById('gmaps-aa-acf-row-template');
+		var addBtn = document.querySelector('.gmaps-aa-acf-add');
+		if (!wrap || !tpl || !addBtn) { return; }
+
+		function bindRow(row) {
+			var removeBtn = row.querySelector('.gmaps-aa-acf-remove');
+			if (removeBtn) {
+				removeBtn.addEventListener('click', function (e) {
+					e.preventDefault();
+					row.remove();
+				});
+			}
+		}
+
+		wrap.querySelectorAll('.gmaps-aa-acf-row').forEach(bindRow);
+
+		addBtn.addEventListener('click', function (e) {
+			e.preventDefault();
+			var nextIndex = parseInt(wrap.getAttribute('data-next-index') || '0', 10);
+			var html = tpl.innerHTML.replace(/__INDEX__/g, String(nextIndex));
+			var temp = document.createElement('div');
+			temp.innerHTML = html.trim();
+			var newRow = temp.firstChild;
+			wrap.appendChild(newRow);
+			bindRow(newRow);
+			wrap.setAttribute('data-next-index', String(nextIndex + 1));
+		});
+	}
+
 	document.addEventListener('DOMContentLoaded', function () {
 		updateTaxonomyVisibility();
 		var sel = document.getElementById('gmaps_aa_source_pt');
 		if (sel) {
 			sel.addEventListener('change', updateTaxonomyVisibility);
 		}
+		initAcfRepeater();
 		if (window.gmapsAAAdmin && !window.gmapsAAAdmin.hasApiKey) {
 			var el = document.getElementById('gmaps_aa_picker');
 			if (el) {

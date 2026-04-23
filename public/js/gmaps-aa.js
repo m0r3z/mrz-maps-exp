@@ -117,22 +117,42 @@
 			});
 		}
 
-		// Filtres.
-		var currentFilters = {};  // taxonomy => array of term IDs (numbers), empty/undefined = pas de filtre
+		// Filtres : deux familles.
+		//   tax[taxonomy] = [termId, ...]       (ids numériques)
+		//   acf[fieldName] = [value, ...]       (valeurs string)
+		var currentFilters = { tax: {}, acf: {} };
 		var searchCenter = null;
 		var searchRadiusKm = config.search && config.search.radius ? config.search.radius : 0;
 		var searchCircle = null;
 
+		function hasAny(obj) {
+			for (var k in obj) {
+				if (obj.hasOwnProperty(k) && obj[k] && obj[k].length) { return true; }
+			}
+			return false;
+		}
+
 		function passesFilters(point) {
-			// AND entre taxonomies, OR à l'intérieur.
-			for (var tax in currentFilters) {
-				if (!currentFilters.hasOwnProperty(tax)) { continue; }
-				var needed = currentFilters[tax];
-				if (!needed || !needed.length) { continue; }
-				var has = point.terms && point.terms[tax];
-				if (!has || !has.length) { return false; }
-				var ok = needed.some(function (n) { return has.indexOf(n) !== -1; });
-				if (!ok) { return false; }
+			// Taxonomies — AND entre taxos, OR à l'intérieur.
+			for (var tax in currentFilters.tax) {
+				if (!currentFilters.tax.hasOwnProperty(tax)) { continue; }
+				var neededT = currentFilters.tax[tax];
+				if (!neededT || !neededT.length) { continue; }
+				var hasT = point.terms && point.terms[tax];
+				if (!hasT || !hasT.length) { return false; }
+				var okT = neededT.some(function (n) { return hasT.indexOf(n) !== -1; });
+				if (!okT) { return false; }
+			}
+			// Champs ACF — AND entre champs, OR à l'intérieur.
+			for (var field in currentFilters.acf) {
+				if (!currentFilters.acf.hasOwnProperty(field)) { continue; }
+				var neededA = currentFilters.acf[field];
+				if (!neededA || !neededA.length) { continue; }
+				var v = point.acfValues && point.acfValues[field];
+				if (v === undefined || v === null || v === '') { return false; }
+				var arr = (Array.isArray(v) ? v : [v]).map(String);
+				var okA = neededA.some(function (n) { return arr.indexOf(String(n)) !== -1; });
+				if (!okA) { return false; }
 			}
 			// Géographique.
 			if (searchCenter && searchRadiusKm > 0) {
@@ -160,25 +180,40 @@
 			renderList(visiblePoints);
 		}
 
-		// Branche les inputs de filtres.
+		// Branche les inputs de filtres (taxonomies et champs ACF).
 		wrapper.querySelectorAll('.gmaps-aa-filter-input').forEach(function (input) {
-			var tax = input.getAttribute('data-taxonomy');
+			var type = input.getAttribute('data-filter-type') || 'tax';
+			var key = type === 'acf'
+				? input.getAttribute('data-field')
+				: input.getAttribute('data-taxonomy');
+			if (!key) { return; }
+
+			// Pour les valeurs : tax = int (term_id), acf = string (valeur brute)
+			var toValue = function (raw) {
+				if (raw === '' || raw === null || raw === undefined) { return null; }
+				return type === 'acf' ? String(raw) : parseInt(raw, 10);
+			};
+
+			var bag = currentFilters[type];
+
 			var handler = function () {
 				if (input.tagName === 'SELECT') {
-					var v = input.value;
-					currentFilters[tax] = v ? [parseInt(v, 10)] : [];
+					var v = toValue(input.value);
+					bag[key] = (v === null) ? [] : [v];
 				} else if (input.type === 'radio') {
 					if (input.checked) {
-						currentFilters[tax] = input.value ? [parseInt(input.value, 10)] : [];
+						var v2 = toValue(input.value);
+						bag[key] = (v2 === null) ? [] : [v2];
 					}
 				} else if (input.type === 'checkbox') {
-					if (!currentFilters[tax]) { currentFilters[tax] = []; }
-					var val = parseInt(input.value, 10);
-					var idx = currentFilters[tax].indexOf(val);
+					if (!bag[key]) { bag[key] = []; }
+					var v3 = toValue(input.value);
+					if (v3 === null) { return; }
+					var idx = bag[key].indexOf(v3);
 					if (input.checked && idx === -1) {
-						currentFilters[tax].push(val);
+						bag[key].push(v3);
 					} else if (!input.checked && idx !== -1) {
-						currentFilters[tax].splice(idx, 1);
+						bag[key].splice(idx, 1);
 					}
 				}
 				applyFilters();
