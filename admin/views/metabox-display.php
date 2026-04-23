@@ -99,7 +99,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<tr>
 			<th scope="row"><?php esc_html_e( 'Layout des filtres', 'gmaps-aa' ); ?></th>
 			<td>
-				<?php foreach ( array( 'above' => __( 'Au-dessus', 'gmaps-aa' ), 'side' => __( 'À côté', 'gmaps-aa' ) ) as $val => $label ) : ?>
+				<?php
+				$filter_layouts = array(
+					'above'      => __( 'Au-dessus', 'gmaps-aa' ),
+					'side-left'  => __( 'À côté gauche', 'gmaps-aa' ),
+					'side-right' => __( 'À côté droit', 'gmaps-aa' ),
+				);
+				foreach ( $filter_layouts as $val => $label ) :
+					?>
 					<label style="margin-right:16px;">
 						<input type="radio" name="gmaps_aa[layout_filters]" value="<?php echo esc_attr( $val ); ?>" <?php checked( $values['layout_filters'], $val ); ?> />
 						<?php echo esc_html( $label ); ?>
@@ -110,7 +117,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<tr>
 			<th scope="row"><?php esc_html_e( 'Layout de la liste', 'gmaps-aa' ); ?></th>
 			<td>
-				<?php foreach ( array( 'below' => __( 'En dessous', 'gmaps-aa' ), 'side' => __( 'À côté', 'gmaps-aa' ), 'none' => __( 'Masquée', 'gmaps-aa' ) ) as $val => $label ) : ?>
+				<?php
+				$list_layouts = array(
+					'below'      => __( 'En dessous', 'gmaps-aa' ),
+					'side-left'  => __( 'À côté gauche', 'gmaps-aa' ),
+					'side-right' => __( 'À côté droit', 'gmaps-aa' ),
+					'none'       => __( 'Masquée', 'gmaps-aa' ),
+				);
+				foreach ( $list_layouts as $val => $label ) :
+					?>
 					<label style="margin-right:16px;">
 						<input type="radio" name="gmaps_aa[layout_list]" value="<?php echo esc_attr( $val ); ?>" <?php checked( $values['layout_list'], $val ); ?> />
 						<?php echo esc_html( $label ); ?>

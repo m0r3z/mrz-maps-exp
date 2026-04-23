@@ -18,10 +18,10 @@ final class MapConfig {
 	 * Définition des valeurs autorisées pour les champs à choix fermé.
 	 */
 	public static function layouts_filters() {
-		return array( 'above', 'side' );
+		return array( 'above', 'side-left', 'side-right' );
 	}
 	public static function layouts_list() {
-		return array( 'below', 'side', 'none' );
+		return array( 'below', 'side-left', 'side-right', 'none' );
 	}
 	public static function list_formats() {
 		return array( 'list', 'grid' );
@@ -119,6 +119,14 @@ final class MapConfig {
 			} else {
 				$out[ $key ] = $stored;
 			}
+		}
+
+		// Migration des anciennes valeurs « side » (avant gauche/droite).
+		if ( 'side' === $out['layout_filters'] ) {
+			$out['layout_filters'] = 'side-left';
+		}
+		if ( 'side' === $out['layout_list'] ) {
+			$out['layout_list'] = 'side-left';
 		}
 
 		return $out;
