@@ -1,0 +1,57 @@
+<?php
+/**
+ * Plugin Name:       DoubleA Maps (gmaps-aa)
+ * Plugin URI:        https://github.com/doubleA/gmaps-aa
+ * Description:       Cartographie Google Maps basée sur les champs ACF, avec filtres par taxonomie, clustering, Snazzy Maps et recherche par adresse.
+ * Version:           0.1.0
+ * Requires at least: 6.0
+ * Requires PHP:      7.4
+ * Author:            DoubleA
+ * License:           GPLv2 or later
+ * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
+ * Text Domain:       gmaps-aa
+ * Domain Path:       /languages
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+define( 'GMAPS_AA_VERSION', '0.1.0' );
+define( 'GMAPS_AA_FILE', __FILE__ );
+define( 'GMAPS_AA_DIR', plugin_dir_path( __FILE__ ) );
+define( 'GMAPS_AA_URL', plugin_dir_url( __FILE__ ) );
+define( 'GMAPS_AA_BASENAME', plugin_basename( __FILE__ ) );
+define( 'GMAPS_AA_CPT', 'gmaps_aa_map' );
+
+require_once GMAPS_AA_DIR . 'includes/helpers.php';
+
+spl_autoload_register(
+	static function ( $class ) {
+		if ( strpos( $class, 'GmapsAA\\' ) !== 0 ) {
+			return;
+		}
+
+		$relative = substr( $class, strlen( 'GmapsAA\\' ) );
+		$relative = str_replace( '\\', '/', $relative );
+		$parts    = explode( '/', $relative );
+		$last     = array_pop( $parts );
+		$last     = strtolower( preg_replace( '/(?<!^)[A-Z]/', '-$0', $last ) );
+		$prefix   = empty( $parts ) ? '' : strtolower( implode( '/', $parts ) ) . '/';
+		$path     = GMAPS_AA_DIR . 'includes/' . $prefix . 'class-' . $last . '.php';
+
+		if ( file_exists( $path ) ) {
+			require_once $path;
+		}
+	}
+);
+
+register_activation_hook( __FILE__, array( 'GmapsAA\\Activator', 'activate' ) );
+register_deactivation_hook( __FILE__, array( 'GmapsAA\\Deactivator', 'deactivate' ) );
+
+add_action(
+	'plugins_loaded',
+	static function () {
+		GmapsAA\Plugin::instance()->boot();
+	}
+);

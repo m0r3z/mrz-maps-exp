@@ -1,0 +1,9 @@
+.DS_Store
+*.log
+*.swp
+*.swo
+node_modules/
+vendor/
+languages/*.mo
+.idea/
+.vscode/
