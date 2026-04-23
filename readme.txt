@@ -1,7 +1,7 @@
 === gmaps-aa ===
 Contributors: doubleA
 Tags: google maps, acf, map, taxonomy, cluster, snazzy maps
-Requires at least: 6.0
+Requires at least: 6.3
 Tested up to: 6.9
 Requires PHP: 7.4
 Stable tag: 0.1.0

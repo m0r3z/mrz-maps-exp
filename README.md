@@ -4,7 +4,7 @@ Plugin WordPress générique de cartographie Google Maps basé sur les champs AC
 
 ## Prérequis
 
-- WordPress 6.0 ou supérieur
+- WordPress 6.3 ou supérieur (utilisation de `strategy: async` pour les scripts)
 - PHP 7.4 ou supérieur
 - Advanced Custom Fields (Pro recommandé)
 

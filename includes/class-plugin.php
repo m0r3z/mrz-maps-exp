@@ -48,19 +48,10 @@ final class Plugin {
 		}
 
 		( new CPT() )->register();
-		// Les modules suivants seront ajoutés dans les phases 2+.
-		if ( class_exists( __NAMESPACE__ . '\\MapConfig' ) ) {
-			( new MapConfig() )->register();
-		}
-		if ( class_exists( __NAMESPACE__ . '\\TaxonomyMarkers' ) ) {
-			( new TaxonomyMarkers() )->register();
-		}
-		if ( class_exists( __NAMESPACE__ . '\\Assets' ) ) {
-			( new Assets() )->register();
-		}
-		if ( class_exists( __NAMESPACE__ . '\\Shortcode' ) ) {
-			( new Shortcode() )->register();
-		}
+		( new MapConfig() )->register();
+		( new TaxonomyMarkers() )->register();
+		( new Assets() )->register();
+		( new Shortcode() )->register();
 	}
 
 	public function notice_missing_acf() {

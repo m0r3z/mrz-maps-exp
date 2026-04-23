@@ -53,6 +53,16 @@ final class Assets {
 	}
 
 	/**
+	 * Garantit que les scripts sont enregistrés (au cas où le shortcode
+	 * s'exécute avant wp_enqueue_scripts, ex: widgets, rendu AJAX).
+	 */
+	public function ensure_registered() {
+		if ( ! wp_script_is( self::HANDLE_SCRIPT, 'registered' ) ) {
+			$this->register_assets();
+		}
+	}
+
+	/**
 	 * Enqueue pour un shortcode donné. Retourne false si la clé API est absente.
 	 */
 	public function enqueue_for_shortcode() {
@@ -61,8 +71,15 @@ final class Assets {
 			return false;
 		}
 
-		$skip_gmaps = apply_filters( 'gmaps_aa_skip_gmaps_enqueue', false );
-		if ( ! $skip_gmaps && ! wp_script_is( self::HANDLE_GMAPS, 'enqueued' ) ) {
+		$this->ensure_registered();
+
+		// Détection des loaders Google Maps déjà en place (ex: Salient nectar_gmap).
+		$already_loaded = wp_script_is( self::HANDLE_GMAPS, 'enqueued' )
+			|| wp_script_is( 'nectar-gmap', 'enqueued' )
+			|| wp_script_is( 'nectar-gmaps', 'enqueued' );
+
+		$skip_gmaps = apply_filters( 'gmaps_aa_skip_gmaps_enqueue', $already_loaded );
+		if ( ! $skip_gmaps ) {
 			wp_enqueue_script(
 				self::HANDLE_GMAPS,
 				add_query_arg(

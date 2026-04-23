@@ -4,7 +4,7 @@
  * Plugin URI:        https://github.com/doubleA/gmaps-aa
  * Description:       Cartographie Google Maps basée sur les champs ACF, avec filtres par taxonomie, clustering, Snazzy Maps et recherche par adresse.
  * Version:           0.1.0
- * Requires at least: 6.0
+ * Requires at least: 6.3
  * Requires PHP:      7.4
  * Author:            DoubleA
  * License:           GPLv2 or later
