@@ -180,6 +180,13 @@
 			popup.open({ map: map, anchor: marker });
 		}
 
+		// Ferme la popup au clic sur une zone vide de la carte.
+		if (config.closePopupOnMapClick) {
+			map.addListener('click', function () {
+				popup.close();
+			});
+		}
+
 		// Spiderfier : dépile les marqueurs superposés.
 		var oms = null;
 		if (config.spiderfier && typeof OverlappingMarkerSpiderfier !== 'undefined') {

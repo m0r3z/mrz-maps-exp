@@ -66,6 +66,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</td>
 		</tr>
 		<tr>
+			<th scope="row"><?php esc_html_e( 'Fermer la tooltip au clic sur la carte', 'gmaps-aa' ); ?></th>
+			<td>
+				<label>
+					<input type="checkbox" name="gmaps_aa[close_popup_on_map_click]" value="1" <?php checked( ! empty( $values['close_popup_on_map_click'] ) ); ?> />
+					<?php esc_html_e( 'Fermer la tooltip ouverte lorsque l\'utilisateur clique ailleurs sur la carte.', 'gmaps-aa' ); ?>
+				</label>
+			</td>
+		</tr>
+		<tr>
 			<th scope="row"><?php esc_html_e( 'Centrer sur le post courant', 'gmaps-aa' ); ?></th>
 			<td>
 				<label>

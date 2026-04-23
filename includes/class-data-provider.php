@@ -105,6 +105,7 @@ final class DataProvider {
 			'perPage'          => (int) $values['per_page'],
 			'listClickAction'  => (string) $values['list_click_action'],
 			'centerOnCurrent'  => ! empty( $values['center_on_current'] ),
+			'closePopupOnMapClick' => ! empty( $values['close_popup_on_map_click'] ),
 			'sourcePt'         => (string) $values['source_pt'],
 		);
 	}
