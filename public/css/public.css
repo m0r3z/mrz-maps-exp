@@ -75,11 +75,6 @@ a.gmaps-aa-list-item-wrap { display: block; color: inherit; text-decoration: non
 .gmaps-aa-popup-body > *:first-child { margin-top: 0; }
 .gmaps-aa-popup-body > *:last-child { margin-bottom: 0; }
 
-/* Masque le message 'Utilisez Ctrl + molette pour zoomer' de Google Maps
-   en mode cooperative. L'interception du scroll reste active (la page
-   défile quand on utilise la molette sans Ctrl). */
-.gmaps-aa-wrapper .gm-style-pbt { display: none !important; }
-
 /* Responsive : tablette et mobile — empilement forcé filtres → carte → liste */
 @media (max-width: 1024px) {
 	.gmaps-aa-wrapper.gmaps-aa-filters-side-left,

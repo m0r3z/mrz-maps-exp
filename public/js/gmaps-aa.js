@@ -134,10 +134,11 @@
 		var mapEl = wrapper.querySelector('.gmaps-aa-map');
 		if (!mapEl) { return; }
 
-		// Mobile / tactile : toujours zoom direct (greedy).
-		// Desktop : cooperative (CTRL+molette + message) si activé, sinon greedy.
+		// Mobile / tactile : toujours zoom direct (greedy, un doigt déplace,
+		// pinch pour zoomer). Desktop : toujours greedy aussi — si le mode
+		// « coopératif » est demandé, on simule manuellement en exigeant Ctrl,
+		// sans afficher le message natif de Google Maps.
 		var isCoarsePointer = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
-		var desktopMode = config.cooperativeZoom ? 'cooperative' : 'greedy';
 		var mapOptions = {
 			center: config.center,
 			zoom: config.zoom,
@@ -147,13 +148,24 @@
 			streetViewControl: false,
 			mapTypeControl: false,
 			fullscreenControl: true,
-			gestureHandling: isCoarsePointer ? 'greedy' : desktopMode
+			gestureHandling: 'greedy'
 		};
 		if (config.style && config.style.length) {
 			mapOptions.styles = config.style;
 		}
 
 		var map = new google.maps.Map(mapEl, mapOptions);
+
+		// Simulation du mode « coopératif » sans le message natif :
+		// en capture on intercepte le wheel et on bloque sa propagation
+		// vers Google Maps si Ctrl/Cmd n'est pas maintenu.
+		if (config.cooperativeZoom && !isCoarsePointer) {
+			mapEl.addEventListener('wheel', function (e) {
+				if (!e.ctrlKey && !e.metaKey) {
+					e.stopPropagation();
+				}
+			}, { capture: true, passive: true });
+		}
 
 		var markerW = parseInt(config.markerWidth, 10) || 32;
 		var markerSize = new google.maps.Size(markerW, markerW);
