@@ -92,9 +92,8 @@ final class DataProvider {
 			'clustering'     => ! empty( $values['clustering'] ),
 			'style'          => $style,
 			'search'         => array(
-				'enabled'    => ! empty( $values['search_enabled'] ),
-				'radius'     => (int) $values['search_radius'],
-				'showCircle' => ! empty( $values['search_show_circle'] ),
+				'enabled' => ! empty( $values['search_enabled'] ),
+				'radius'  => (int) $values['search_radius'],
 			),
 			'taxonomies'       => array_values( (array) $values['taxonomies'] ),
 			'taxoModes'        => (array) $values['taxo_modes'],

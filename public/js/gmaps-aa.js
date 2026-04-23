@@ -166,7 +166,6 @@
 		var currentFilters = { tax: {}, acf: {} };
 		var searchCenter = null;
 		var searchRadiusKm = config.search && config.search.radius ? config.search.radius : 0;
-		var searchCircle = null;
 
 		function hasAny(obj) {
 			for (var k in obj) {
@@ -293,7 +292,6 @@
 
 		function clearSearch() {
 			searchCenter = null;
-			if (searchCircle) { searchCircle.setMap(null); searchCircle = null; }
 			if (searchInput) { searchInput.value = ''; }
 		}
 
@@ -322,16 +320,6 @@
 				map.panTo(searchCenter);
 				if (config.zoomSearch) {
 					map.setZoom(config.zoomSearch);
-				}
-				if (searchCircle) { searchCircle.setMap(null); searchCircle = null; }
-				if (config.search.showCircle && searchRadiusKm > 0) {
-					searchCircle = new google.maps.Circle({
-						map: map,
-						center: searchCenter,
-						radius: searchRadiusKm * 1000,
-						fillOpacity: 0.1,
-						strokeWeight: 1
-					});
 				}
 				// Pas de fitBounds après recherche : on respecte config.zoomSearch.
 				applyFilters({ skipFitBounds: true });

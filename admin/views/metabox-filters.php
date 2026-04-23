@@ -19,6 +19,22 @@ $modes_labels = array(
 $acf_filters = (array) $values['acf_filters'];
 ?>
 
+<h3 class="gmaps-aa-section-title"><?php esc_html_e( 'Recherche par adresse', 'gmaps-aa' ); ?></h3>
+<p>
+	<label>
+		<input type="checkbox" name="gmaps_aa[search_enabled]" value="1" <?php checked( ! empty( $values['search_enabled'] ) ); ?> />
+		<?php esc_html_e( 'Afficher un champ de recherche par adresse.', 'gmaps-aa' ); ?>
+	</label>
+</p>
+<p>
+	<label>
+		<?php esc_html_e( 'Rayon par défaut (km) :', 'gmaps-aa' ); ?>
+		<input type="number" name="gmaps_aa[search_radius]" value="<?php echo esc_attr( $values['search_radius'] ); ?>" min="1" max="500" step="1" />
+	</label>
+</p>
+
+<hr />
+
 <h3 class="gmaps-aa-section-title"><?php esc_html_e( 'Options globales', 'gmaps-aa' ); ?></h3>
 <p>
 	<label>

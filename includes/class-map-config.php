@@ -45,7 +45,6 @@ final class MapConfig {
 		add_meta_box( 'gmaps_aa_cosmetic', __( 'Cosmétique', 'gmaps-aa' ), array( $this, 'render' ), GMAPS_AA_CPT, 'normal', 'default', array( 'view' => 'cosmetic' ) );
 		add_meta_box( 'gmaps_aa_templates', __( 'Templates HTML', 'gmaps-aa' ), array( $this, 'render' ), GMAPS_AA_CPT, 'normal', 'default', array( 'view' => 'templates' ) );
 		add_meta_box( 'gmaps_aa_style', __( 'Style de la carte', 'gmaps-aa' ), array( $this, 'render' ), GMAPS_AA_CPT, 'normal', 'default', array( 'view' => 'style' ) );
-		add_meta_box( 'gmaps_aa_search', __( 'Recherche par adresse', 'gmaps-aa' ), array( $this, 'render' ), GMAPS_AA_CPT, 'normal', 'default', array( 'view' => 'search' ) );
 		add_meta_box( 'gmaps_aa_shortcode', __( 'Shortcode', 'gmaps-aa' ), array( $this, 'render' ), GMAPS_AA_CPT, 'side', 'high', array( 'view' => 'shortcode' ) );
 	}
 
@@ -96,9 +95,8 @@ final class MapConfig {
 			'tpl_list'           => "<div class=\"gmaps-aa-list-item\">\n  <h6>{post_title}</h6>\n</div>",
 			'snazzy'             => '',
 			'clustering'         => 1,
-			'search_enabled'     => 0,
-			'search_radius'      => 25,
-			'search_show_circle' => 0,
+			'search_enabled'       => 0,
+			'search_radius'        => 25,
 			'marker_default_url'   => '',
 			'marker_default_id'    => 0,
 			'marker_default_width' => 32,
@@ -247,9 +245,8 @@ final class MapConfig {
 		$clean['clustering'] = ! empty( $raw['clustering'] ) ? 1 : 0;
 
 		// Search.
-		$clean['search_enabled']     = ! empty( $raw['search_enabled'] ) ? 1 : 0;
-		$clean['search_radius']      = isset( $raw['search_radius'] ) ? max( 1, min( 500, absint( $raw['search_radius'] ) ) ) : 25;
-		$clean['search_show_circle'] = ! empty( $raw['search_show_circle'] ) ? 1 : 0;
+		$clean['search_enabled'] = ! empty( $raw['search_enabled'] ) ? 1 : 0;
+		$clean['search_radius']  = isset( $raw['search_radius'] ) ? max( 1, min( 500, absint( $raw['search_radius'] ) ) ) : 25;
 
 		// Cosmétique.
 		$clean['marker_default_url']   = isset( $raw['marker_default_url'] ) ? esc_url_raw( (string) $raw['marker_default_url'] ) : '';
