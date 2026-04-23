@@ -64,6 +64,8 @@
 		var mapOptions = {
 			center: config.center,
 			zoom: config.zoom,
+			minZoom: config.zoomMin || 1,
+			maxZoom: config.zoomMax || 22,
 			zoomControl: true,
 			streetViewControl: false,
 			mapTypeControl: false,
@@ -167,7 +169,10 @@
 			return true;
 		}
 
-		function applyFilters() {
+		var isInitialRender = true;
+
+		function applyFilters(opts) {
+			opts = opts || {};
 			var visiblePoints = [];
 			var visibleMarkers = [];
 			markers.forEach(function (m) {
@@ -183,6 +188,20 @@
 				clusterer.addMarkers(visibleMarkers);
 			}
 			renderList(visiblePoints);
+
+			// Fit bounds après filtrage (jamais au boot, jamais après une recherche géographique
+			// où l'on préfère centrer sur l'adresse trouvée avec config.zoomSearch).
+			if (
+				config.fitbounds &&
+				!isInitialRender &&
+				!opts.skipFitBounds &&
+				visibleMarkers.length > 0
+			) {
+				var bounds = new google.maps.LatLngBounds();
+				visibleMarkers.forEach(function (m) { bounds.extend(m.getPosition()); });
+				map.fitBounds(bounds);
+			}
+			isInitialRender = false;
 		}
 
 		// Branche les inputs de filtres (taxonomies et champs ACF).
@@ -255,13 +274,19 @@
 				}
 			});
 			clearSearch();
-			applyFilters();
+			applyFilters({ skipFitBounds: true });
+			// Retour à la vue par défaut.
+			map.setCenter(config.center);
+			map.setZoom(config.zoom);
 		}
 
 		if (searchInput) {
 			function applySearchLocation(latLng) {
 				searchCenter = { lat: latLng.lat(), lng: latLng.lng() };
 				map.panTo(searchCenter);
+				if (config.zoomSearch) {
+					map.setZoom(config.zoomSearch);
+				}
 				if (searchCircle) { searchCircle.setMap(null); searchCircle = null; }
 				if (config.search.showCircle && searchRadiusKm > 0) {
 					searchCircle = new google.maps.Circle({
@@ -272,7 +297,8 @@
 						strokeWeight: 1
 					});
 				}
-				applyFilters();
+				// Pas de fitBounds après recherche : on respecte config.zoomSearch.
+				applyFilters({ skipFitBounds: true });
 			}
 
 			// Autocomplétion Google Places (lib 'places' chargée via l'URL du loader).

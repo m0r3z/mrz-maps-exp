@@ -51,7 +51,6 @@ $filter_data_attrs = static function ( $filter ) {
 				<div class="gmaps-aa-filter gmaps-aa-filter-search">
 					<div class="gmaps-aa-filter-label"><?php esc_html_e( 'Rechercher', 'gmaps-aa' ); ?></div>
 					<input type="text" class="gmaps-aa-search" placeholder="<?php echo esc_attr( $data['i18n']['search_placeholder'] ); ?>" />
-					<button type="button" class="gmaps-aa-search-clear"><?php echo esc_html( $data['i18n']['clear'] ); ?></button>
 				</div>
 			<?php endif; ?>
 
@@ -120,6 +119,12 @@ $filter_data_attrs = static function ( $filter ) {
 					<?php endif; ?>
 				</div>
 			<?php endforeach; ?>
+
+			<?php if ( ! empty( $config['showClearBtn'] ) ) : ?>
+				<div class="gmaps-aa-filter gmaps-aa-filter-reset">
+					<button type="button" class="gmaps-aa-search-clear"><?php echo esc_html( $config['clearBtnText'] ); ?></button>
+				</div>
+			<?php endif; ?>
 
 		</div>
 	<?php endif; ?>

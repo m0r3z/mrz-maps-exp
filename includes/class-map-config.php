@@ -78,6 +78,12 @@ final class MapConfig {
 			'limit'              => 0,
 			'height'             => 500,
 			'zoom'               => 10,
+			'zoom_min'           => 1,
+			'zoom_max'           => 22,
+			'zoom_search'        => 12,
+			'fitbounds'          => 1,
+			'show_clear_btn'     => 1,
+			'clear_btn_text'     => '',
 			'center_lat'         => 46.603354,
 			'center_lng'         => 1.888334,
 			'layout_filters'     => 'above',
@@ -192,6 +198,17 @@ final class MapConfig {
 		// Display.
 		$clean['height']         = isset( $raw['height'] ) ? max( 100, min( 2000, absint( $raw['height'] ) ) ) : 500;
 		$clean['zoom']           = isset( $raw['zoom'] ) ? max( 1, min( 22, absint( $raw['zoom'] ) ) ) : 10;
+		$clean['zoom_min']       = isset( $raw['zoom_min'] ) ? max( 1, min( 22, absint( $raw['zoom_min'] ) ) ) : 1;
+		$clean['zoom_max']       = isset( $raw['zoom_max'] ) ? max( 1, min( 22, absint( $raw['zoom_max'] ) ) ) : 22;
+		if ( $clean['zoom_min'] > $clean['zoom_max'] ) {
+			$tmp               = $clean['zoom_min'];
+			$clean['zoom_min'] = $clean['zoom_max'];
+			$clean['zoom_max'] = $tmp;
+		}
+		$clean['zoom_search']    = isset( $raw['zoom_search'] ) ? max( 1, min( 22, absint( $raw['zoom_search'] ) ) ) : 12;
+		$clean['fitbounds']      = ! empty( $raw['fitbounds'] ) ? 1 : 0;
+		$clean['show_clear_btn'] = ! empty( $raw['show_clear_btn'] ) ? 1 : 0;
+		$clean['clear_btn_text'] = isset( $raw['clear_btn_text'] ) ? sanitize_text_field( (string) $raw['clear_btn_text'] ) : '';
 		$clean['center_lat']     = isset( $raw['center_lat'] ) ? self::clamp_float( (float) $raw['center_lat'], -90, 90 ) : 46.603354;
 		$clean['center_lng']     = isset( $raw['center_lng'] ) ? self::clamp_float( (float) $raw['center_lng'], -180, 180 ) : 1.888334;
 		$clean['layout_filters'] = ( isset( $raw['layout_filters'] ) && in_array( $raw['layout_filters'], self::layouts_filters(), true ) ) ? $raw['layout_filters'] : 'above';

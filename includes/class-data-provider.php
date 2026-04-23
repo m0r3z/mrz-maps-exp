@@ -65,9 +65,19 @@ final class DataProvider {
 			}
 		}
 
+		$clear_btn_text = '' !== (string) $values['clear_btn_text']
+			? (string) $values['clear_btn_text']
+			: __( 'Effacer', 'gmaps-aa' );
+
 		return array(
 			'height'         => (int) $values['height'],
 			'zoom'           => (int) $values['zoom'],
+			'zoomMin'        => (int) $values['zoom_min'],
+			'zoomMax'        => (int) $values['zoom_max'],
+			'zoomSearch'     => (int) $values['zoom_search'],
+			'fitbounds'      => ! empty( $values['fitbounds'] ),
+			'showClearBtn'   => ! empty( $values['show_clear_btn'] ),
+			'clearBtnText'   => $clear_btn_text,
 			'center'         => array(
 				'lat' => (float) $values['center_lat'],
 				'lng' => (float) $values['center_lng'],

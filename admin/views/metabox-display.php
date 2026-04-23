@@ -25,7 +25,60 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</th>
 			<td>
 				<input type="number" name="gmaps_aa[zoom]" id="gmaps_aa_zoom" value="<?php echo esc_attr( $values['zoom'] ); ?>" min="1" max="22" step="1" />
-				<p class="description"><?php esc_html_e( 'De 1 (monde) à 22 (bâtiment).', 'gmaps-aa' ); ?></p>
+				<p class="description"><?php esc_html_e( 'Niveau de zoom au chargement de la page. De 1 (monde) à 22 (bâtiment).', 'gmaps-aa' ); ?></p>
+			</td>
+		</tr>
+		<tr>
+			<th scope="row">
+				<label for="gmaps_aa_zoom_min"><?php esc_html_e( 'Zoom minimum', 'gmaps-aa' ); ?></label>
+			</th>
+			<td>
+				<input type="number" name="gmaps_aa[zoom_min]" id="gmaps_aa_zoom_min" value="<?php echo esc_attr( $values['zoom_min'] ); ?>" min="1" max="22" step="1" />
+				<p class="description"><?php esc_html_e( 'Niveau de dézoom maximal autorisé à l\'utilisateur.', 'gmaps-aa' ); ?></p>
+			</td>
+		</tr>
+		<tr>
+			<th scope="row">
+				<label for="gmaps_aa_zoom_max"><?php esc_html_e( 'Zoom maximum', 'gmaps-aa' ); ?></label>
+			</th>
+			<td>
+				<input type="number" name="gmaps_aa[zoom_max]" id="gmaps_aa_zoom_max" value="<?php echo esc_attr( $values['zoom_max'] ); ?>" min="1" max="22" step="1" />
+				<p class="description"><?php esc_html_e( 'Niveau de zoom maximal autorisé à l\'utilisateur.', 'gmaps-aa' ); ?></p>
+			</td>
+		</tr>
+		<tr>
+			<th scope="row">
+				<label for="gmaps_aa_zoom_search"><?php esc_html_e( 'Zoom après recherche', 'gmaps-aa' ); ?></label>
+			</th>
+			<td>
+				<input type="number" name="gmaps_aa[zoom_search]" id="gmaps_aa_zoom_search" value="<?php echo esc_attr( $values['zoom_search'] ); ?>" min="1" max="22" step="1" />
+				<p class="description"><?php esc_html_e( 'Zoom appliqué après la sélection d\'une adresse dans la barre de recherche.', 'gmaps-aa' ); ?></p>
+			</td>
+		</tr>
+		<tr>
+			<th scope="row"><?php esc_html_e( 'Fit bounds après filtrage', 'gmaps-aa' ); ?></th>
+			<td>
+				<label>
+					<input type="checkbox" name="gmaps_aa[fitbounds]" value="1" <?php checked( ! empty( $values['fitbounds'] ) ); ?> />
+					<?php esc_html_e( 'Ajuster automatiquement le centre et le zoom pour englober les marqueurs visibles après chaque filtrage.', 'gmaps-aa' ); ?>
+				</label>
+			</td>
+		</tr>
+		<tr>
+			<th scope="row"><?php esc_html_e( 'Bouton de réinitialisation', 'gmaps-aa' ); ?></th>
+			<td>
+				<p>
+					<label>
+						<input type="checkbox" name="gmaps_aa[show_clear_btn]" value="1" <?php checked( ! empty( $values['show_clear_btn'] ) ); ?> />
+						<?php esc_html_e( 'Afficher un bouton de réinitialisation de tous les filtres.', 'gmaps-aa' ); ?>
+					</label>
+				</p>
+				<p>
+					<label>
+						<?php esc_html_e( 'Texte du bouton :', 'gmaps-aa' ); ?>
+						<input type="text" name="gmaps_aa[clear_btn_text]" value="<?php echo esc_attr( $values['clear_btn_text'] ); ?>" placeholder="<?php esc_attr_e( 'Effacer', 'gmaps-aa' ); ?>" class="regular-text" />
+					</label>
+				</p>
 			</td>
 		</tr>
 		<tr>
