@@ -75,6 +75,12 @@ a.gmaps-aa-list-item-wrap { display: block; color: inherit; text-decoration: non
 .gmaps-aa-popup-body > *:first-child { margin-top: 0; }
 .gmaps-aa-popup-body > *:last-child { margin-bottom: 0; }
 
+/* Léger ombrage sous les marqueurs (nécessite optimized:false côté JS). */
+.gmaps-aa-wrapper .gm-style img[src*=".svg"],
+.gmaps-aa-wrapper .gm-style img[src*=".png"] {
+	filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.3));
+}
+
 /* Responsive : tablette et mobile — empilement forcé filtres → carte → liste */
 @media (max-width: 1024px) {
 	.gmaps-aa-wrapper.gmaps-aa-filters-side-left,

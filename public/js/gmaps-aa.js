@@ -199,7 +199,10 @@
 			var opts = {
 				position: { lat: p.lat, lng: p.lng },
 				map: map,
-				title: p.address || ''
+				title: p.address || '',
+				// Rend les markers comme <img> individuels dans le DOM : nécessaire
+				// pour que les filtres CSS (ombrage) s'appliquent.
+				optimized: false
 			};
 			var iconUrl = p.icon || defaultIconUrl;
 			if (iconUrl) {
