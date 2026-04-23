@@ -217,73 +217,6 @@
 			return marker;
 		});
 
-		// Si Spiderfier est actif, on sort les markers partageant strictement
-		// la même position du clusterer : ils restent sur la carte comme markers
-		// standalone et OMS les dépile au clic. Sinon le clusterer les regroupe
-		// pour toujours et on ne peut plus les voir individuellement.
-		var clusterableMarkers = markers.slice();
-		if (oms) {
-			var bucket = {};
-			markers.forEach(function (m) {
-				var pos = m.getPosition();
-				var key = pos.lat().toFixed(6) + ',' + pos.lng().toFixed(6);
-				(bucket[key] = bucket[key] || []).push(m);
-			});
-			clusterableMarkers = [];
-			Object.keys(bucket).forEach(function (k) {
-				if (bucket[k].length === 1) {
-					clusterableMarkers.push(bucket[k][0]);
-				}
-				// bucket[k].length > 1 : markers superposés → hors clusterer.
-				// Ils sont déjà sur la map via opts.map et OMS gère leur clic.
-			});
-		}
-
-		var clusterer = null;
-		if (config.clustering && window.markerClusterer && markerClusterer.MarkerClusterer) {
-			var clusterColor = config.clusterColor || '#0073aa';
-			var renderer = {
-				render: function (cluster) {
-					var count = cluster.count;
-					var pos = cluster.position;
-					var svg = [
-						'<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">',
-						'<circle cx="24" cy="24" r="22" fill="', clusterColor, '" opacity="0.95" />',
-						'<circle cx="24" cy="24" r="22" fill="none" stroke="', clusterColor, '" stroke-opacity="0.4" stroke-width="6" />',
-						'</svg>'
-					].join('');
-					return new google.maps.Marker({
-						position: pos,
-						icon: {
-							url: 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg),
-							scaledSize: new google.maps.Size(48, 48)
-						},
-						label: {
-							text: String(count),
-							color: '#fff',
-							fontSize: '13px',
-							fontWeight: 'bold'
-						},
-						zIndex: 1000 + count
-					});
-				}
-			};
-
-			// maxZoom: au-delà, les clusters se défont (utile si plusieurs markers
-			// proches mais non strictement superposés).
-			var clusterAlgorithm = markerClusterer.SuperClusterAlgorithm
-				? new markerClusterer.SuperClusterAlgorithm({ maxZoom: 15, radius: 60 })
-				: null;
-
-			var clustererOpts = {
-				map: map,
-				markers: clusterableMarkers,
-				renderer: renderer
-			};
-			if (clusterAlgorithm) { clustererOpts.algorithm = clusterAlgorithm; }
-			clusterer = new markerClusterer.MarkerClusterer(clustererOpts);
-		}
-
 		// Liste + pagination.
 		var listEl = wrapper.querySelector('.gmaps-aa-list');
 		var paginationEl = wrapper.querySelector('.gmaps-aa-pagination');
@@ -432,26 +365,18 @@
 
 		var isInitialRender = true;
 
-		var clusterableSet = new Set(clusterableMarkers);
-
 		function applyFilters(opts) {
 			opts = opts || {};
 			var visiblePoints = [];
 			var visibleMarkers = [];
-			var visibleClusterable = [];
 			markers.forEach(function (m) {
 				var ok = passesFilters(m.__point);
 				m.setMap(ok ? map : null);
 				if (ok) {
 					visiblePoints.push(m.__point);
 					visibleMarkers.push(m);
-					if (clusterableSet.has(m)) { visibleClusterable.push(m); }
 				}
 			});
-			if (clusterer) {
-				clusterer.clearMarkers();
-				clusterer.addMarkers(visibleClusterable);
-			}
 			renderList(visiblePoints);
 
 			// Fit bounds après filtrage (jamais au boot, jamais après une recherche géographique

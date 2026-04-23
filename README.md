@@ -13,7 +13,7 @@ Plugin WordPress générique de cartographie Google Maps basé sur les champs AC
 - Multi-cartes indépendantes via un Custom Post Type
 - Source configurable : n'importe quel post type avec un champ ACF de type `google_map`
 - Filtres front par taxonomie (dropdown, radio, cases à cocher)
-- Marker clustering (Google MarkerClusterer, bundlé localement)
+- Dépilement des marqueurs superposés (OverlappingMarkerSpiderfier, bundlé localement)
 - Skin Snazzy Maps (coller le JSON depuis snazzymaps.com)
 - Icône de marker personnalisable par terme de taxonomie
 - Templates HTML d'infobulle et de liste avec placeholders et conditionnels

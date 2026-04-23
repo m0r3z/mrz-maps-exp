@@ -1,6 +1,6 @@
 <?php
 /**
- * Métabox : style (Snazzy Maps JSON, clustering).
+ * Métabox : style (Snazzy Maps JSON).
  *
  * @var array $values
  */
@@ -31,15 +31,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 					);
 					?>
 				</p>
-			</td>
-		</tr>
-		<tr>
-			<th scope="row"><?php esc_html_e( 'Marker clustering', 'gmaps-aa' ); ?></th>
-			<td>
-				<label>
-					<input type="checkbox" name="gmaps_aa[clustering]" value="1" <?php checked( ! empty( $values['clustering'] ) ); ?> />
-					<?php esc_html_e( 'Regrouper les markers proches en clusters.', 'gmaps-aa' ); ?>
-				</label>
 			</td>
 		</tr>
 	</tbody>

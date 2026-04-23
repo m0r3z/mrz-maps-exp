@@ -1,6 +1,6 @@
 <?php
 /**
- * Métabox : cosmétique (marqueur par défaut, clusters, marqueurs par terme).
+ * Métabox : cosmétique (marqueur par défaut, spiderfier, marqueurs par terme).
  *
  * @var array    $values
  * @var \WP_Post $post
@@ -12,11 +12,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 global $post;
 
-$default_url   = (string) $values['marker_default_url'];
-$default_id    = (int) $values['marker_default_id'];
-$width         = (int) $values['marker_default_width'];
-$cluster_color = (string) $values['cluster_color'];
-$primary_tax   = (string) $values['primary_taxonomy'];
+$default_url = (string) $values['marker_default_url'];
+$default_id  = (int) $values['marker_default_id'];
+$width       = (int) $values['marker_default_width'];
+$primary_tax = (string) $values['primary_taxonomy'];
 
 $all_tax = get_taxonomies( array( 'public' => true ), 'objects' );
 
@@ -59,14 +58,6 @@ if ( '' !== $primary_tax && taxonomy_exists( $primary_tax ) ) {
 			<td>
 				<input type="number" name="gmaps_aa[marker_default_width]" id="gmaps_aa_marker_default_width" value="<?php echo esc_attr( $width ); ?>" min="8" max="128" step="1" />
 				<p class="description"><?php esc_html_e( 'S\'applique à tous les marqueurs (défaut + marqueurs par terme).', 'gmaps-aa' ); ?></p>
-			</td>
-		</tr>
-		<tr>
-			<th scope="row">
-				<label for="gmaps_aa_cluster_color"><?php esc_html_e( 'Couleur des clusters', 'gmaps-aa' ); ?></label>
-			</th>
-			<td>
-				<input type="text" name="gmaps_aa[cluster_color]" id="gmaps_aa_cluster_color" class="gmaps-aa-color-picker" value="<?php echo esc_attr( $cluster_color ); ?>" data-default-color="#0073aa" />
 			</td>
 		</tr>
 		<tr>

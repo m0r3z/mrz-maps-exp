@@ -90,7 +90,6 @@ final class DataProvider {
 			'layoutFilters'  => (string) $values['layout_filters'],
 			'layoutList'     => (string) $values['layout_list'],
 			'listFormat'     => (string) $values['list_format'],
-			'clustering'     => ! empty( $values['clustering'] ),
 			'style'          => $style,
 			'search'         => array(
 				'enabled' => ! empty( $values['search_enabled'] ),
@@ -101,7 +100,6 @@ final class DataProvider {
 			'showFilterCounts' => ! empty( $values['show_filter_counts'] ),
 			'defaultIconUrl'   => $marker_default_url,
 			'markerWidth'      => (int) $values['marker_default_width'],
-			'clusterColor'     => (string) $values['cluster_color'],
 			'primaryTaxonomy'  => (string) $values['primary_taxonomy'],
 			'spiderfier'       => ! empty( $values['spiderfier'] ),
 			'perPage'          => (int) $values['per_page'],

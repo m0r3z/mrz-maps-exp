@@ -104,14 +104,12 @@ final class MapConfig {
 			'list_click_action'  => 'tooltip',
 			'tpl_tooltip'        => "<div class=\"gmaps-aa-tooltip\">\n  <h6>{post_title}</h6>\n</div>",
 			'tpl_list'           => "<div class=\"gmaps-aa-list-item\">\n  <h6>{post_title}</h6>\n</div>",
-			'snazzy'             => '',
-			'clustering'         => 1,
+			'snazzy'               => '',
 			'search_enabled'       => 0,
 			'search_radius'        => 25,
 			'marker_default_url'   => '',
 			'marker_default_id'    => 0,
 			'marker_default_width' => 32,
-			'cluster_color'        => '#0073aa',
 			'primary_taxonomy'     => '',
 			'spiderfier'           => 1,
 		);
@@ -281,7 +279,6 @@ final class MapConfig {
 		} else {
 			$clean['snazzy'] = '';
 		}
-		$clean['clustering'] = ! empty( $raw['clustering'] ) ? 1 : 0;
 
 		// Search.
 		$clean['search_enabled'] = ! empty( $raw['search_enabled'] ) ? 1 : 0;
@@ -294,10 +291,6 @@ final class MapConfig {
 			$clean['marker_default_id'] = 0;
 		}
 		$clean['marker_default_width'] = isset( $raw['marker_default_width'] ) ? max( 8, min( 128, absint( $raw['marker_default_width'] ) ) ) : 32;
-		$clean['cluster_color']        = isset( $raw['cluster_color'] ) ? self::sanitize_hex_color( (string) $raw['cluster_color'] ) : '#0073aa';
-		if ( '' === $clean['cluster_color'] ) {
-			$clean['cluster_color'] = '#0073aa';
-		}
 		$clean['primary_taxonomy']     = ( isset( $raw['primary_taxonomy'] ) && in_array( $raw['primary_taxonomy'], $all_tax, true ) )
 			? $raw['primary_taxonomy']
 			: '';

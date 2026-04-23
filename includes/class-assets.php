@@ -12,7 +12,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 final class Assets {
 
 	const HANDLE_GMAPS      = 'gmaps-aa-gmaps';
-	const HANDLE_CLUSTERER  = 'gmaps-aa-clusterer';
 	const HANDLE_SPIDERFIER = 'gmaps-aa-spiderfier';
 	const HANDLE_SCRIPT     = 'gmaps-aa';
 	const HANDLE_STYLE      = 'gmaps-aa';
@@ -34,17 +33,6 @@ final class Assets {
 		);
 
 		wp_register_script(
-			self::HANDLE_CLUSTERER,
-			apply_filters(
-				'gmaps_aa_clusterer_url',
-				'https://unpkg.com/@googlemaps/markerclusterer@2.5.3/dist/index.min.js'
-			),
-			array(),
-			'2.5.3',
-			true
-		);
-
-		wp_register_script(
 			self::HANDLE_SPIDERFIER,
 			apply_filters(
 				'gmaps_aa_spiderfier_url',
@@ -58,7 +46,7 @@ final class Assets {
 		wp_register_script(
 			self::HANDLE_SCRIPT,
 			GMAPS_AA_URL . 'public/js/gmaps-aa.js',
-			array( self::HANDLE_CLUSTERER, self::HANDLE_SPIDERFIER ),
+			array( self::HANDLE_SPIDERFIER ),
 			GMAPS_AA_VERSION,
 			true
 		);
@@ -113,7 +101,6 @@ final class Assets {
 			);
 		}
 
-		wp_enqueue_script( self::HANDLE_CLUSTERER );
 		wp_enqueue_script( self::HANDLE_SPIDERFIER );
 		wp_enqueue_script( self::HANDLE_SCRIPT );
 		wp_enqueue_style( self::HANDLE_STYLE );
