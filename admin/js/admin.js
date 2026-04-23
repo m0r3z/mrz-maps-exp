@@ -131,7 +131,10 @@
 			wireLogicToggle(
 				row,
 				'.gmaps-aa-taxo-mode',
-				function (r) { return r.querySelector('.gmaps-aa-taxo-logic'); }
+				function (r) {
+					var logicSel = r.querySelector('.gmaps-aa-taxo-logic');
+					return logicSel ? logicSel.closest('.gmaps-aa-taxo-col') : null;
+				}
 			);
 		});
 	}

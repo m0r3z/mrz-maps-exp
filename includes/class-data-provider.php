@@ -234,6 +234,7 @@ final class DataProvider {
 		$taxonomies  = (array) $values['taxonomies'];
 		$modes       = (array) $values['taxo_modes'];
 		$tax_logics  = (array) $values['taxo_logic'];
+		$tax_labels  = (array) $values['taxo_labels'];
 
 		foreach ( $taxonomies as $slug ) {
 			$tax_obj = get_taxonomy( $slug );
@@ -273,10 +274,11 @@ final class DataProvider {
 				);
 			}
 
+			$custom_label = isset( $tax_labels[ $slug ] ) ? (string) $tax_labels[ $slug ] : '';
 			$filters[] = array(
 				'type'     => 'tax',
 				'taxonomy' => $slug,
-				'label'    => $tax_obj->labels->singular_name,
+				'label'    => '' !== $custom_label ? $custom_label : $tax_obj->labels->singular_name,
 				'mode'     => isset( $modes[ $slug ] ) ? (string) $modes[ $slug ] : 'dropdown',
 				'logic'    => isset( $tax_logics[ $slug ] ) ? (string) $tax_logics[ $slug ] : 'or',
 				'options'  => $options,

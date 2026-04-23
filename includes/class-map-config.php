@@ -82,6 +82,7 @@ final class MapConfig {
 			'taxonomies'         => array(),
 			'taxo_modes'         => array(),
 			'taxo_logic'         => array(),
+			'taxo_labels'        => array(),
 			'acf_filters'        => array(),
 			'show_filter_counts' => 1,
 			'limit'              => 0,
@@ -207,6 +208,20 @@ final class MapConfig {
 			}
 		}
 		$clean['taxo_logic'] = $logics;
+
+		$labels = array();
+		if ( isset( $raw['taxo_labels'] ) && is_array( $raw['taxo_labels'] ) ) {
+			foreach ( $raw['taxo_labels'] as $slug => $label ) {
+				$slug = sanitize_key( $slug );
+				if ( in_array( $slug, $taxo, true ) ) {
+					$clean_label = sanitize_text_field( (string) $label );
+					if ( '' !== $clean_label ) {
+						$labels[ $slug ] = $clean_label;
+					}
+				}
+			}
+		}
+		$clean['taxo_labels'] = $labels;
 
 		// Filtres ACF.
 		$acf_filters = array();

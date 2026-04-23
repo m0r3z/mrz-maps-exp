@@ -54,35 +54,46 @@ $acf_filters = (array) $values['acf_filters'];
 <div class="gmaps-aa-taxo-list">
 	<?php foreach ( $all_tax as $tax ) : ?>
 		<?php
-		$slug        = $tax->name;
-		$checked     = in_array( $slug, (array) $values['taxonomies'], true );
-		$mode        = isset( $values['taxo_modes'][ $slug ] ) ? $values['taxo_modes'][ $slug ] : 'dropdown';
-		$object_type = implode( ',', (array) $tax->object_type );
+		$slug         = $tax->name;
+		$checked      = in_array( $slug, (array) $values['taxonomies'], true );
+		$mode         = isset( $values['taxo_modes'][ $slug ] ) ? $values['taxo_modes'][ $slug ] : 'dropdown';
+		$logic        = isset( $values['taxo_logic'][ $slug ] ) ? $values['taxo_logic'][ $slug ] : 'or';
+		$custom_label = isset( $values['taxo_labels'][ $slug ] ) ? $values['taxo_labels'][ $slug ] : '';
+		$object_type  = implode( ',', (array) $tax->object_type );
 		?>
-		<?php $logic = isset( $values['taxo_logic'][ $slug ] ) ? $values['taxo_logic'][ $slug ] : 'or'; ?>
 		<div class="gmaps-aa-taxo-row" data-object-types="<?php echo esc_attr( $object_type ); ?>">
-			<label>
+			<label class="gmaps-aa-taxo-col gmaps-aa-taxo-col-activate">
 				<input type="checkbox" name="gmaps_aa[taxonomies][]" value="<?php echo esc_attr( $slug ); ?>" <?php checked( $checked ); ?> />
-				<?php echo esc_html( $tax->labels->singular_name . ' (' . $slug . ')' ); ?>
+				<span class="gmaps-aa-taxo-name"><?php echo esc_html( $tax->labels->singular_name . ' (' . $slug . ')' ); ?></span>
 			</label>
-			<select name="gmaps_aa[taxo_modes][<?php echo esc_attr( $slug ); ?>]" class="gmaps-aa-taxo-mode">
-				<?php foreach ( $modes_labels as $value => $label ) : ?>
-					<option value="<?php echo esc_attr( $value ); ?>" <?php selected( $mode, $value ); ?>>
-						<?php echo esc_html( $label ); ?>
-					</option>
-				<?php endforeach; ?>
-			</select>
-			<select name="gmaps_aa[taxo_logic][<?php echo esc_attr( $slug ); ?>]" class="gmaps-aa-taxo-logic" title="<?php esc_attr_e( 'Combinaison entre cases cochées (sans effet en mode dropdown/radio)', 'gmaps-aa' ); ?>">
-				<?php foreach ( $logic_labels as $value => $label ) : ?>
-					<option value="<?php echo esc_attr( $value ); ?>" <?php selected( $logic, $value ); ?>>
-						<?php echo esc_html( $label ); ?>
-					</option>
-				<?php endforeach; ?>
-			</select>
+			<label class="gmaps-aa-taxo-col">
+				<span><?php esc_html_e( 'Libellé affiché', 'gmaps-aa' ); ?></span>
+				<input type="text" name="gmaps_aa[taxo_labels][<?php echo esc_attr( $slug ); ?>]" value="<?php echo esc_attr( $custom_label ); ?>" class="regular-text" placeholder="<?php echo esc_attr( $tax->labels->singular_name ); ?>" />
+			</label>
+			<label class="gmaps-aa-taxo-col">
+				<span><?php esc_html_e( 'Type de filtre', 'gmaps-aa' ); ?></span>
+				<select name="gmaps_aa[taxo_modes][<?php echo esc_attr( $slug ); ?>]" class="gmaps-aa-taxo-mode">
+					<?php foreach ( $modes_labels as $value => $label ) : ?>
+						<option value="<?php echo esc_attr( $value ); ?>" <?php selected( $mode, $value ); ?>>
+							<?php echo esc_html( $label ); ?>
+						</option>
+					<?php endforeach; ?>
+				</select>
+			</label>
+			<label class="gmaps-aa-taxo-col">
+				<span><?php esc_html_e( 'Logique', 'gmaps-aa' ); ?></span>
+				<select name="gmaps_aa[taxo_logic][<?php echo esc_attr( $slug ); ?>]" class="gmaps-aa-taxo-logic" title="<?php esc_attr_e( 'Combinaison entre cases cochées', 'gmaps-aa' ); ?>">
+					<?php foreach ( $logic_labels as $value => $label ) : ?>
+						<option value="<?php echo esc_attr( $value ); ?>" <?php selected( $logic, $value ); ?>>
+							<?php echo esc_html( $label ); ?>
+						</option>
+					<?php endforeach; ?>
+				</select>
+			</label>
 		</div>
 	<?php endforeach; ?>
 </div>
-<p class="description"><?php esc_html_e( 'Seules les taxonomies liées au post type sélectionné sont affichées.', 'gmaps-aa' ); ?></p>
+<p class="description"><?php esc_html_e( 'Seules les taxonomies liées au post type sélectionné sont affichées. Le libellé remplace le nom de la taxonomie affiché au-dessus du filtre sur le site.', 'gmaps-aa' ); ?></p>
 
 <hr />
 
