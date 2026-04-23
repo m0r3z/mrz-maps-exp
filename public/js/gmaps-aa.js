@@ -138,12 +138,29 @@
 			});
 		}
 
-		// Liste.
+		// Liste + pagination.
 		var listEl = wrapper.querySelector('.gmaps-aa-list');
-		function renderList(visiblePoints) {
+		var paginationEl = wrapper.querySelector('.gmaps-aa-pagination');
+		var pageCurrentEl = wrapper.querySelector('.gmaps-aa-page-current');
+		var pageTotalEl = wrapper.querySelector('.gmaps-aa-page-total');
+		var pagePrev = wrapper.querySelector('.gmaps-aa-page-prev');
+		var pageNext = wrapper.querySelector('.gmaps-aa-page-next');
+		var perPage = parseInt(config.perPage, 10) || 0;
+		var currentPage = 1;
+		var lastVisiblePoints = [];
+
+		function renderListPage() {
 			if (!listEl) { return; }
 			listEl.innerHTML = '';
-			visiblePoints.forEach(function (p) {
+			var points = lastVisiblePoints;
+			var slice;
+			if (perPage > 0) {
+				var start = (currentPage - 1) * perPage;
+				slice = points.slice(start, start + perPage);
+			} else {
+				slice = points;
+			}
+			slice.forEach(function (p) {
 				var w = document.createElement('div');
 				w.className = 'gmaps-aa-list-item-wrap';
 				w.innerHTML = p.listItem || '';
@@ -157,6 +174,40 @@
 					}
 				});
 				listEl.appendChild(w);
+			});
+			updatePaginationUI();
+		}
+
+		function updatePaginationUI() {
+			if (!paginationEl) { return; }
+			var total = lastVisiblePoints.length;
+			if (perPage <= 0 || total <= perPage) {
+				paginationEl.hidden = true;
+				return;
+			}
+			var totalPages = Math.ceil(total / perPage);
+			paginationEl.hidden = false;
+			if (pageCurrentEl) { pageCurrentEl.textContent = String(currentPage); }
+			if (pageTotalEl) { pageTotalEl.textContent = String(totalPages); }
+			if (pagePrev) { pagePrev.disabled = currentPage <= 1; }
+			if (pageNext) { pageNext.disabled = currentPage >= totalPages; }
+		}
+
+		function renderList(visiblePoints) {
+			lastVisiblePoints = visiblePoints;
+			currentPage = 1;
+			renderListPage();
+		}
+
+		if (pagePrev) {
+			pagePrev.addEventListener('click', function () {
+				if (currentPage > 1) { currentPage -= 1; renderListPage(); }
+			});
+		}
+		if (pageNext) {
+			pageNext.addEventListener('click', function () {
+				var totalPages = perPage > 0 ? Math.ceil(lastVisiblePoints.length / perPage) : 1;
+				if (currentPage < totalPages) { currentPage += 1; renderListPage(); }
 			});
 		}
 

@@ -78,6 +78,7 @@ final class MapConfig {
 			'acf_filters'        => array(),
 			'show_filter_counts' => 1,
 			'limit'              => 0,
+			'per_page'           => 10,
 			'height'             => 500,
 			'zoom'               => 10,
 			'zoom_min'           => 1,
@@ -153,6 +154,7 @@ final class MapConfig {
 			: 'post';
 		$clean['acf_field']    = isset( $raw['acf_field'] ) ? sanitize_key( $raw['acf_field'] ) : 'location';
 		$clean['limit']        = isset( $raw['limit'] ) ? max( 0, absint( $raw['limit'] ) ) : 0;
+		$clean['per_page']     = isset( $raw['per_page'] ) ? max( 0, min( 200, absint( $raw['per_page'] ) ) ) : 10;
 
 		$all_tax = array_keys( get_taxonomies( array( 'public' => true ), 'names' ) );
 		$taxo    = array();

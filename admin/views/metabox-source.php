@@ -43,7 +43,16 @@ $public_pts = get_post_types( array( 'public' => true ), 'objects' );
 			</th>
 			<td>
 				<input type="number" name="gmaps_aa[limit]" id="gmaps_aa_limit" value="<?php echo esc_attr( $values['limit'] ); ?>" min="0" step="1" />
-				<p class="description"><?php esc_html_e( '0 = illimité. Les filtres (taxonomies, champs ACF) se configurent dans la métabox « Filtres ».', 'gmaps-aa' ); ?></p>
+				<p class="description"><?php esc_html_e( 'Limite de chargement côté serveur. 0 = illimité.', 'gmaps-aa' ); ?></p>
+			</td>
+		</tr>
+		<tr>
+			<th scope="row">
+				<label for="gmaps_aa_per_page"><?php esc_html_e( 'Posts par page (liste)', 'gmaps-aa' ); ?></label>
+			</th>
+			<td>
+				<input type="number" name="gmaps_aa[per_page]" id="gmaps_aa_per_page" value="<?php echo esc_attr( $values['per_page'] ); ?>" min="0" step="1" />
+				<p class="description"><?php esc_html_e( 'Pagination côté utilisateur : nombre de posts affichés par page dans la liste. 0 = pas de pagination (tous affichés). La carte affiche toujours tous les marqueurs.', 'gmaps-aa' ); ?></p>
 			</td>
 		</tr>
 	</tbody>

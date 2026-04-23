@@ -143,7 +143,20 @@ $format_option = static function ( $opt ) use ( $show_counts ) {
 	<div class="gmaps-aa-main">
 		<div class="gmaps-aa-map" style="height:<?php echo (int) $config['height']; ?>px;"></div>
 		<?php if ( 'none' !== $layout_l ) : ?>
-			<div class="gmaps-aa-list"></div>
+			<div class="gmaps-aa-list-wrap">
+				<div class="gmaps-aa-list"></div>
+				<?php if ( (int) $config['perPage'] > 0 ) : ?>
+					<nav class="gmaps-aa-pagination" hidden>
+						<button type="button" class="gmaps-aa-page-prev" aria-label="<?php esc_attr_e( 'Page précédente', 'gmaps-aa' ); ?>">&lsaquo;</button>
+						<span class="gmaps-aa-page-info">
+							<span class="gmaps-aa-page-current">1</span>
+							<?php echo ' / '; ?>
+							<span class="gmaps-aa-page-total">1</span>
+						</span>
+						<button type="button" class="gmaps-aa-page-next" aria-label="<?php esc_attr_e( 'Page suivante', 'gmaps-aa' ); ?>">&rsaquo;</button>
+					</nav>
+				<?php endif; ?>
+			</div>
 		<?php endif; ?>
 	</div>
 

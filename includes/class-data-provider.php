@@ -102,6 +102,7 @@ final class DataProvider {
 			'markerWidth'      => (int) $values['marker_default_width'],
 			'clusterColor'     => (string) $values['cluster_color'],
 			'primaryTaxonomy'  => (string) $values['primary_taxonomy'],
+			'perPage'          => (int) $values['per_page'],
 		);
 	}
 
