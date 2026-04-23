@@ -48,7 +48,7 @@ final class Assets {
 			self::HANDLE_SPIDERFIER,
 			apply_filters(
 				'gmaps_aa_spiderfier_url',
-				'https://cdn.jsdelivr.net/npm/overlapping-marker-spiderfier@1.0.3/lib/oms.min.js'
+				GMAPS_AA_URL . 'assets/vendor/oms.min.js'
 			),
 			array(),
 			'1.0.3',

@@ -246,11 +246,47 @@
 					});
 				}
 			};
-			clusterer = new markerClusterer.MarkerClusterer({
+
+			// Au-delà de ce zoom, les clusters se défont. Cela laisse OMS (si activé)
+			// prendre le relais pour les marqueurs superposés au même point.
+			var clusterAlgorithm = markerClusterer.SuperClusterAlgorithm
+				? new markerClusterer.SuperClusterAlgorithm({ maxZoom: 15, radius: 60 })
+				: null;
+
+			// onClusterClick par défaut : zoomer aux bounds. Si le zoom est déjà
+			// au-delà du maxZoom et que le cluster persiste (markers au même
+			// point), on déclenche le spiderfy via OMS le cas échéant.
+			function handleClusterClick(event, cluster, m) {
+				var targetZoom = m.getZoom();
+				// Si tous les markers du cluster partagent la même position, spiderfy.
+				if (oms && cluster.markers && cluster.markers.length > 1) {
+					var first = cluster.markers[0].getPosition();
+					var samePoint = cluster.markers.every(function (mk) {
+						var p = mk.getPosition();
+						return Math.abs(p.lat() - first.lat()) < 1e-6
+							&& Math.abs(p.lng() - first.lng()) < 1e-6;
+					});
+					if (samePoint) {
+						m.setCenter(first);
+						m.setZoom(Math.max(m.getZoom(), 16));
+						setTimeout(function () {
+							google.maps.event.trigger(cluster.markers[0], 'click');
+						}, 200);
+						return;
+					}
+				}
+				// Comportement par défaut : fit bounds sur le cluster.
+				m.fitBounds(cluster.bounds);
+			}
+
+			var clustererOpts = {
 				map: map,
 				markers: markers.slice(),
-				renderer: renderer
-			});
+				renderer: renderer,
+				onClusterClick: handleClusterClick
+			};
+			if (clusterAlgorithm) { clustererOpts.algorithm = clusterAlgorithm; }
+			clusterer = new markerClusterer.MarkerClusterer(clustererOpts);
 		}
 
 		// Liste + pagination.
