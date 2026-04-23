@@ -69,6 +69,10 @@ final class DataProvider {
 			? (string) $values['clear_btn_text']
 			: __( 'Effacer', 'gmaps-aa' );
 
+		$marker_default_url = '' !== (string) $values['marker_default_url']
+			? (string) $values['marker_default_url']
+			: GMAPS_AA_URL . 'assets/default-marker.svg';
+
 		return array(
 			'height'         => (int) $values['height'],
 			'zoom'           => (int) $values['zoom'],
@@ -95,16 +99,20 @@ final class DataProvider {
 			'taxonomies'       => array_values( (array) $values['taxonomies'] ),
 			'taxoModes'        => (array) $values['taxo_modes'],
 			'showFilterCounts' => ! empty( $values['show_filter_counts'] ),
-			'defaultIconUrl'   => GMAPS_AA_URL . 'assets/default-marker.svg',
+			'defaultIconUrl'   => $marker_default_url,
+			'markerWidth'      => (int) $values['marker_default_width'],
+			'clusterColor'     => (string) $values['cluster_color'],
+			'primaryTaxonomy'  => (string) $values['primary_taxonomy'],
 		);
 	}
 
 	private static function build_points( $values, &$data ) {
-		$source_pt   = $values['source_pt'];
-		$acf_field   = $values['acf_field'];
-		$taxonomies  = (array) $values['taxonomies'];
-		$acf_filters = (array) $values['acf_filters'];
-		$limit       = (int) $values['limit'];
+		$source_pt    = $values['source_pt'];
+		$acf_field    = $values['acf_field'];
+		$taxonomies   = (array) $values['taxonomies'];
+		$acf_filters  = (array) $values['acf_filters'];
+		$primary_tax  = (string) $values['primary_taxonomy'];
+		$limit        = (int) $values['limit'];
 
 		$args = array(
 			'post_type'              => $source_pt,
@@ -175,7 +183,21 @@ final class DataProvider {
 				}
 			}
 
-			// Terms + icône (priorité au premier terme ayant une icône).
+			// Icône : priorité à la taxonomie primaire (Cosmétique).
+			if ( '' !== $primary_tax ) {
+				$primary_terms = get_the_terms( $post->ID, $primary_tax );
+				if ( ! empty( $primary_terms ) && ! is_wp_error( $primary_terms ) ) {
+					foreach ( $primary_terms as $term ) {
+						$icon = get_term_meta( $term->term_id, '_gmaps_aa_icon_url', true );
+						if ( $icon ) {
+							$point['icon'] = esc_url_raw( $icon );
+							break;
+						}
+					}
+				}
+			}
+
+			// Terms des taxonomies de filtre (+ fallback d'icône si pas encore trouvée).
 			foreach ( $taxonomies as $tax ) {
 				$terms = get_the_terms( $post->ID, $tax );
 				if ( empty( $terms ) || is_wp_error( $terms ) ) {

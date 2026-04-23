@@ -79,14 +79,19 @@
 		var map = new google.maps.Map(mapEl, mapOptions);
 		var infoWindow = new google.maps.InfoWindow();
 
+		var markerW = parseInt(config.markerWidth, 10) || 32;
+		var markerSize = new google.maps.Size(markerW, markerW);
+		var defaultIconUrl = config.defaultIconUrl || '';
+
 		var markers = data.points.map(function (p) {
 			var opts = {
 				position: { lat: p.lat, lng: p.lng },
 				map: map,
 				title: p.address || ''
 			};
-			if (p.icon) {
-				opts.icon = { url: p.icon, scaledSize: new google.maps.Size(40, 40) };
+			var iconUrl = p.icon || defaultIconUrl;
+			if (iconUrl) {
+				opts.icon = { url: iconUrl, scaledSize: markerSize };
 			}
 			var marker = new google.maps.Marker(opts);
 			marker.__point = p;
@@ -99,7 +104,38 @@
 
 		var clusterer = null;
 		if (config.clustering && window.markerClusterer && markerClusterer.MarkerClusterer) {
-			clusterer = new markerClusterer.MarkerClusterer({ map: map, markers: markers.slice() });
+			var clusterColor = config.clusterColor || '#0073aa';
+			var renderer = {
+				render: function (cluster) {
+					var count = cluster.count;
+					var pos = cluster.position;
+					var svg = [
+						'<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">',
+						'<circle cx="24" cy="24" r="22" fill="', clusterColor, '" opacity="0.95" />',
+						'<circle cx="24" cy="24" r="22" fill="none" stroke="', clusterColor, '" stroke-opacity="0.4" stroke-width="6" />',
+						'</svg>'
+					].join('');
+					return new google.maps.Marker({
+						position: pos,
+						icon: {
+							url: 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg),
+							scaledSize: new google.maps.Size(48, 48)
+						},
+						label: {
+							text: String(count),
+							color: '#fff',
+							fontSize: '13px',
+							fontWeight: 'bold'
+						},
+						zIndex: 1000 + count
+					});
+				}
+			};
+			clusterer = new markerClusterer.MarkerClusterer({
+				map: map,
+				markers: markers.slice(),
+				renderer: renderer
+			});
 		}
 
 		// Liste.

@@ -35,12 +35,14 @@ final class MapConfig {
 		add_action( 'save_post_' . GMAPS_AA_CPT, array( $this, 'save' ), 10, 2 );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin' ) );
 		add_action( 'admin_notices', array( $this, 'maybe_notice_missing_key' ) );
+		add_action( 'wp_ajax_gmaps_aa_fetch_terms', array( $this, 'ajax_fetch_terms' ) );
 	}
 
 	public function add_metaboxes() {
 		add_meta_box( 'gmaps_aa_source', __( 'Source des données', 'gmaps-aa' ), array( $this, 'render' ), GMAPS_AA_CPT, 'normal', 'high', array( 'view' => 'source' ) );
 		add_meta_box( 'gmaps_aa_filters', __( 'Filtres', 'gmaps-aa' ), array( $this, 'render' ), GMAPS_AA_CPT, 'normal', 'high', array( 'view' => 'filters' ) );
 		add_meta_box( 'gmaps_aa_display', __( 'Affichage', 'gmaps-aa' ), array( $this, 'render' ), GMAPS_AA_CPT, 'normal', 'high', array( 'view' => 'display' ) );
+		add_meta_box( 'gmaps_aa_cosmetic', __( 'Cosmétique', 'gmaps-aa' ), array( $this, 'render' ), GMAPS_AA_CPT, 'normal', 'default', array( 'view' => 'cosmetic' ) );
 		add_meta_box( 'gmaps_aa_templates', __( 'Templates HTML', 'gmaps-aa' ), array( $this, 'render' ), GMAPS_AA_CPT, 'normal', 'default', array( 'view' => 'templates' ) );
 		add_meta_box( 'gmaps_aa_style', __( 'Style de la carte', 'gmaps-aa' ), array( $this, 'render' ), GMAPS_AA_CPT, 'normal', 'default', array( 'view' => 'style' ) );
 		add_meta_box( 'gmaps_aa_search', __( 'Recherche par adresse', 'gmaps-aa' ), array( $this, 'render' ), GMAPS_AA_CPT, 'normal', 'default', array( 'view' => 'search' ) );
@@ -97,6 +99,11 @@ final class MapConfig {
 			'search_enabled'     => 0,
 			'search_radius'      => 25,
 			'search_show_circle' => 0,
+			'marker_default_url'   => '',
+			'marker_default_id'    => 0,
+			'marker_default_width' => 32,
+			'cluster_color'        => '#0073aa',
+			'primary_taxonomy'     => '',
 		);
 
 		$out = array();
@@ -244,12 +251,102 @@ final class MapConfig {
 		$clean['search_radius']      = isset( $raw['search_radius'] ) ? max( 1, min( 500, absint( $raw['search_radius'] ) ) ) : 25;
 		$clean['search_show_circle'] = ! empty( $raw['search_show_circle'] ) ? 1 : 0;
 
+		// Cosmétique.
+		$clean['marker_default_url']   = isset( $raw['marker_default_url'] ) ? esc_url_raw( (string) $raw['marker_default_url'] ) : '';
+		$clean['marker_default_id']    = isset( $raw['marker_default_id'] ) ? absint( $raw['marker_default_id'] ) : 0;
+		if ( $clean['marker_default_id'] > 0 && ! wp_attachment_is_image( $clean['marker_default_id'] ) ) {
+			$clean['marker_default_id'] = 0;
+		}
+		$clean['marker_default_width'] = isset( $raw['marker_default_width'] ) ? max( 8, min( 128, absint( $raw['marker_default_width'] ) ) ) : 32;
+		$clean['cluster_color']        = isset( $raw['cluster_color'] ) ? self::sanitize_hex_color( (string) $raw['cluster_color'] ) : '#0073aa';
+		if ( '' === $clean['cluster_color'] ) {
+			$clean['cluster_color'] = '#0073aa';
+		}
+		$clean['primary_taxonomy']     = ( isset( $raw['primary_taxonomy'] ) && in_array( $raw['primary_taxonomy'], $all_tax, true ) )
+			? $raw['primary_taxonomy']
+			: '';
+
 		foreach ( $clean as $key => $value ) {
 			update_post_meta( $post_id, '_gmaps_aa_' . $key, $value );
 		}
 
+		// Icônes par terme — stockées globalement en term_meta.
+		if ( isset( $raw['term_icons'] ) && is_array( $raw['term_icons'] ) ) {
+			foreach ( $raw['term_icons'] as $term_id => $icon_data ) {
+				$term_id = absint( $term_id );
+				if ( ! $term_id || ! term_exists( $term_id ) ) {
+					continue;
+				}
+				if ( ! is_array( $icon_data ) ) {
+					continue;
+				}
+				$url = isset( $icon_data['url'] ) ? esc_url_raw( (string) $icon_data['url'] ) : '';
+				$id  = isset( $icon_data['id'] ) ? absint( $icon_data['id'] ) : 0;
+				if ( $id > 0 && ! wp_attachment_is_image( $id ) ) {
+					$id = 0;
+				}
+				if ( '' === $url && 0 === $id ) {
+					delete_term_meta( $term_id, '_gmaps_aa_icon_url' );
+					delete_term_meta( $term_id, '_gmaps_aa_icon_id' );
+				} else {
+					update_term_meta( $term_id, '_gmaps_aa_icon_url', $url );
+					update_term_meta( $term_id, '_gmaps_aa_icon_id', $id );
+				}
+			}
+		}
+
 		// Invalide le cache transient.
 		delete_transient( 'gmaps_aa_map_' . (int) $post_id );
+	}
+
+	/**
+	 * Sanitize une couleur hex (#rgb ou #rrggbb). Retourne '' si invalide.
+	 */
+	public static function sanitize_hex_color( $color ) {
+		$color = trim( (string) $color );
+		if ( '' === $color ) {
+			return '';
+		}
+		if ( preg_match( '/^#([a-f0-9]{3}|[a-f0-9]{6})$/i', $color ) ) {
+			return strtolower( $color );
+		}
+		return '';
+	}
+
+	/**
+	 * Handler AJAX : récupère les termes d'une taxonomie (pour la métabox Cosmétique).
+	 */
+	public function ajax_fetch_terms() {
+		check_ajax_referer( 'gmaps_aa_fetch_terms', 'nonce' );
+		if ( ! current_user_can( 'edit_posts' ) ) {
+			wp_send_json_error( array( 'message' => __( 'Accès refusé.', 'gmaps-aa' ) ), 403 );
+		}
+
+		$taxonomy = isset( $_POST['taxonomy'] ) ? sanitize_key( wp_unslash( $_POST['taxonomy'] ) ) : '';
+		if ( '' === $taxonomy || ! taxonomy_exists( $taxonomy ) ) {
+			wp_send_json_error( array( 'message' => __( 'Taxonomie invalide.', 'gmaps-aa' ) ), 400 );
+		}
+
+		$terms = get_terms(
+			array(
+				'taxonomy'   => $taxonomy,
+				'hide_empty' => false,
+			)
+		);
+		if ( is_wp_error( $terms ) ) {
+			wp_send_json_error( array( 'message' => $terms->get_error_message() ), 500 );
+		}
+
+		$out = array();
+		foreach ( $terms as $term ) {
+			$out[] = array(
+				'id'       => (int) $term->term_id,
+				'name'     => $term->name,
+				'icon_url' => (string) get_term_meta( $term->term_id, '_gmaps_aa_icon_url', true ),
+				'icon_id'  => (int) get_term_meta( $term->term_id, '_gmaps_aa_icon_id', true ),
+			);
+		}
+		wp_send_json_success( $out );
 	}
 
 	private static function clamp_float( $value, $min, $max ) {
@@ -302,6 +399,8 @@ final class MapConfig {
 
 		wp_enqueue_media();
 
+		wp_enqueue_style( 'wp-color-picker' );
+
 		wp_enqueue_style(
 			'gmaps-aa-admin',
 			GMAPS_AA_URL . 'admin/css/admin.css',
@@ -335,7 +434,7 @@ final class MapConfig {
 		wp_enqueue_script(
 			'gmaps-aa-admin',
 			GMAPS_AA_URL . 'admin/js/admin.js',
-			array( 'jquery' ),
+			array( 'jquery', 'wp-color-picker' ),
 			GMAPS_AA_VERSION,
 			true
 		);

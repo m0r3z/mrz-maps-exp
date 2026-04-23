@@ -10,3 +10,9 @@
 .gmaps-aa-acf-row { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 12px; padding: 10px; background: #f6f7f7; border: 1px solid #dcdcde; }
 .gmaps-aa-acf-col { display: flex; flex-direction: column; gap: 4px; }
 .gmaps-aa-acf-col > span { font-size: 12px; color: #646970; }
+.gmaps-aa-media-picker { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.gmaps-aa-media-picker .gmaps-aa-media-url { flex: 1 1 240px; min-width: 200px; }
+.gmaps-aa-media-preview img { display: block; }
+#gmaps_aa_term_markers { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+.gmaps-aa-term-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 8px; background: #f6f7f7; border: 1px solid #dcdcde; }
+.gmaps-aa-term-name { font-weight: 600; min-width: 180px; }
