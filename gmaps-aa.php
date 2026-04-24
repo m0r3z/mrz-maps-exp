@@ -1,12 +1,12 @@
 <?php
 /**
- * Plugin Name:       DoubleA Maps (gmaps-aa)
+ * Plugin Name:       GMaps-AA
  * Plugin URI:        https://github.com/doubleA/gmaps-aa
- * Description:       Cartographie Google Maps basée sur les champs ACF, avec filtres par taxonomie, Snazzy Maps et recherche par adresse.
+ * Description:       Cartographie Google Maps basée sur les CPT et champs ACF, avec filtres par taxonomie, Snazzy Maps et recherche par adresse.
  * Version:           0.3.2
  * Requires at least: 6.3
  * Requires PHP:      7.4
- * Author:            DoubleA
+ * Author:            Doublea.io
  * License:           GPLv2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       gmaps-aa

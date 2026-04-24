@@ -21,7 +21,7 @@ final class CPT {
 		$labels = array(
 			'name'               => _x( 'Cartes', 'post type general name', 'gmaps-aa' ),
 			'singular_name'      => _x( 'Carte', 'post type singular name', 'gmaps-aa' ),
-			'menu_name'          => _x( 'gmaps-aa', 'admin menu', 'gmaps-aa' ),
+			'menu_name'          => _x( 'GMaps', 'admin menu', 'gmaps-aa' ),
 			'name_admin_bar'     => _x( 'Carte', 'add new on admin bar', 'gmaps-aa' ),
 			'add_new'            => _x( 'Ajouter', 'map', 'gmaps-aa' ),
 			'add_new_item'       => __( 'Ajouter une carte', 'gmaps-aa' ),
@@ -43,7 +43,8 @@ final class CPT {
 			'show_in_nav_menus'  => false,
 			'show_in_admin_bar'  => false,
 			'show_in_rest'       => false,
-			'menu_icon'          => 'dashicons-location-alt',
+			'menu_icon'          => GMAPS_AA_URL . 'assets/menu-icon.svg',
+			'menu_position'      => 90,
 			'capability_type'    => 'post',
 			'map_meta_cap'       => true,
 			'hierarchical'       => false,
