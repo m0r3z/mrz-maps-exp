@@ -181,6 +181,34 @@
 		function openPopupOn(marker, point) {
 			popup.setContent(point.tooltip || '');
 			popup.open({ map: map, anchor: marker });
+			// Deux rAF pour laisser Google Maps positionner la popup et le
+			// navigateur calculer sa taille avant de corriger le débordement.
+			requestAnimationFrame(function () {
+				requestAnimationFrame(ensurePopupVisible);
+			});
+		}
+
+		function ensurePopupVisible() {
+			if (!popup.container || !popup.container.offsetParent) { return; }
+			var mapRect = mapEl.getBoundingClientRect();
+			var popRect = popup.container.getBoundingClientRect();
+			var margin = 12;
+			var dx = 0;
+			var dy = 0;
+
+			if (popRect.left < mapRect.left + margin) {
+				dx = popRect.left - (mapRect.left + margin);
+			} else if (popRect.right > mapRect.right - margin) {
+				dx = popRect.right - (mapRect.right - margin);
+			}
+			if (popRect.top < mapRect.top + margin) {
+				dy = popRect.top - (mapRect.top + margin);
+			} else if (popRect.bottom > mapRect.bottom - margin) {
+				dy = popRect.bottom - (mapRect.bottom - margin);
+			}
+			if (dx !== 0 || dy !== 0) {
+				map.panBy(dx, dy);
+			}
 		}
 
 		// Ferme la popup au clic sur une zone vide de la carte.
