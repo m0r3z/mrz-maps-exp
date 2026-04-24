@@ -1,4 +1,4 @@
-# gmaps-aa
+# GMaps-AA
 
 Plugin WordPress générique de cartographie Google Maps basé sur les champs ACF `google_map`.
 
@@ -103,7 +103,7 @@ define( 'GMAPS_AA_API_KEY', 'VOTRE_CLE_API' );
 
 ### 3. Réglage ACF
 
-Si vous avez déjà configuré ACF pour les champs `google_map` (`acf_get_setting('google_api_key')`), gmaps-aa réutilise automatiquement cette valeur.
+Si vous avez déjà configuré ACF pour les champs `google_map` (`acf_get_setting('google_api_key')`), GMaps-AA réutilise automatiquement cette valeur.
 
 ### Restrictions recommandées
 
@@ -113,7 +113,7 @@ Une notice s'affiche dans l'admin tant que la clé n'est pas détectée.
 
 ## Utilisation
 
-1. Créer une carte depuis le menu **gmaps-aa** de l'admin.
+1. Créer une carte depuis le menu **GMaps** de l'admin.
 2. Remplir les métaboxes (source, filtres, affichage, cosmétique, templates, style).
 3. Copier le shortcode affiché dans la sidebar (`[gmaps_aa id="XX"]`) et le coller sur la page voulue.
 
@@ -247,7 +247,7 @@ Google Maps JavaScript API est chargée à la volée via la clé fournie par le 
 
 ## Compatibilité
 
-- **Thème Salient** (`salient-core` / `nectar_gmap`) : les deux systèmes cohabitent sans conflit. Si Salient charge déjà Google Maps sur la même page, gmaps-aa le détecte et ne le recharge pas.
+- **Thème Salient** (`salient-core` / `nectar_gmap`) : les deux systèmes cohabitent sans conflit. Si Salient charge déjà Google Maps sur la même page, GMaps-AA le détecte et ne le recharge pas.
 
 ## Architecture
 
