@@ -1,0 +1,604 @@
+# Copyright (C) 2026 Doublea.io
+# This file is distributed under the GPLv2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: GMaps-AA 0.3.2\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/gmaps-aa\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-04-24T11:58:11+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: gmaps-aa\n"
+
+#. Plugin Name of the plugin
+#: gmaps-aa.php
+msgid "GMaps-AA"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: gmaps-aa.php
+msgid "https://github.com/doubleA/gmaps-aa"
+msgstr ""
+
+#. Description of the plugin
+#: gmaps-aa.php
+msgid "Cartographie Google Maps basée sur les CPT et champs ACF, avec filtres par taxonomie, Snazzy Maps et recherche par adresse."
+msgstr ""
+
+#. Author of the plugin
+#: gmaps-aa.php
+msgid "Doublea.io"
+msgstr ""
+
+#: admin/views/metabox-cosmetic.php:38
+msgid "Marqueur par défaut"
+msgstr ""
+
+#: admin/views/metabox-cosmetic.php:43
+#: includes/class-taxonomy-markers.php:41
+#: includes/class-taxonomy-markers.php:63
+msgid "Choisir une image"
+msgstr ""
+
+#: admin/views/metabox-cosmetic.php:44
+#: admin/views/metabox-cosmetic.php:111
+#: admin/views/metabox-cosmetic.php:134
+#: admin/views/metabox-filters.php:154
+#: admin/views/metabox-filters.php:189
+#: includes/class-taxonomy-markers.php:42
+#: includes/class-taxonomy-markers.php:64
+msgid "Retirer"
+msgstr ""
+
+#: admin/views/metabox-cosmetic.php:51
+msgid "Image SVG ou PNG utilisée comme marqueur pour les posts sans icône de terme. Laissez vide pour utiliser le marqueur fourni par le plugin."
+msgstr ""
+
+#: admin/views/metabox-cosmetic.php:56
+msgid "Largeur du marqueur (px)"
+msgstr ""
+
+#: admin/views/metabox-cosmetic.php:60
+msgid "S'applique à tous les marqueurs (défaut + marqueurs par terme)."
+msgstr ""
+
+#: admin/views/metabox-cosmetic.php:64
+msgid "Effet Spiderfier"
+msgstr ""
+
+#: admin/views/metabox-cosmetic.php:68
+msgid "Dépiler en éventail les marqueurs superposés lorsqu'un groupe est cliqué (utile quand plusieurs posts partagent les mêmes coordonnées)."
+msgstr ""
+
+#: admin/views/metabox-cosmetic.php:74
+msgid "Taxonomie des marqueurs"
+msgstr ""
+
+#: admin/views/metabox-cosmetic.php:78
+msgid "— Aucune —"
+msgstr ""
+
+#: admin/views/metabox-cosmetic.php:85
+msgid "Chaque terme de cette taxonomie peut avoir son propre marqueur (priorité sur les icônes des taxonomies de filtre)."
+msgstr ""
+
+#: admin/views/metabox-cosmetic.php:89
+msgid "Marqueurs par terme"
+msgstr ""
+
+#: admin/views/metabox-cosmetic.php:96
+msgid "Sélectionnez d'abord une taxonomie ci-dessus."
+msgstr ""
+
+#: admin/views/metabox-cosmetic.php:98
+msgid "Aucun terme disponible dans cette taxonomie."
+msgstr ""
+
+#: admin/views/metabox-cosmetic.php:110
+#: admin/views/metabox-cosmetic.php:133
+msgid "Choisir"
+msgstr ""
+
+#: admin/views/metabox-display.php:16
+msgid "Hauteur (px)"
+msgstr ""
+
+#: admin/views/metabox-display.php:24
+msgid "Zoom initial"
+msgstr ""
+
+#: admin/views/metabox-display.php:28
+msgid "Niveau de zoom au chargement de la page. De 1 (monde) à 22 (bâtiment)."
+msgstr ""
+
+#: admin/views/metabox-display.php:33
+msgid "Zoom minimum"
+msgstr ""
+
+#: admin/views/metabox-display.php:37
+msgid "Niveau de dézoom maximal autorisé à l'utilisateur."
+msgstr ""
+
+#: admin/views/metabox-display.php:42
+msgid "Zoom maximum"
+msgstr ""
+
+#: admin/views/metabox-display.php:46
+msgid "Niveau de zoom maximal autorisé à l'utilisateur."
+msgstr ""
+
+#: admin/views/metabox-display.php:51
+msgid "Zoom après recherche"
+msgstr ""
+
+#: admin/views/metabox-display.php:55
+msgid "Zoom appliqué après la sélection d'une adresse dans la barre de recherche."
+msgstr ""
+
+#: admin/views/metabox-display.php:59
+msgid "Zoom desktop à la molette"
+msgstr ""
+
+#: admin/views/metabox-display.php:63
+msgid "Exiger Ctrl/Cmd + molette pour zoomer (affiche le message d'aide sinon)."
+msgstr ""
+
+#: admin/views/metabox-display.php:65
+msgid "Décoche pour zoomer directement à la molette sans message. Le comportement tactile (mobile/tablette) n'est pas affecté : toujours un doigt pour déplacer, pinch pour zoomer."
+msgstr ""
+
+#: admin/views/metabox-display.php:69
+msgid "Fermer la tooltip au clic sur la carte"
+msgstr ""
+
+#: admin/views/metabox-display.php:73
+msgid "Fermer la tooltip ouverte lorsque l'utilisateur clique ailleurs sur la carte."
+msgstr ""
+
+#: admin/views/metabox-display.php:78
+msgid "Centrer sur le post courant"
+msgstr ""
+
+#: admin/views/metabox-display.php:82
+msgid "Si le shortcode est rendu sur une page single du post type source, centrer automatiquement la carte sur les coordonnées du post courant (zoom = « Zoom après recherche »)."
+msgstr ""
+
+#: admin/views/metabox-display.php:87
+msgid "Fit bounds après filtrage"
+msgstr ""
+
+#: admin/views/metabox-display.php:91
+msgid "Ajuster automatiquement le centre et le zoom pour englober les marqueurs visibles après chaque filtrage."
+msgstr ""
+
+#: admin/views/metabox-display.php:96
+msgid "Bouton de réinitialisation"
+msgstr ""
+
+#: admin/views/metabox-display.php:101
+msgid "Afficher un bouton de réinitialisation de tous les filtres."
+msgstr ""
+
+#: admin/views/metabox-display.php:106
+msgid "Texte du bouton :"
+msgstr ""
+
+#: admin/views/metabox-display.php:107
+#: includes/class-data-provider.php:42
+#: includes/class-data-provider.php:70
+msgid "Effacer"
+msgstr ""
+
+#: admin/views/metabox-display.php:113
+msgid "Centre de la carte"
+msgstr ""
+
+#: admin/views/metabox-display.php:116
+msgid "Latitude :"
+msgstr ""
+
+#: admin/views/metabox-display.php:120
+msgid "Longitude :"
+msgstr ""
+
+#: admin/views/metabox-display.php:123
+msgid "Cliquez sur la carte ci-dessous pour définir le centre."
+msgstr ""
+
+#: admin/views/metabox-display.php:128
+msgid "Layout des filtres"
+msgstr ""
+
+#: admin/views/metabox-display.php:132
+msgid "Au-dessus"
+msgstr ""
+
+#: admin/views/metabox-display.php:133
+#: admin/views/metabox-display.php:151
+msgid "À côté gauche"
+msgstr ""
+
+#: admin/views/metabox-display.php:134
+#: admin/views/metabox-display.php:152
+msgid "À côté droit"
+msgstr ""
+
+#: admin/views/metabox-display.php:146
+msgid "Layout de la liste"
+msgstr ""
+
+#: admin/views/metabox-display.php:150
+msgid "En dessous"
+msgstr ""
+
+#: admin/views/metabox-display.php:153
+msgid "Masquée"
+msgstr ""
+
+#: admin/views/metabox-display.php:165
+msgid "Format de la liste"
+msgstr ""
+
+#: admin/views/metabox-display.php:167
+msgid "Liste"
+msgstr ""
+
+#: admin/views/metabox-display.php:167
+msgid "Grille"
+msgstr ""
+
+#: admin/views/metabox-display.php:176
+msgid "Clic sur un item de la liste"
+msgstr ""
+
+#: admin/views/metabox-display.php:180
+msgid "Afficher la tooltip sur la carte"
+msgstr ""
+
+#: admin/views/metabox-display.php:181
+msgid "Ne rien faire"
+msgstr ""
+
+#: admin/views/metabox-display.php:182
+msgid "Ouvrir la page du post"
+msgstr ""
+
+#: admin/views/metabox-filters.php:14
+msgid "Menu déroulant"
+msgstr ""
+
+#: admin/views/metabox-filters.php:15
+msgid "Boutons radio"
+msgstr ""
+
+#: admin/views/metabox-filters.php:16
+msgid "Cases à cocher"
+msgstr ""
+
+#: admin/views/metabox-filters.php:19
+msgid "OU"
+msgstr ""
+
+#: admin/views/metabox-filters.php:20
+msgid "ET"
+msgstr ""
+
+#: admin/views/metabox-filters.php:26
+msgid "Recherche par adresse"
+msgstr ""
+
+#: admin/views/metabox-filters.php:30
+msgid "Afficher un champ de recherche par adresse."
+msgstr ""
+
+#: admin/views/metabox-filters.php:35
+msgid "Rayon par défaut (km) :"
+msgstr ""
+
+#: admin/views/metabox-filters.php:41
+msgid "Libellé affiché au-dessus du champ :"
+msgstr ""
+
+#: admin/views/metabox-filters.php:42
+#: includes/class-data-provider.php:99
+msgid "Rechercher"
+msgstr ""
+
+#: admin/views/metabox-filters.php:47
+msgid "Placeholder du champ :"
+msgstr ""
+
+#: admin/views/metabox-filters.php:48
+#: includes/class-data-provider.php:40
+#: includes/class-data-provider.php:102
+msgid "Rechercher une adresse…"
+msgstr ""
+
+#: admin/views/metabox-filters.php:54
+msgid "Options globales"
+msgstr ""
+
+#: admin/views/metabox-filters.php:58
+msgid "Afficher le nombre de résultats à côté de chaque option de filtre."
+msgstr ""
+
+#: admin/views/metabox-filters.php:64
+msgid "Filtres par taxonomie"
+msgstr ""
+
+#: admin/views/metabox-filters.php:82
+#: admin/views/metabox-filters.php:131
+#: admin/views/metabox-filters.php:170
+msgid "Libellé affiché"
+msgstr ""
+
+#: admin/views/metabox-filters.php:86
+#: admin/views/metabox-filters.php:135
+#: admin/views/metabox-filters.php:174
+msgid "Type de filtre"
+msgstr ""
+
+#: admin/views/metabox-filters.php:96
+#: admin/views/metabox-filters.php:145
+#: admin/views/metabox-filters.php:182
+msgid "Logique"
+msgstr ""
+
+#: admin/views/metabox-filters.php:97
+msgid "Combinaison entre cases cochées"
+msgstr ""
+
+#: admin/views/metabox-filters.php:108
+msgid "Seules les taxonomies liées au post type sélectionné sont affichées. Le libellé remplace le nom de la taxonomie affiché au-dessus du filtre sur le site."
+msgstr ""
+
+#: admin/views/metabox-filters.php:112
+msgid "Filtres par champ ACF"
+msgstr ""
+
+#: admin/views/metabox-filters.php:114
+msgid "Pour les champs Select, Radio, Checkbox ou Vrai/Faux, les options sont détectées automatiquement depuis la configuration ACF. Pour les autres types (texte, nombre), les valeurs distinctes des posts sont collectées dynamiquement."
+msgstr ""
+
+#: admin/views/metabox-filters.php:127
+#: admin/views/metabox-filters.php:166
+msgid "Nom du champ ACF"
+msgstr ""
+
+#: admin/views/metabox-filters.php:146
+msgid "Combinaison entre cases cochées (sans effet en mode dropdown/radio)"
+msgstr ""
+
+#: admin/views/metabox-filters.php:160
+msgid "Ajouter un filtre ACF"
+msgstr ""
+
+#: admin/views/metabox-shortcode.php:16
+msgid "Collez ce shortcode dans vos contenus :"
+msgstr ""
+
+#: admin/views/metabox-shortcode.php:18
+msgid "Exemple avec filtre forcé :"
+msgstr ""
+
+#: admin/views/metabox-source.php:18
+msgid "Post type source"
+msgstr ""
+
+#: admin/views/metabox-source.php:28
+msgid "Le post type dont les entrées seront affichées sur la carte."
+msgstr ""
+
+#: admin/views/metabox-source.php:33
+msgid "Champ ACF des coordonnées"
+msgstr ""
+
+#: admin/views/metabox-source.php:37
+msgid "Nom du champ ACF de type « Google Map » qui contient les coordonnées."
+msgstr ""
+
+#: admin/views/metabox-source.php:42
+msgid "Nombre max de posts"
+msgstr ""
+
+#: admin/views/metabox-source.php:46
+msgid "Limite de chargement côté serveur. 0 = illimité."
+msgstr ""
+
+#: admin/views/metabox-source.php:51
+msgid "Posts par page (liste)"
+msgstr ""
+
+#: admin/views/metabox-source.php:55
+msgid "Pagination côté utilisateur : nombre de posts affichés par page dans la liste. 0 = pas de pagination (tous affichés). La carte affiche toujours tous les marqueurs."
+msgstr ""
+
+#: admin/views/metabox-style.php:16
+msgid "JSON Snazzy Maps"
+msgstr ""
+
+#: admin/views/metabox-style.php:23
+msgid "Collez le JSON d'un style <a href=\"https://snazzymaps.com/\" target=\"_blank\" rel=\"noopener\">Snazzy Maps</a>. Laissez vide pour le style par défaut."
+msgstr ""
+
+#: admin/views/metabox-templates.php:14
+msgid "Placeholders disponibles :"
+msgstr ""
+
+#: admin/views/metabox-templates.php:19
+msgid "Conditionnels :"
+msgstr ""
+
+#: admin/views/metabox-templates.php:27
+msgid "Template infobulle"
+msgstr ""
+
+#: admin/views/metabox-templates.php:31
+msgid "HTML affiché dans l'infobulle de chaque marker."
+msgstr ""
+
+#: admin/views/metabox-templates.php:36
+msgid "Template liste"
+msgstr ""
+
+#: admin/views/metabox-templates.php:40
+msgid "HTML affiché pour chaque entrée de la liste/grille."
+msgstr ""
+
+#: includes/class-activator.php:18
+msgid "gmaps-aa nécessite Advanced Custom Fields (Pro recommandé). Veuillez installer et activer ACF avant d'activer ce plugin."
+msgstr ""
+
+#: includes/class-activator.php:19
+msgid "Dépendance manquante"
+msgstr ""
+
+#: includes/class-cpt.php:22
+msgctxt "post type general name"
+msgid "Cartes"
+msgstr ""
+
+#: includes/class-cpt.php:23
+msgctxt "post type singular name"
+msgid "Carte"
+msgstr ""
+
+#: includes/class-cpt.php:24
+msgctxt "admin menu"
+msgid "GMaps"
+msgstr ""
+
+#: includes/class-cpt.php:25
+msgctxt "add new on admin bar"
+msgid "Carte"
+msgstr ""
+
+#: includes/class-cpt.php:26
+msgctxt "map"
+msgid "Ajouter"
+msgstr ""
+
+#: includes/class-cpt.php:27
+msgid "Ajouter une carte"
+msgstr ""
+
+#: includes/class-cpt.php:28
+msgid "Nouvelle carte"
+msgstr ""
+
+#: includes/class-cpt.php:29
+msgid "Modifier la carte"
+msgstr ""
+
+#: includes/class-cpt.php:30
+msgid "Voir la carte"
+msgstr ""
+
+#: includes/class-cpt.php:31
+msgid "Toutes les cartes"
+msgstr ""
+
+#: includes/class-cpt.php:32
+msgid "Rechercher une carte"
+msgstr ""
+
+#: includes/class-cpt.php:33
+msgid "Aucune carte trouvée."
+msgstr ""
+
+#: includes/class-cpt.php:34
+msgid "Aucune carte dans la corbeille."
+msgstr ""
+
+#: includes/class-cpt.php:83
+#: includes/class-map-config.php:54
+msgid "Shortcode"
+msgstr ""
+
+#: includes/class-data-provider.php:41
+msgid "Rayon (km)"
+msgstr ""
+
+#: includes/class-data-provider.php:371
+msgid "Oui"
+msgstr ""
+
+#: includes/class-data-provider.php:372
+msgid "Non"
+msgstr ""
+
+#: includes/class-map-config.php:48
+msgid "Source des données"
+msgstr ""
+
+#: includes/class-map-config.php:49
+msgid "Templates HTML"
+msgstr ""
+
+#: includes/class-map-config.php:50
+#: public/views/map-wrapper.php:70
+msgid "Filtres"
+msgstr ""
+
+#: includes/class-map-config.php:51
+msgid "Affichage"
+msgstr ""
+
+#: includes/class-map-config.php:52
+msgid "Cosmétique"
+msgstr ""
+
+#: includes/class-map-config.php:53
+msgid "Style de la carte"
+msgstr ""
+
+#: includes/class-map-config.php:294
+msgid "Snazzy Maps : JSON invalide, le style a été ignoré."
+msgstr ""
+
+#: includes/class-map-config.php:373
+msgid "Accès refusé."
+msgstr ""
+
+#: includes/class-map-config.php:378
+msgid "Taxonomie invalide."
+msgstr ""
+
+#: includes/class-map-config.php:515
+msgid "gmaps-aa : clé Google Maps API manquante."
+msgstr ""
+
+#: includes/class-map-config.php:517
+msgid "Ajoutez dans le functions.php de votre thème :"
+msgstr ""
+
+#: includes/class-plugin.php:63
+msgid "gmaps-aa nécessite Advanced Custom Fields (Pro recommandé) pour fonctionner."
+msgstr ""
+
+#: includes/class-taxonomy-markers.php:37
+#: includes/class-taxonomy-markers.php:57
+msgid "Icône marker gmaps-aa"
+msgstr ""
+
+#: includes/class-taxonomy-markers.php:45
+#: includes/class-taxonomy-markers.php:71
+msgid "Image utilisée comme marker sur la carte pour les posts associés à ce terme."
+msgstr ""
+
+#: public/views/map-wrapper.php:94
+#: public/views/map-wrapper.php:110
+msgid "Tous"
+msgstr ""
+
+#: public/views/map-wrapper.php:160
+msgid "Page précédente"
+msgstr ""
+
+#: public/views/map-wrapper.php:166
+msgid "Page suivante"
+msgstr ""

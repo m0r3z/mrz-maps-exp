@@ -4,7 +4,7 @@ Tags: google maps, acf, map, taxonomy, spiderfier, snazzy maps
 Requires at least: 6.3
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 0.3.2
+Stable tag: 0.4.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -39,6 +39,19 @@ Fonctionnalités principales :
 Voir le README.md du repo pour la documentation complète (hooks, placeholders, architecture, compatibilité Salient).
 
 == Changelog ==
+
+= 0.4.0 =
+* Libellé personnalisable par taxonomie (même présentation que les filtres ACF)
+* Champs de recherche personnalisables (label et placeholder)
+* Bouton « Filtres » pliable sur mobile (<768 px)
+* Popup auto-repositionnée quand elle dépasse de la carte (panBy intelligent)
+* Correction de l'ombrage sous les marqueurs (padding + margin pour éviter le clipping)
+* Tooltip au-dessus du marqueur (fix offset + fermeture du gap avec la pointe)
+* Option « Fermer la tooltip au clic sur la carte »
+* Affichage conditionnel du sélecteur OU/ET (mode checkbox uniquement)
+* Icône SVG du menu admin (data URI pour colorisation automatique par WP)
+* Menu admin renommé en « GMaps » et déplacé en position 90
+* Fichier .pot généré pour l'internationalisation
 
 = 0.3.2 =
 * Documentation README complète, changelog structuré
