@@ -566,6 +566,16 @@
 			clearBtn.addEventListener('click', resetAllFilters);
 		}
 
+		// Toggle mobile : repli/dépli du bloc de filtres.
+		var filtersBlock = wrapper.querySelector('.gmaps-aa-filters');
+		var filtersToggle = wrapper.querySelector('.gmaps-aa-filters-toggle');
+		if (filtersBlock && filtersToggle) {
+			filtersToggle.addEventListener('click', function () {
+				var isOpen = filtersBlock.classList.toggle('is-open');
+				filtersToggle.setAttribute('aria-expanded', String(isOpen));
+			});
+		}
+
 		// Rendu initial.
 		applyFilters();
 

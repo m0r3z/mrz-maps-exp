@@ -65,6 +65,14 @@ $format_option = static function ( $opt ) use ( $show_counts ) {
 				</div>
 			<?php endif; ?>
 
+			<?php if ( ! empty( $filters ) || ! empty( $config['showClearBtn'] ) ) : ?>
+				<button type="button" class="gmaps-aa-filters-toggle" aria-expanded="false" aria-controls="<?php echo esc_attr( $uid ); ?>-filters-body">
+					<?php esc_html_e( 'Filtres', 'gmaps-aa' ); ?>
+				</button>
+			<?php endif; ?>
+
+			<div class="gmaps-aa-filters-body" id="<?php echo esc_attr( $uid ); ?>-filters-body">
+
 			<?php foreach ( $filters as $filter ) : ?>
 				<?php
 				// Masquer le filtre forcé via shortcode si demandé.
@@ -136,6 +144,8 @@ $format_option = static function ( $opt ) use ( $show_counts ) {
 					<button type="button" class="gmaps-aa-search-clear"><?php echo esc_html( $config['clearBtnText'] ); ?></button>
 				</div>
 			<?php endif; ?>
+
+			</div><!-- /.gmaps-aa-filters-body -->
 
 		</div>
 	<?php endif; ?>
