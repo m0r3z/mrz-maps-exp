@@ -4,7 +4,7 @@ Tags: google maps, acf, map, taxonomy, spiderfier, snazzy maps
 Requires at least: 6.3
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 0.4.2
+Stable tag: 0.4.3
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -39,6 +39,9 @@ Fonctionnalités principales :
 Voir le README.md du repo pour la documentation complète (hooks, placeholders, architecture, compatibilité Salient).
 
 == Changelog ==
+
+= 0.4.3 =
+* Correction du sélecteur CSS de l'icône admin : dans la 0.4.2 l'ID cible ne correspondait pas à l'élément <li> réellement généré par WordPress, l'icône ne s'affichait donc plus. Utilisation d'un sélecteur tolérant (attribute-contains sur .menu-top).
 
 = 0.4.2 =
 * Correction du flash noir sur l'icône du menu admin au chargement de page : utilisation de CSS mask-image au lieu de data URI SVG. La couleur de l'icône suit désormais instantanément l'état du menu (gris au repos, blanc au hover / actif).
