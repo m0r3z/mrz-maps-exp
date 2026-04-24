@@ -4,7 +4,7 @@ Tags: google maps, acf, map, taxonomy, spiderfier, snazzy maps
 Requires at least: 6.3
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 0.4.0
+Stable tag: 0.4.1
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -39,6 +39,11 @@ Fonctionnalités principales :
 Voir le README.md du repo pour la documentation complète (hooks, placeholders, architecture, compatibilité Salient).
 
 == Changelog ==
+
+= 0.4.1 =
+* Audit sécurité : remplacement des innerHTML risqués par createElement + img.src, retrait de 'style' de l'allowlist kses des templates
+* Nettoyage du code mort (helpers inutilisés)
+* Accessibilité clavier de la popup : role=dialog, focus trap, Échap pour fermer, focus automatique sur le bouton de fermeture à l'ouverture
 
 = 0.4.0 =
 * Libellé personnalisable par taxonomie (même présentation que les filtres ACF)
