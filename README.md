@@ -229,7 +229,6 @@ Exemple :
 | Hook | Type | Description |
 |---|---|---|
 | `gmaps_aa_api_key` | filter | Retourne la clé Google Maps API |
-| `gmaps_aa_capability` | filter | Capability requise (défaut `manage_options`) |
 | `gmaps_aa_cache_ttl` | filter | Durée du cache transient en secondes (défaut 300) |
 | `gmaps_aa_template_value` | filter | Transforme la valeur d'un placeholder avant échappement |
 | `gmaps_aa_template_kses_allowed` | filter | Allowlist HTML pour les templates utilisateur |

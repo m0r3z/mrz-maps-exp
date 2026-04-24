@@ -37,16 +37,3 @@ function gmaps_aa_get_api_key() {
 	return $key;
 }
 
-/**
- * Capability requise pour administrer les cartes.
- */
-function gmaps_aa_capability() {
-	return apply_filters( 'gmaps_aa_capability', 'manage_options' );
-}
-
-/**
- * Raccourci d'échappement pour attributs data-*.
- */
-function gmaps_aa_esc_data( $value ) {
-	return esc_attr( is_scalar( $value ) ? (string) $value : wp_json_encode( $value ) );
-}

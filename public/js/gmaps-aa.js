@@ -59,6 +59,9 @@
 
 			this.container = document.createElement('div');
 			this.container.className = 'gmaps-aa-popup';
+			this.container.setAttribute('role', 'dialog');
+			this.container.setAttribute('aria-modal', 'true');
+			this.container.setAttribute('tabindex', '-1');
 
 			this.closeBtn = document.createElement('button');
 			this.closeBtn.type = 'button';
@@ -74,6 +77,29 @@
 
 			var self = this;
 			this.closeBtn.addEventListener('click', function () { self.close(); });
+
+			// Navigation clavier : Escape ferme, Tab reste piégé dans la popup.
+			this.container.addEventListener('keydown', function (e) {
+				if (e.key === 'Escape') {
+					e.stopPropagation();
+					self.close();
+					return;
+				}
+				if (e.key !== 'Tab') { return; }
+				var focusables = self.container.querySelectorAll(
+					'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+				);
+				if (!focusables.length) { return; }
+				var first = focusables[0];
+				var last = focusables[focusables.length - 1];
+				if (e.shiftKey && document.activeElement === first) {
+					last.focus();
+					e.preventDefault();
+				} else if (!e.shiftKey && document.activeElement === last) {
+					first.focus();
+					e.preventDefault();
+				}
+			});
 
 			// Évite que les clics/scroll dans la popup ne déclenchent la carte.
 			google.maps.OverlayView.preventMapHitsAndGesturesFrom(this.container);
@@ -182,9 +208,15 @@
 			popup.setContent(point.tooltip || '');
 			popup.open({ map: map, anchor: marker });
 			// Deux rAF pour laisser Google Maps positionner la popup et le
-			// navigateur calculer sa taille avant de corriger le débordement.
+			// navigateur calculer sa taille avant de corriger le débordement
+			// et de transférer le focus pour l'accessibilité clavier.
 			requestAnimationFrame(function () {
-				requestAnimationFrame(ensurePopupVisible);
+				requestAnimationFrame(function () {
+					ensurePopupVisible();
+					if (popup.closeBtn) {
+						popup.closeBtn.focus();
+					}
+				});
 			});
 		}
 
@@ -217,6 +249,13 @@
 				popup.close();
 			});
 		}
+
+		// Escape global : ferme la popup même si le focus est sorti.
+		document.addEventListener('keydown', function (e) {
+			if (e.key === 'Escape' && popup.getMap()) {
+				popup.close();
+			}
+		});
 
 		// Spiderfier : dépile les marqueurs superposés.
 		var oms = null;

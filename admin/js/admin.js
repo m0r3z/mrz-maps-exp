@@ -154,9 +154,14 @@
 
 		function renderPreview(url) {
 			if (!preview) { return; }
-			preview.innerHTML = url
-				? '<img src="' + url + '" alt="" style="max-width:60px;height:auto;" />'
-				: '';
+			preview.innerHTML = '';
+			if (!url) { return; }
+			var img = document.createElement('img');
+			img.alt = '';
+			img.style.maxWidth = '60px';
+			img.style.height = 'auto';
+			img.src = url;
+			preview.appendChild(img);
 		}
 
 		var frame = null;
@@ -223,7 +228,12 @@
 			if (term.icon_url) {
 				var preview = row.querySelector('.gmaps-aa-media-preview');
 				if (preview) {
-					preview.innerHTML = '<img src="' + term.icon_url + '" alt="" style="max-width:60px;height:auto;" />';
+					var img = document.createElement('img');
+					img.alt = '';
+					img.style.maxWidth = '60px';
+					img.style.height = 'auto';
+					img.src = term.icon_url;
+					preview.appendChild(img);
 				}
 			}
 			return row;
