@@ -43,7 +43,7 @@ final class CPT {
 			'show_in_nav_menus'  => false,
 			'show_in_admin_bar'  => false,
 			'show_in_rest'       => false,
-			'menu_icon'          => GMAPS_AA_URL . 'assets/menu-icon.svg',
+			'menu_icon'          => self::menu_icon(),
 			'menu_position'      => 90,
 			'capability_type'    => 'post',
 			'map_meta_cap'       => true,
@@ -55,6 +55,24 @@ final class CPT {
 		);
 
 		register_post_type( GMAPS_AA_CPT, $args );
+	}
+
+	/**
+	 * Renvoie l'icône du menu admin au format attendu par register_post_type :
+	 * un data URI base64 pour que WordPress applique la colorisation du thème
+	 * (gris/blanc, état hover/actif). Les SVG chargés par URL externe ne sont
+	 * pas colorisés par le core.
+	 */
+	private static function menu_icon() {
+		$file = GMAPS_AA_DIR . 'assets/menu-icon.svg';
+		if ( ! file_exists( $file ) ) {
+			return 'dashicons-location-alt';
+		}
+		$svg = file_get_contents( $file );
+		if ( ! $svg ) {
+			return 'dashicons-location-alt';
+		}
+		return 'data:image/svg+xml;base64,' . base64_encode( $svg );
 	}
 
 	public function columns( $columns ) {
