@@ -36,6 +36,18 @@ $acf_filters = (array) $values['acf_filters'];
 		<input type="number" name="gmaps_aa[search_radius]" value="<?php echo esc_attr( $values['search_radius'] ); ?>" min="1" max="500" step="1" />
 	</label>
 </p>
+<p>
+	<label>
+		<?php esc_html_e( 'Libellé affiché au-dessus du champ :', 'gmaps-aa' ); ?>
+		<input type="text" name="gmaps_aa[search_label]" value="<?php echo esc_attr( $values['search_label'] ); ?>" class="regular-text" placeholder="<?php esc_attr_e( 'Rechercher', 'gmaps-aa' ); ?>" />
+	</label>
+</p>
+<p>
+	<label>
+		<?php esc_html_e( 'Placeholder du champ :', 'gmaps-aa' ); ?>
+		<input type="text" name="gmaps_aa[search_placeholder]" value="<?php echo esc_attr( $values['search_placeholder'] ); ?>" class="regular-text" placeholder="<?php esc_attr_e( 'Rechercher une adresse…', 'gmaps-aa' ); ?>" />
+	</label>
+</p>
 
 <hr />
 

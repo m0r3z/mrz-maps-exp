@@ -60,8 +60,8 @@ $format_option = static function ( $opt ) use ( $show_counts ) {
 
 			<?php if ( ! empty( $config['search']['enabled'] ) ) : ?>
 				<div class="gmaps-aa-filter gmaps-aa-filter-search">
-					<div class="gmaps-aa-filter-label"><?php esc_html_e( 'Rechercher', 'gmaps-aa' ); ?></div>
-					<input type="text" class="gmaps-aa-search" placeholder="<?php echo esc_attr( $data['i18n']['search_placeholder'] ); ?>" />
+					<div class="gmaps-aa-filter-label"><?php echo esc_html( $config['search']['label'] ); ?></div>
+					<input type="text" class="gmaps-aa-search" placeholder="<?php echo esc_attr( $config['search']['placeholder'] ); ?>" />
 				</div>
 			<?php endif; ?>
 

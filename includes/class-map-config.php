@@ -109,6 +109,8 @@ final class MapConfig {
 			'snazzy'               => '',
 			'search_enabled'       => 0,
 			'search_radius'        => 25,
+			'search_label'         => '',
+			'search_placeholder'   => '',
 			'marker_default_url'   => '',
 			'marker_default_id'    => 0,
 			'marker_default_width' => 32,
@@ -298,8 +300,10 @@ final class MapConfig {
 		}
 
 		// Search.
-		$clean['search_enabled'] = ! empty( $raw['search_enabled'] ) ? 1 : 0;
-		$clean['search_radius']  = isset( $raw['search_radius'] ) ? max( 1, min( 500, absint( $raw['search_radius'] ) ) ) : 25;
+		$clean['search_enabled']     = ! empty( $raw['search_enabled'] ) ? 1 : 0;
+		$clean['search_radius']      = isset( $raw['search_radius'] ) ? max( 1, min( 500, absint( $raw['search_radius'] ) ) ) : 25;
+		$clean['search_label']       = isset( $raw['search_label'] ) ? sanitize_text_field( (string) $raw['search_label'] ) : '';
+		$clean['search_placeholder'] = isset( $raw['search_placeholder'] ) ? sanitize_text_field( (string) $raw['search_placeholder'] ) : '';
 
 		// Cosmétique.
 		$clean['marker_default_url']   = isset( $raw['marker_default_url'] ) ? esc_url_raw( (string) $raw['marker_default_url'] ) : '';
