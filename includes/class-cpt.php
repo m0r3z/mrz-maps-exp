@@ -65,22 +65,25 @@ final class CPT {
 	 */
 	public function print_menu_icon_css() {
 		$url = GMAPS_AA_URL . 'assets/menu-icon.svg?ver=' . GMAPS_AA_VERSION;
-		$id  = 'toplevel_page_edit-post_type-' . GMAPS_AA_CPT;
+		// L'ID exact du <li> varie selon la façon dont WP sanitise le menu_file
+		// (edit.php?post_type=...). Sélecteur tolérant : tout menu_top dont l'ID
+		// contient le slug du CPT.
+		$sel = '#adminmenu li.menu-top[id*="' . GMAPS_AA_CPT . '"]';
 		?>
 		<style>
-			#<?php echo esc_attr( $id ); ?> .wp-menu-image {
+			<?php echo $sel; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped — sélecteur construit à partir d'un slug contrôlé ?> .wp-menu-image {
 				background: none !important;
 				background-color: rgba(240, 246, 252, 0.6) !important;
 				-webkit-mask: url('<?php echo esc_url( $url ); ?>') no-repeat 9px 7px / 20px;
 				        mask: url('<?php echo esc_url( $url ); ?>') no-repeat 9px 7px / 20px;
 			}
-			#<?php echo esc_attr( $id ); ?> .wp-menu-image::before {
+			<?php echo $sel; // phpcs:ignore ?> .wp-menu-image::before {
 				display: none;
 			}
-			#<?php echo esc_attr( $id ); ?>:hover .wp-menu-image,
-			#<?php echo esc_attr( $id ); ?>.wp-has-current-submenu .wp-menu-image,
-			#<?php echo esc_attr( $id ); ?>.current .wp-menu-image,
-			#<?php echo esc_attr( $id ); ?>.wp-menu-open .wp-menu-image {
+			<?php echo $sel; // phpcs:ignore ?>:hover .wp-menu-image,
+			<?php echo $sel; // phpcs:ignore ?>.wp-has-current-submenu .wp-menu-image,
+			<?php echo $sel; // phpcs:ignore ?>.current .wp-menu-image,
+			<?php echo $sel; // phpcs:ignore ?>.wp-menu-open .wp-menu-image {
 				background-color: #fff !important;
 			}
 		</style>
