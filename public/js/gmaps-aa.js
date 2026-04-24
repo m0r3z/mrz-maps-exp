@@ -173,7 +173,10 @@
 
 		var Popup = createPopupClass();
 		var popup = new Popup();
-		popup.setPixelOffset({ x: 0, y: -(markerW / 2 + 8) });
+		// L'anchor par défaut du Marker est au bas-centre de l'image :
+		// la position lat/lng correspond donc à la pointe du pin.
+		// On remonte la popup de (hauteur du marker) + un petit écart.
+		popup.setPixelOffset({ x: 0, y: -(markerW + 8) });
 
 		function openPopupOn(marker, point) {
 			popup.setContent(point.tooltip || '');
