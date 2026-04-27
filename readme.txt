@@ -4,7 +4,7 @@ Tags: google maps, acf, map, taxonomy, spiderfier, snazzy maps
 Requires at least: 6.3
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 0.4.3
+Stable tag: 0.4.4
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -39,6 +39,9 @@ Fonctionnalités principales :
 Voir le README.md du repo pour la documentation complète (hooks, placeholders, architecture, compatibilité Salient).
 
 == Changelog ==
+
+= 0.4.4 =
+* Inclusion de la librairie OverlappingMarkerSpiderfier (assets/vendor/oms.min.js) dans le repo : précédemment ignorée par .gitignore, elle manquait dans tous les zipballs auto-générés GitHub et tous les git clone, ce qui faisait que la carte et la liste ne s'affichaient pas (seuls les filtres apparaissaient).
 
 = 0.4.3 =
 * Correction du sélecteur CSS de l'icône admin : dans la 0.4.2 l'ID cible ne correspondait pas à l'élément <li> réellement généré par WordPress, l'icône ne s'affichait donc plus. Utilisation d'un sélecteur tolérant (attribute-contains sur .menu-top).

@@ -3,7 +3,8 @@
 *.swp
 *.swo
 node_modules/
-vendor/
+/vendor/
+!/assets/vendor/
 languages/*.mo
 .idea/
 .vscode/
