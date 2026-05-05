@@ -1,0 +1,111 @@
+# CLAUDE.md — gmaps-aa
+
+Conventions et repères techniques pour Claude Code quand il opère sur ce plugin.
+
+## Vue d'ensemble
+
+**GMaps-AA** est un plugin WordPress générique de cartographie Google Maps basé sur les champs ACF `google_map`. Multi-sites, minimaliste, configurable via l'admin, pensé pour être déployé tel quel sur plusieurs sites clients et personnalisé via le CSS du thème.
+
+- Repo : https://github.com/d0ubl34/gmaps-aa
+- Branche principale : `main`
+- Version courante : voir `define('GMAPS_AA_VERSION', '...')` dans `gmaps-aa.php`
+
+## Conventions de nommage
+
+| Élément | Valeur |
+|---|---|
+| Slug plugin / text-domain | `gmaps-aa` |
+| Nom affiché (Plugin Name) | `GMaps-AA` |
+| Namespace PHP | `GmapsAA\` |
+| Préfixe options / transients | `gmaps_aa_` |
+| Préfixe post_meta / term_meta | `_gmaps_aa_` |
+| CPT | `gmaps_aa_map` |
+| Handles scripts / styles | `gmaps-aa-*` |
+| Constantes | `GMAPS_AA_VERSION`, `GMAPS_AA_FILE`, `GMAPS_AA_DIR`, `GMAPS_AA_URL`, `GMAPS_AA_BASENAME`, `GMAPS_AA_CPT` |
+
+## Architecture
+
+```
+gmaps-aa/
+├── gmaps-aa.php                    # Bootstrap + autoloader PSR-4 maison
+├── uninstall.php                   # Cleanup wildcard sur _gmaps_aa_%
+├── includes/
+│   ├── class-plugin.php            # Singleton, instancie les modules
+│   ├── class-activator.php         # Vérifie ACF, enregistre le CPT
+│   ├── class-deactivator.php
+│   ├── class-cpt.php               # CPT + icône admin via mask-image CSS
+│   ├── class-map-config.php        # Métaboxes + save + AJAX fetch_terms
+│   ├── class-taxonomy-markers.php  # Champ icône sur la page d'édition d'un term
+│   ├── class-template-parser.php   # Placeholders + conditionnels
+│   ├── class-data-provider.php     # Agrège les données + cache transient 5 min
+│   ├── class-assets.php            # Enregistre/enqueue scripts et styles
+│   ├── class-shortcode.php         # [gmaps_aa] + recentrage post courant
+│   └── helpers.php                 # gmaps_aa_has_acf(), gmaps_aa_get_api_key()
+├── admin/
+│   ├── css/admin.css
+│   ├── js/admin.js                 # Mini-carte centre + media pickers + AJAX terms + repeater ACF + logic toggle
+│   └── views/                      # Une vue par métabox
+├── public/
+│   ├── css/public.css              # Layout minimal + responsive + popup
+│   ├── js/gmaps-aa.js              # Init map, markers, filtres, search, popup, OMS, pagination
+│   └── views/map-wrapper.php       # HTML du shortcode
+├── assets/
+│   ├── default-marker.svg
+│   ├── menu-icon.svg               # Icône admin (utilisée via mask-image CSS, pas data URI)
+│   └── vendor/
+│       └── oms.min.js              # OverlappingMarkerSpiderfier 1.0.3 (TRACKED dans git, voir .gitignore)
+└── languages/
+    └── gmaps-aa.pot                # Généré via wp-cli i18n make-pot
+```
+
+## Décisions architecturales (à respecter)
+
+- **Clé API Google Maps** : jamais d'UI admin. Lue dans `helpers.php::gmaps_aa_get_api_key()` selon la cascade : filtre `gmaps_aa_api_key` → constante `GMAPS_AA_API_KEY` → `acf_get_setting('google_api_key')`. Si absente, le shortcode renvoie un commentaire HTML admin-only et n'enqueue rien.
+- **Données front** : JSON inline injecté dans un `<script type="application/json">` à la fin du wrapper. Pas de REST endpoint.
+- **Pas de MarkerClusterer** : retiré en v0.3.0 (friction > bénéfice). Seul OMS gère les markers superposés.
+- **Tooltip / popup** : classe `Popup` custom étendant `google.maps.OverlayView` (cf. `public/js/gmaps-aa.js`). 100% sous notre contrôle, surchargeable en CSS sans casser à chaque update Google.
+- **Cache transient** : par carte (`gmaps_aa_map_<id>`), 5 min, filtrable via `gmaps_aa_cache_ttl`. Invalidé sur `save_post`, `edited_term`, `deleted_term`.
+- **Sécurité** : nonces + caps + sanitization typée partout. `wp_kses` allowlist restreinte pour les templates HTML utilisateur (pas de `style` autorisé). Audit fait en v0.4.1.
+
+## Hooks exposés (filtres)
+
+- `gmaps_aa_api_key` — string, retourne la clé Google Maps API
+- `gmaps_aa_cache_ttl` — int, durée du cache transient en secondes (défaut 300)
+- `gmaps_aa_template_value` — string, transforme la valeur d'un placeholder ACF avant échappement
+- `gmaps_aa_template_kses_allowed` — array, allowlist HTML pour les templates utilisateur
+- `gmaps_aa_skip_gmaps_enqueue` — bool, skip l'enqueue Google Maps JS (utile en coexistence avec d'autres loaders)
+- `gmaps_aa_spiderfier_url` — string, URL du script OMS (défaut : `assets/vendor/oms.min.js`)
+
+## Workflow release
+
+1. Bump `define('GMAPS_AA_VERSION', 'X.Y.Z')` + `Version: X.Y.Z` dans le header de `gmaps-aa.php`
+2. Bump `Stable tag: X.Y.Z` + ajouter une entrée `= X.Y.Z =` dans le changelog de `readme.txt`
+3. (Si chaînes traduisibles modifiées) regénérer le POT : `php /tmp/wp-cli.phar i18n make-pot . languages/gmaps-aa.pot --domain=gmaps-aa --package-name="GMaps-AA"`
+4. Commit avec identité inline (pas de config git globale sur ce poste) :
+   ```
+   git -c user.email="hello@doublea.io" -c user.name="DoubleA" commit -q -m "..."
+   ```
+5. Tag annoté : `git -c user.email="..." -c user.name="..." tag -a vX.Y.Z -m "Release vX.Y.Z"`
+6. Push : `git push origin main && git push origin vX.Y.Z`
+7. Zip propre : `cd wp-content/plugins && rm -f /tmp/gmaps-aa-X.Y.Z.zip && zip -rq /tmp/gmaps-aa-X.Y.Z.zip gmaps-aa -x "gmaps-aa/.git/*" "gmaps-aa/.gitignore" "gmaps-aa/.DS_Store" "gmaps-aa/**/.DS_Store"`
+8. Release GitHub : `gh release create vX.Y.Z /tmp/gmaps-aa-X.Y.Z.zip --title "vX.Y.Z" --notes "..."`
+
+## Pièges connus
+
+- **`.gitignore` `/vendor/` ancré** : doit rester ancré à la racine et `/assets/vendor/` ré-activé. Sinon `oms.min.js` sort du repo et casse les zipballs / `git clone` (bug v0.4.3, fix v0.4.4).
+- **L'identité git n'est pas configurée globalement** sur ce poste, toujours utiliser `git -c user.email=... -c user.name=...` pour les commits.
+- **wp-cli n'est pas installé en système**. Pour les commandes WP-CLI : `php /tmp/wp-cli.phar <command>` (le phar a été téléchargé manuellement).
+- **gh CLI installé via brew** et authentifié sur le compte `d0ubl34`. `gh auth status` pour vérifier.
+- **Compatibilité Salient** : `salient-core` charge aussi Google Maps. Le plugin détecte (`wp_script_is('nectar-gmap', 'enqueued')`) et skip son propre loader si Salient l'a déjà fait.
+- **Sélecteur CSS de l'icône admin** : utiliser `#adminmenu li.menu-top[id*="gmaps_aa_map"]` (tolérant), pas `#toplevel_page_...` qui ne match pas tous les ID que WP peut générer pour les CPT (bug v0.4.2, fix v0.4.3).
+- **Anchor par défaut d'un Google Maps Marker** : bottom-center de l'image, pas centre. La popup doit être positionnée avec `pixelOffset.y = -(markerW + 8)` pour atterrir au-dessus.
+
+## Fichiers à NE PAS modifier sans raison forte
+
+- `assets/vendor/oms.min.js` (lib externe, pas notre code)
+- `LICENSE` (GPLv3 du repo GitHub, hérité)
+
+## Tests rapides à faire après une modif
+
+- `php -l <fichier>.php` sur tout fichier PHP modifié
+- Sur le site dev (`/Users/morez/Documents/_Local/dev/app/public/`), recharger une page contenant le shortcode après avoir resauvegardé la carte (pour invalider le transient)
