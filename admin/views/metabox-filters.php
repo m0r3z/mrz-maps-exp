@@ -23,18 +23,42 @@ $logic_labels = array(
 $acf_filters = (array) $values['acf_filters'];
 ?>
 
-<h3 class="gmaps-aa-section-title"><?php esc_html_e( 'Recherche par adresse', 'gmaps-aa' ); ?></h3>
+<h3 class="gmaps-aa-section-title"><?php esc_html_e( 'Recherche', 'gmaps-aa' ); ?></h3>
 <p>
 	<label>
 		<input type="checkbox" name="gmaps_aa[search_enabled]" value="1" <?php checked( ! empty( $values['search_enabled'] ) ); ?> />
-		<?php esc_html_e( 'Afficher un champ de recherche par adresse.', 'gmaps-aa' ); ?>
+		<?php esc_html_e( 'Afficher un champ de recherche.', 'gmaps-aa' ); ?>
 	</label>
+</p>
+<p>
+	<label>
+		<input type="checkbox" name="gmaps_aa[search_local_match]" value="1" <?php checked( ! empty( $values['search_local_match'] ) ); ?> />
+		<?php esc_html_e( 'Suggérer aussi les fiches dont le titre correspond à la saisie (en plus des adresses Google).', 'gmaps-aa' ); ?>
+	</label>
+</p>
+<p>
+	<?php esc_html_e( 'Position du champ :', 'gmaps-aa' ); ?>
+	<?php
+	$search_layouts_labels = array(
+		'inline' => __( 'Dans le bloc filtres', 'gmaps-aa' ),
+		'top'    => __( 'En haut, pleine largeur', 'gmaps-aa' ),
+	);
+	foreach ( $search_layouts_labels as $val => $label ) :
+		?>
+		<label style="margin-right:16px;">
+			<input type="radio" name="gmaps_aa[search_layout]" value="<?php echo esc_attr( $val ); ?>" <?php checked( $values['search_layout'], $val ); ?> />
+			<?php echo esc_html( $label ); ?>
+		</label>
+	<?php endforeach; ?>
+	<br />
+	<span class="description"><?php esc_html_e( 'En mode « En haut », le champ est sorti du bloc des filtres et occupe toute la largeur. Pratique quand les filtres sont placés sur le côté.', 'gmaps-aa' ); ?></span>
 </p>
 <p>
 	<label>
 		<?php esc_html_e( 'Rayon par défaut (km) :', 'gmaps-aa' ); ?>
 		<input type="number" name="gmaps_aa[search_radius]" value="<?php echo esc_attr( $values['search_radius'] ); ?>" min="1" max="500" step="1" />
 	</label>
+	<span class="description"><?php esc_html_e( 'Appliqué uniquement quand l\'utilisateur sélectionne une adresse.', 'gmaps-aa' ); ?></span>
 </p>
 <p>
 	<label>

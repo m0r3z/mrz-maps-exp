@@ -30,6 +30,70 @@ a.gmaps-aa-list-item-wrap { display: block; color: inherit; text-decoration: non
 .gmaps-aa-pagination button[disabled] { opacity: 0.4; cursor: not-allowed; }
 .gmaps-aa-data { display: none; }
 
+/* Recherche : champ détaché en haut, pleine largeur (search_layout = top) */
+.gmaps-aa-search-top { display: flex; flex-direction: column; gap: 4px; margin-bottom: 12px; }
+/* En mode filtres latéraux, on étire le champ sur les deux colonnes de la grid
+   et on force filtres / main en ligne 2. */
+.gmaps-aa-wrapper.gmaps-aa-has-search-top.gmaps-aa-filters-side-left,
+.gmaps-aa-wrapper.gmaps-aa-has-search-top.gmaps-aa-filters-side-right {
+	grid-template-rows: auto 1fr;
+}
+.gmaps-aa-wrapper.gmaps-aa-has-search-top.gmaps-aa-filters-side-left .gmaps-aa-search-top,
+.gmaps-aa-wrapper.gmaps-aa-has-search-top.gmaps-aa-filters-side-right .gmaps-aa-search-top {
+	grid-column: 1 / -1;
+	grid-row: 1;
+	margin-bottom: 0;
+}
+.gmaps-aa-wrapper.gmaps-aa-has-search-top.gmaps-aa-filters-side-left .gmaps-aa-filters {
+	grid-column: 1; grid-row: 2;
+}
+.gmaps-aa-wrapper.gmaps-aa-has-search-top.gmaps-aa-filters-side-left .gmaps-aa-main {
+	grid-column: 2; grid-row: 2;
+}
+.gmaps-aa-wrapper.gmaps-aa-has-search-top.gmaps-aa-filters-side-right .gmaps-aa-filters {
+	grid-column: 2; grid-row: 2;
+}
+.gmaps-aa-wrapper.gmaps-aa-has-search-top.gmaps-aa-filters-side-right .gmaps-aa-main {
+	grid-column: 1; grid-row: 2;
+}
+
+/* Recherche : dropdown unifiée (fiches locales + suggestions Google) */
+.gmaps-aa-search-wrapper { position: relative; }
+.gmaps-aa-search-dropdown {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	right: 0;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	background: #fff;
+	border: 1px solid #ddd;
+	border-top: 0;
+	max-height: 320px;
+	overflow-y: auto;
+	z-index: 1000;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+.gmaps-aa-search-dropdown[hidden] { display: none; }
+.gmaps-aa-search-section {
+	padding: 6px 10px;
+	font-size: 11px;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	color: #888;
+	background: #f6f6f6;
+	font-weight: 600;
+}
+.gmaps-aa-search-option {
+	padding: 8px 10px;
+	cursor: pointer;
+	border-top: 1px solid #f0f0f0;
+}
+.gmaps-aa-search-option:first-of-type { border-top: 0; }
+.gmaps-aa-search-option.is-active,
+.gmaps-aa-search-option:hover { background: #f0f0f0; }
+
 /* Popup personnalisée (OverlayView) */
 .gmaps-aa-popup {
 	position: absolute;

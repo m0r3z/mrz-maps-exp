@@ -16,11 +16,18 @@ $forced      = isset( $data['forced'] ) ? $data['forced'] : null;
 $layout_f    = $config['layoutFilters'];
 $layout_l    = $config['layoutList'];
 $list_format = $config['listFormat'];
+
+$search_enabled = ! empty( $config['search']['enabled'] );
+$search_layout  = isset( $config['search']['layout'] ) ? (string) $config['search']['layout'] : 'inline';
+$search_top     = $search_enabled && 'top' === $search_layout;
+$search_inline  = $search_enabled && ! $search_top;
+
 $wrapper_cls = sprintf(
-	'gmaps-aa-wrapper gmaps-aa-filters-%s gmaps-aa-list-%s gmaps-aa-listfmt-%s',
+	'gmaps-aa-wrapper gmaps-aa-filters-%s gmaps-aa-list-%s gmaps-aa-listfmt-%s%s',
 	$layout_f,
 	$layout_l,
-	$list_format
+	$list_format,
+	$search_top ? ' gmaps-aa-has-search-top' : ''
 );
 
 /**
@@ -52,16 +59,49 @@ $format_option = static function ( $opt ) use ( $show_counts ) {
 		? $opt['name'] . ' (' . $opt['count'] . ')'
 		: $opt['name'];
 };
+
+$dropdown_id = $uid . '-search-dropdown';
+
+/**
+ * Rend le champ de recherche (input + dropdown) — réutilisé en mode inline et top.
+ */
+$render_search_field = static function () use ( $config, $dropdown_id ) {
+	?>
+	<div class="gmaps-aa-search-wrapper">
+		<input type="text"
+			class="gmaps-aa-search"
+			role="combobox"
+			aria-autocomplete="list"
+			aria-expanded="false"
+			aria-controls="<?php echo esc_attr( $dropdown_id ); ?>"
+			autocomplete="off"
+			placeholder="<?php echo esc_attr( $config['search']['placeholder'] ); ?>" />
+		<ul id="<?php echo esc_attr( $dropdown_id ); ?>"
+			class="gmaps-aa-search-dropdown"
+			role="listbox"
+			hidden></ul>
+	</div>
+	<?php
+};
 ?>
 <div id="<?php echo esc_attr( $uid ); ?>" class="<?php echo esc_attr( $wrapper_cls ); ?>" data-gmaps-aa="1">
 
-	<?php if ( ! empty( $filters ) || ! empty( $config['search']['enabled'] ) ) : ?>
+	<?php if ( $search_top ) : ?>
+		<div class="gmaps-aa-search-top">
+			<?php if ( '' !== (string) $config['search']['label'] ) : ?>
+				<div class="gmaps-aa-filter-label"><?php echo esc_html( $config['search']['label'] ); ?></div>
+			<?php endif; ?>
+			<?php $render_search_field(); ?>
+		</div>
+	<?php endif; ?>
+
+	<?php if ( ! empty( $filters ) || $search_inline ) : ?>
 		<div class="gmaps-aa-filters">
 
-			<?php if ( ! empty( $config['search']['enabled'] ) ) : ?>
+			<?php if ( $search_inline ) : ?>
 				<div class="gmaps-aa-filter gmaps-aa-filter-search">
 					<div class="gmaps-aa-filter-label"><?php echo esc_html( $config['search']['label'] ); ?></div>
-					<input type="text" class="gmaps-aa-search" placeholder="<?php echo esc_attr( $config['search']['placeholder'] ); ?>" />
+					<?php $render_search_field(); ?>
 				</div>
 			<?php endif; ?>
 

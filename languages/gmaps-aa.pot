@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: GMaps-AA 0.4.1\n"
+"Project-Id-Version: GMaps-AA 0.5.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/gmaps-aa\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-04-24T12:16:38+00:00\n"
+"POT-Creation-Date: 2026-05-06T15:44:00+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: gmaps-aa\n"
@@ -47,8 +47,8 @@ msgstr ""
 #: admin/views/metabox-cosmetic.php:44
 #: admin/views/metabox-cosmetic.php:111
 #: admin/views/metabox-cosmetic.php:134
-#: admin/views/metabox-filters.php:154
-#: admin/views/metabox-filters.php:189
+#: admin/views/metabox-filters.php:178
+#: admin/views/metabox-filters.php:213
 #: includes/class-taxonomy-markers.php:42
 #: includes/class-taxonomy-markers.php:64
 msgid "Retirer"
@@ -288,92 +288,116 @@ msgid "ET"
 msgstr ""
 
 #: admin/views/metabox-filters.php:26
-msgid "Recherche par adresse"
+msgid "Recherche"
 msgstr ""
 
 #: admin/views/metabox-filters.php:30
-msgid "Afficher un champ de recherche par adresse."
+msgid "Afficher un champ de recherche."
 msgstr ""
 
-#: admin/views/metabox-filters.php:35
+#: admin/views/metabox-filters.php:36
+msgid "Suggérer aussi les fiches dont le titre correspond à la saisie (en plus des adresses Google)."
+msgstr ""
+
+#: admin/views/metabox-filters.php:40
+msgid "Position du champ :"
+msgstr ""
+
+#: admin/views/metabox-filters.php:43
+msgid "Dans le bloc filtres"
+msgstr ""
+
+#: admin/views/metabox-filters.php:44
+msgid "En haut, pleine largeur"
+msgstr ""
+
+#: admin/views/metabox-filters.php:54
+msgid "En mode « En haut », le champ est sorti du bloc des filtres et occupe toute la largeur. Pratique quand les filtres sont placés sur le côté."
+msgstr ""
+
+#: admin/views/metabox-filters.php:58
 msgid "Rayon par défaut (km) :"
 msgstr ""
 
-#: admin/views/metabox-filters.php:41
+#: admin/views/metabox-filters.php:61
+msgid "Appliqué uniquement quand l'utilisateur sélectionne une adresse."
+msgstr ""
+
+#: admin/views/metabox-filters.php:65
 msgid "Libellé affiché au-dessus du champ :"
 msgstr ""
 
-#: admin/views/metabox-filters.php:42
+#: admin/views/metabox-filters.php:66
 #: includes/class-data-provider.php:99
 msgid "Rechercher"
 msgstr ""
 
-#: admin/views/metabox-filters.php:47
+#: admin/views/metabox-filters.php:71
 msgid "Placeholder du champ :"
 msgstr ""
 
-#: admin/views/metabox-filters.php:48
+#: admin/views/metabox-filters.php:72
 #: includes/class-data-provider.php:40
 #: includes/class-data-provider.php:102
 msgid "Rechercher une adresse…"
 msgstr ""
 
-#: admin/views/metabox-filters.php:54
+#: admin/views/metabox-filters.php:78
 msgid "Options globales"
 msgstr ""
 
-#: admin/views/metabox-filters.php:58
+#: admin/views/metabox-filters.php:82
 msgid "Afficher le nombre de résultats à côté de chaque option de filtre."
 msgstr ""
 
-#: admin/views/metabox-filters.php:64
+#: admin/views/metabox-filters.php:88
 msgid "Filtres par taxonomie"
 msgstr ""
 
-#: admin/views/metabox-filters.php:82
-#: admin/views/metabox-filters.php:131
-#: admin/views/metabox-filters.php:170
+#: admin/views/metabox-filters.php:106
+#: admin/views/metabox-filters.php:155
+#: admin/views/metabox-filters.php:194
 msgid "Libellé affiché"
 msgstr ""
 
-#: admin/views/metabox-filters.php:86
-#: admin/views/metabox-filters.php:135
-#: admin/views/metabox-filters.php:174
+#: admin/views/metabox-filters.php:110
+#: admin/views/metabox-filters.php:159
+#: admin/views/metabox-filters.php:198
 msgid "Type de filtre"
 msgstr ""
 
-#: admin/views/metabox-filters.php:96
-#: admin/views/metabox-filters.php:145
-#: admin/views/metabox-filters.php:182
+#: admin/views/metabox-filters.php:120
+#: admin/views/metabox-filters.php:169
+#: admin/views/metabox-filters.php:206
 msgid "Logique"
 msgstr ""
 
-#: admin/views/metabox-filters.php:97
+#: admin/views/metabox-filters.php:121
 msgid "Combinaison entre cases cochées"
 msgstr ""
 
-#: admin/views/metabox-filters.php:108
+#: admin/views/metabox-filters.php:132
 msgid "Seules les taxonomies liées au post type sélectionné sont affichées. Le libellé remplace le nom de la taxonomie affiché au-dessus du filtre sur le site."
 msgstr ""
 
-#: admin/views/metabox-filters.php:112
+#: admin/views/metabox-filters.php:136
 msgid "Filtres par champ ACF"
 msgstr ""
 
-#: admin/views/metabox-filters.php:114
+#: admin/views/metabox-filters.php:138
 msgid "Pour les champs Select, Radio, Checkbox ou Vrai/Faux, les options sont détectées automatiquement depuis la configuration ACF. Pour les autres types (texte, nombre), les valeurs distinctes des posts sont collectées dynamiquement."
 msgstr ""
 
-#: admin/views/metabox-filters.php:127
-#: admin/views/metabox-filters.php:166
+#: admin/views/metabox-filters.php:151
+#: admin/views/metabox-filters.php:190
 msgid "Nom du champ ACF"
 msgstr ""
 
-#: admin/views/metabox-filters.php:146
+#: admin/views/metabox-filters.php:170
 msgid "Combinaison entre cases cochées (sans effet en mode dropdown/radio)"
 msgstr ""
 
-#: admin/views/metabox-filters.php:160
+#: admin/views/metabox-filters.php:184
 msgid "Ajouter un filtre ACF"
 msgstr ""
 
@@ -457,65 +481,65 @@ msgstr ""
 msgid "Dépendance manquante"
 msgstr ""
 
-#: includes/class-cpt.php:22
+#: includes/class-cpt.php:23
 msgctxt "post type general name"
 msgid "Cartes"
 msgstr ""
 
-#: includes/class-cpt.php:23
+#: includes/class-cpt.php:24
 msgctxt "post type singular name"
 msgid "Carte"
 msgstr ""
 
-#: includes/class-cpt.php:24
+#: includes/class-cpt.php:25
 msgctxt "admin menu"
 msgid "GMaps"
 msgstr ""
 
-#: includes/class-cpt.php:25
+#: includes/class-cpt.php:26
 msgctxt "add new on admin bar"
 msgid "Carte"
 msgstr ""
 
-#: includes/class-cpt.php:26
+#: includes/class-cpt.php:27
 msgctxt "map"
 msgid "Ajouter"
 msgstr ""
 
-#: includes/class-cpt.php:27
+#: includes/class-cpt.php:28
 msgid "Ajouter une carte"
 msgstr ""
 
-#: includes/class-cpt.php:28
+#: includes/class-cpt.php:29
 msgid "Nouvelle carte"
 msgstr ""
 
-#: includes/class-cpt.php:29
+#: includes/class-cpt.php:30
 msgid "Modifier la carte"
 msgstr ""
 
-#: includes/class-cpt.php:30
+#: includes/class-cpt.php:31
 msgid "Voir la carte"
 msgstr ""
 
-#: includes/class-cpt.php:31
+#: includes/class-cpt.php:32
 msgid "Toutes les cartes"
 msgstr ""
 
-#: includes/class-cpt.php:32
+#: includes/class-cpt.php:33
 msgid "Rechercher une carte"
 msgstr ""
 
-#: includes/class-cpt.php:33
+#: includes/class-cpt.php:34
 msgid "Aucune carte trouvée."
 msgstr ""
 
-#: includes/class-cpt.php:34
+#: includes/class-cpt.php:35
 msgid "Aucune carte dans la corbeille."
 msgstr ""
 
-#: includes/class-cpt.php:83
-#: includes/class-map-config.php:54
+#: includes/class-cpt.php:98
+#: includes/class-map-config.php:57
 msgid "Shortcode"
 msgstr ""
 
@@ -523,56 +547,64 @@ msgstr ""
 msgid "Rayon (km)"
 msgstr ""
 
-#: includes/class-data-provider.php:371
+#: includes/class-data-provider.php:105
+msgid "Fiches"
+msgstr ""
+
+#: includes/class-data-provider.php:106
+msgid "Adresses"
+msgstr ""
+
+#: includes/class-data-provider.php:376
 msgid "Oui"
 msgstr ""
 
-#: includes/class-data-provider.php:372
+#: includes/class-data-provider.php:377
 msgid "Non"
 msgstr ""
 
-#: includes/class-map-config.php:48
+#: includes/class-map-config.php:51
 msgid "Source des données"
 msgstr ""
 
-#: includes/class-map-config.php:49
+#: includes/class-map-config.php:52
 msgid "Templates HTML"
 msgstr ""
 
-#: includes/class-map-config.php:50
-#: public/views/map-wrapper.php:70
+#: includes/class-map-config.php:53
+#: public/views/map-wrapper.php:110
 msgid "Filtres"
 msgstr ""
 
-#: includes/class-map-config.php:51
+#: includes/class-map-config.php:54
 msgid "Affichage"
 msgstr ""
 
-#: includes/class-map-config.php:52
+#: includes/class-map-config.php:55
 msgid "Cosmétique"
 msgstr ""
 
-#: includes/class-map-config.php:53
+#: includes/class-map-config.php:56
 msgid "Style de la carte"
 msgstr ""
 
-#: includes/class-map-config.php:294
+#: includes/class-map-config.php:299
 msgid "Snazzy Maps : JSON invalide, le style a été ignoré."
 msgstr ""
 
-#: includes/class-map-config.php:373
+#: includes/class-map-config.php:382
 msgid "Accès refusé."
 msgstr ""
 
-#: includes/class-map-config.php:378
+#: includes/class-map-config.php:387
 msgid "Taxonomie invalide."
 msgstr ""
 
-#: includes/class-map-config.php:516
+#: includes/class-map-config.php:525
 msgid "gmaps-aa : clé Google Maps API manquante."
 msgstr ""
 
-#: includes/class-map-config.php:518
+#: includes/class-map-config.php:527
 msgid "Ajoutez dans le functions.php de votre thème :"
 msgstr ""
 
@@ -590,15 +622,15 @@ msgstr ""
 msgid "Image utilisée comme marker sur la carte pour les posts associés à ce terme."
 msgstr ""
 
-#: public/views/map-wrapper.php:94
-#: public/views/map-wrapper.php:110
+#: public/views/map-wrapper.php:134
+#: public/views/map-wrapper.php:150
 msgid "Tous"
 msgstr ""
 
-#: public/views/map-wrapper.php:160
+#: public/views/map-wrapper.php:200
 msgid "Page précédente"
 msgstr ""
 
-#: public/views/map-wrapper.php:166
+#: public/views/map-wrapper.php:206
 msgid "Page suivante"
 msgstr ""

@@ -92,14 +92,18 @@ final class DataProvider {
 			'listFormat'     => (string) $values['list_format'],
 			'style'          => $style,
 			'search'         => array(
-				'enabled'     => ! empty( $values['search_enabled'] ),
-				'radius'      => (int) $values['search_radius'],
-				'label'       => '' !== (string) $values['search_label']
+				'enabled'        => ! empty( $values['search_enabled'] ),
+				'radius'         => (int) $values['search_radius'],
+				'label'          => '' !== (string) $values['search_label']
 					? (string) $values['search_label']
 					: __( 'Rechercher', 'gmaps-aa' ),
-				'placeholder' => '' !== (string) $values['search_placeholder']
+				'placeholder'    => '' !== (string) $values['search_placeholder']
 					? (string) $values['search_placeholder']
 					: __( 'Rechercher une adresse…', 'gmaps-aa' ),
+				'localMatch'     => ! empty( $values['search_local_match'] ),
+				'layout'         => (string) $values['search_layout'],
+				'sectionLocal'   => __( 'Fiches', 'gmaps-aa' ),
+				'sectionAddress' => __( 'Adresses', 'gmaps-aa' ),
 			),
 			'taxonomies'       => array_values( (array) $values['taxonomies'] ),
 			'taxoModes'        => (array) $values['taxo_modes'],
@@ -162,6 +166,7 @@ final class DataProvider {
 				'lat'       => $lat,
 				'lng'       => $lng,
 				'url'       => get_permalink( $post->ID ),
+				'title'     => get_the_title( $post->ID ),
 				'address'   => isset( $raw['address'] ) ? (string) $raw['address'] : '',
 				'tooltip'   => TemplateParser::render( (string) $values['tpl_tooltip'], $post->ID ),
 				'listItem'  => TemplateParser::render( (string) $values['tpl_list'], $post->ID ),

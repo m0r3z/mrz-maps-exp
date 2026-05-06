@@ -4,7 +4,7 @@ Tags: google maps, acf, map, taxonomy, spiderfier, snazzy maps
 Requires at least: 6.3
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 0.4.4
+Stable tag: 0.5.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -39,6 +39,12 @@ Fonctionnalités principales :
 Voir le README.md du repo pour la documentation complète (hooks, placeholders, architecture, compatibilité Salient).
 
 == Changelog ==
+
+= 0.5.0 =
+* Recherche hybride : la dropdown du champ de recherche affiche désormais les fiches dont le titre correspond à la saisie, en plus des suggestions d'adresses Google. Au clic sur une fiche, la carte se centre dessus, applique le zoom de recherche et ouvre la tooltip.
+* Nouvelle option « Suggérer aussi les fiches » dans la métabox Filtres (activée par défaut), pour activer/désactiver le matching local.
+* Nouvelle option « Position du champ » : permet de sortir le champ de recherche du bloc des filtres pour le placer en pleine largeur au-dessus, utile lorsque les filtres sont latéraux.
+* Remplacement du widget google.maps.places.Autocomplete par AutocompleteService + une dropdown custom 100 % stylable. Navigation clavier complète (↓/↑/Entrée/Échap/Tab) avec attributs ARIA combobox.
 
 = 0.4.4 =
 * Inclusion de la librairie OverlappingMarkerSpiderfier (assets/vendor/oms.min.js) dans le repo : précédemment ignorée par .gitignore, elle manquait dans tous les zipballs auto-générés GitHub et tous les git clone, ce qui faisait que la carte et la liste ne s'affichaient pas (seuls les filtres apparaissaient).

@@ -29,6 +29,9 @@ final class MapConfig {
 	public static function list_click_actions() {
 		return array( 'tooltip', 'none', 'link' );
 	}
+	public static function search_layouts() {
+		return array( 'inline', 'top' );
+	}
 	public static function taxo_modes() {
 		return array( 'dropdown', 'radio', 'checkbox' );
 	}
@@ -111,6 +114,8 @@ final class MapConfig {
 			'search_radius'        => 25,
 			'search_label'         => '',
 			'search_placeholder'   => '',
+			'search_local_match'   => 1,
+			'search_layout'        => 'inline',
 			'marker_default_url'   => '',
 			'marker_default_id'    => 0,
 			'marker_default_width' => 32,
@@ -304,6 +309,10 @@ final class MapConfig {
 		$clean['search_radius']      = isset( $raw['search_radius'] ) ? max( 1, min( 500, absint( $raw['search_radius'] ) ) ) : 25;
 		$clean['search_label']       = isset( $raw['search_label'] ) ? sanitize_text_field( (string) $raw['search_label'] ) : '';
 		$clean['search_placeholder'] = isset( $raw['search_placeholder'] ) ? sanitize_text_field( (string) $raw['search_placeholder'] ) : '';
+		$clean['search_local_match'] = ! empty( $raw['search_local_match'] ) ? 1 : 0;
+		$clean['search_layout']      = ( isset( $raw['search_layout'] ) && in_array( $raw['search_layout'], self::search_layouts(), true ) )
+			? $raw['search_layout']
+			: 'inline';
 
 		// Cosmétique.
 		$clean['marker_default_url']   = isset( $raw['marker_default_url'] ) ? esc_url_raw( (string) $raw['marker_default_url'] ) : '';

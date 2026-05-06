@@ -521,8 +521,9 @@
 			}
 		});
 
-		// Recherche par adresse (rayon géré en admin, pas d'UI utilisateur).
+		// Recherche : dropdown unifiée (fiches locales + suggestions d'adresses Google).
 		var searchInput = wrapper.querySelector('.gmaps-aa-search');
+		var searchDropdown = wrapper.querySelector('.gmaps-aa-search-dropdown');
 		var clearBtn = wrapper.querySelector('.gmaps-aa-search-clear');
 
 		function clearSearch() {
@@ -543,61 +544,282 @@
 				}
 			});
 			clearSearch();
+			if (searchDropdown) { closeDropdown(); }
 			applyFilters({ skipFitBounds: true });
 			// Retour à la vue par défaut.
 			map.setCenter(config.center);
 			map.setZoom(config.zoom);
 		}
 
-		if (searchInput) {
-			function applySearchLocation(latLng) {
-				searchCenter = { lat: latLng.lat(), lng: latLng.lng() };
-				map.panTo(searchCenter);
+		// Normalisation pour matching texte (minuscules + retrait des diacritiques).
+		function normalize(s) {
+			return String(s || '')
+				.normalize('NFD')
+				.replace(/[\u0300-\u036f]/g, '')
+				.toLowerCase();
+		}
+
+		var dropdownItems = [];
+		var activeIndex = -1;
+
+		function closeDropdown() {
+			if (!searchDropdown) { return; }
+			searchDropdown.hidden = true;
+			searchDropdown.replaceChildren();
+			dropdownItems = [];
+			activeIndex = -1;
+			if (searchInput) {
+				searchInput.setAttribute('aria-expanded', 'false');
+				searchInput.removeAttribute('aria-activedescendant');
+			}
+		}
+
+		function setActive(idx) {
+			if (!searchDropdown || !dropdownItems.length) { return; }
+			if (idx < 0) { idx = dropdownItems.length - 1; }
+			if (idx >= dropdownItems.length) { idx = 0; }
+			activeIndex = idx;
+			dropdownItems.forEach(function (item, i) {
+				if (i === idx) {
+					item.el.classList.add('is-active');
+					item.el.setAttribute('aria-selected', 'true');
+					if (searchInput) {
+						searchInput.setAttribute('aria-activedescendant', item.el.id);
+					}
+					if (item.el.scrollIntoView) {
+						item.el.scrollIntoView({ block: 'nearest' });
+					}
+				} else {
+					item.el.classList.remove('is-active');
+					item.el.setAttribute('aria-selected', 'false');
+				}
+			});
+		}
+
+		function applySearchLocation(latLng) {
+			searchCenter = { lat: latLng.lat(), lng: latLng.lng() };
+			map.panTo(searchCenter);
+			if (config.zoomSearch) {
+				map.setZoom(config.zoomSearch);
+			}
+			// Pas de fitBounds après recherche : on respecte config.zoomSearch.
+			applyFilters({ skipFitBounds: true });
+		}
+
+		if (searchInput && searchDropdown) {
+			var searchCfg = config.search || {};
+			var localMatchEnabled = !!searchCfg.localMatch;
+			var sectionLocalLabel = searchCfg.sectionLocal || 'Fiches';
+			var sectionAddressLabel = searchCfg.sectionAddress || 'Adresses';
+			var dropdownId = searchDropdown.id || '';
+
+			// Index local pour le matching titre des fiches.
+			var localIndex = localMatchEnabled
+				? data.points.map(function (p) {
+					return { id: p.id, title: p.title || '', _norm: normalize(p.title || '') };
+				}).filter(function (p) { return p._norm !== ''; })
+				: [];
+
+			var hasPlaces = !!(google.maps.places && google.maps.places.AutocompleteService);
+			var autocompleteService = hasPlaces ? new google.maps.places.AutocompleteService() : null;
+			var placesService = hasPlaces ? new google.maps.places.PlacesService(map) : null;
+			var sessionToken = (hasPlaces && google.maps.places.AutocompleteSessionToken)
+				? new google.maps.places.AutocompleteSessionToken()
+				: null;
+
+			function selectLocalPoint(pointId) {
+				var marker = markers.find(function (m) { return m.__point.id === pointId; });
+				if (!marker) { return; }
+				var p = marker.__point;
+				if (searchInput) { searchInput.value = p.title || ''; }
+				closeDropdown();
+				map.panTo({ lat: p.lat, lng: p.lng });
 				if (config.zoomSearch) {
 					map.setZoom(config.zoomSearch);
 				}
-				// Pas de fitBounds après recherche : on respecte config.zoomSearch.
-				applyFilters({ skipFitBounds: true });
+				openPopupOn(marker, p);
 			}
 
-			// Autocomplétion Google Places (lib 'places' chargée via l'URL du loader).
-			var autocomplete = null;
-			if (google.maps.places && google.maps.places.Autocomplete) {
-				autocomplete = new google.maps.places.Autocomplete(searchInput, {
-					types: ['geocode'],
-					fields: ['geometry', 'formatted_address']
-				});
-				autocomplete.addListener('place_changed', function () {
-					var place = autocomplete.getPlace();
-					if (place && place.geometry && place.geometry.location) {
-						applySearchLocation(place.geometry.location);
+			function selectGoogleSuggestion(prediction) {
+				if (searchInput) { searchInput.value = prediction.description || ''; }
+				closeDropdown();
+				if (!placesService) { return; }
+				placesService.getDetails(
+					{ placeId: prediction.place_id, fields: ['geometry'], sessionToken: sessionToken },
+					function (place, status) {
+						if (status === google.maps.places.PlacesServiceStatus.OK && place && place.geometry && place.geometry.location) {
+							applySearchLocation(place.geometry.location);
+							// Nouvelle session pour la prochaine recherche.
+							sessionToken = google.maps.places.AutocompleteSessionToken
+								? new google.maps.places.AutocompleteSessionToken()
+								: null;
+						}
 					}
-				});
-				// Empêche la soumission de formulaire à la touche Entrée dans certains thèmes.
-				searchInput.addEventListener('keydown', function (e) {
-					if (e.key === 'Enter') { e.preventDefault(); }
-				});
+				);
 			}
 
-			// Fallback geocode si le champ est vidé (ou si Autocomplete n'est pas dispo).
-			var geocoder = new google.maps.Geocoder();
+			function buildSection(labelText) {
+				var li = document.createElement('li');
+				li.className = 'gmaps-aa-search-section';
+				li.setAttribute('role', 'presentation');
+				li.textContent = labelText;
+				return li;
+			}
+
+			function buildOption(text, idx, onSelect) {
+				var li = document.createElement('li');
+				li.className = 'gmaps-aa-search-option';
+				li.id = dropdownId + '-opt-' + idx;
+				li.setAttribute('role', 'option');
+				li.setAttribute('aria-selected', 'false');
+				li.textContent = text;
+				li.addEventListener('mousedown', function (e) {
+					// mousedown plutôt que click pour qu'il soit traité avant le blur.
+					e.preventDefault();
+					onSelect();
+				});
+				li.addEventListener('mousemove', function () {
+					setActive(dropdownItems.findIndex(function (it) { return it.el === li; }));
+				});
+				return li;
+			}
+
+			function renderDropdown(query, localResults, googleResults) {
+				searchDropdown.replaceChildren();
+				dropdownItems = [];
+				activeIndex = -1;
+
+				if (!localResults.length && !googleResults.length) {
+					searchDropdown.hidden = true;
+					searchInput.setAttribute('aria-expanded', 'false');
+					searchInput.removeAttribute('aria-activedescendant');
+					return;
+				}
+
+				var idx = 0;
+				if (localResults.length) {
+					searchDropdown.appendChild(buildSection(sectionLocalLabel));
+					localResults.forEach(function (entry) {
+						var optionIdx = idx;
+						var li = buildOption(entry.title, optionIdx, function () {
+							selectLocalPoint(entry.id);
+						});
+						searchDropdown.appendChild(li);
+						dropdownItems.push({
+							el: li,
+							select: function () { selectLocalPoint(entry.id); }
+						});
+						idx += 1;
+					});
+				}
+				if (googleResults.length) {
+					searchDropdown.appendChild(buildSection(sectionAddressLabel));
+					googleResults.forEach(function (prediction) {
+						var optionIdx = idx;
+						var li = buildOption(prediction.description, optionIdx, function () {
+							selectGoogleSuggestion(prediction);
+						});
+						searchDropdown.appendChild(li);
+						dropdownItems.push({
+							el: li,
+							select: function () { selectGoogleSuggestion(prediction); }
+						});
+						idx += 1;
+					});
+				}
+
+				searchDropdown.hidden = false;
+				searchInput.setAttribute('aria-expanded', 'true');
+			}
+
 			var debounceTimer = null;
+			var requestSeq = 0;
+
+			function runSearch(query) {
+				var seq = ++requestSeq;
+				var localResults = [];
+				if (localMatchEnabled && localIndex.length) {
+					var qn = normalize(query);
+					if (qn !== '') {
+						for (var i = 0; i < localIndex.length && localResults.length < 5; i += 1) {
+							if (localIndex[i]._norm.indexOf(qn) !== -1) {
+								localResults.push(localIndex[i]);
+							}
+						}
+					}
+				}
+
+				if (!autocompleteService) {
+					if (seq === requestSeq) {
+						renderDropdown(query, localResults, []);
+					}
+					return;
+				}
+
+				autocompleteService.getPlacePredictions(
+					{ input: query, types: ['geocode'], sessionToken: sessionToken },
+					function (predictions, status) {
+						if (seq !== requestSeq) { return; } // Réponse obsolète.
+						var googleResults = (status === google.maps.places.PlacesServiceStatus.OK && predictions)
+							? predictions
+							: [];
+						renderDropdown(query, localResults, googleResults);
+					}
+				);
+			}
 
 			searchInput.addEventListener('input', function () {
-				if (searchInput.value.trim() === '') {
+				var q = searchInput.value.trim();
+				if (q === '') {
+					clearTimeout(debounceTimer);
+					closeDropdown();
 					clearSearch();
 					applyFilters();
 					return;
 				}
-				if (autocomplete) { return; }
 				clearTimeout(debounceTimer);
-				debounceTimer = setTimeout(function () {
-					geocoder.geocode({ address: searchInput.value.trim() }, function (results, status) {
-						if (status === 'OK' && results && results[0]) {
-							applySearchLocation(results[0].geometry.location);
-						}
-					});
-				}, 400);
+				debounceTimer = setTimeout(function () { runSearch(q); }, 200);
+			});
+
+			searchInput.addEventListener('keydown', function (e) {
+				if (e.key === 'ArrowDown') {
+					if (dropdownItems.length) {
+						e.preventDefault();
+						setActive(activeIndex < 0 ? 0 : activeIndex + 1);
+					}
+				} else if (e.key === 'ArrowUp') {
+					if (dropdownItems.length) {
+						e.preventDefault();
+						setActive(activeIndex < 0 ? dropdownItems.length - 1 : activeIndex - 1);
+					}
+				} else if (e.key === 'Enter') {
+					if (activeIndex >= 0 && dropdownItems[activeIndex]) {
+						e.preventDefault();
+						dropdownItems[activeIndex].select();
+					} else {
+						// Évite la soumission de formulaire dans certains thèmes.
+						e.preventDefault();
+					}
+				} else if (e.key === 'Escape') {
+					if (!searchDropdown.hidden) {
+						e.stopPropagation();
+						closeDropdown();
+					}
+				} else if (e.key === 'Tab') {
+					closeDropdown();
+				}
+			});
+
+			searchInput.addEventListener('blur', function () {
+				// setTimeout pour laisser un éventuel mousedown se propager.
+				setTimeout(closeDropdown, 0);
+			});
+
+			searchInput.addEventListener('focus', function () {
+				if (searchInput.value.trim() !== '' && dropdownItems.length) {
+					searchDropdown.hidden = false;
+					searchInput.setAttribute('aria-expanded', 'true');
+				}
 			});
 		}
 
