@@ -82,6 +82,14 @@ $acf_filters = (array) $values['acf_filters'];
 		<?php esc_html_e( 'Afficher le nombre de résultats à côté de chaque option de filtre.', 'gmaps-aa' ); ?>
 	</label>
 </p>
+<p>
+	<label>
+		<input type="checkbox" name="gmaps_aa[url_filters_enabled]" value="1" <?php checked( ! empty( $values['url_filters_enabled'] ) ); ?> />
+		<?php esc_html_e( 'Synchroniser les filtres avec l\'URL (lien partageable).', 'gmaps-aa' ); ?>
+	</label>
+	<br />
+	<span class="description"><?php esc_html_e( 'Format : ?gm_ID_tax_slug=12,34&gm_ID_acf_field=valeur. L\'URL se met à jour automatiquement quand l\'utilisateur change un filtre.', 'gmaps-aa' ); ?></span>
+</p>
 
 <hr />
 

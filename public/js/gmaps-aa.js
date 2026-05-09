@@ -472,7 +472,93 @@
 				map.fitBounds(bounds);
 			}
 			isInitialRender = false;
+
+			writeUrlFilters();
 		}
+
+		// Synchronisation des filtres avec l'URL (opt-in via config.urlFilters).
+		// Format : ?gm_<map_id>_tax_<slug>=12,34&gm_<map_id>_acf_<field>=foo,bar
+		function urlPrefix() {
+			return 'gm_' + (data.id || 0) + '_';
+		}
+
+		function applyUrlFilters() {
+			if (!config.urlFilters) { return; }
+			var params = new URLSearchParams(window.location.search);
+			var prefix = urlPrefix();
+			var taxPrefix = prefix + 'tax_';
+			var acfPrefix = prefix + 'acf_';
+
+			params.forEach(function (value, key) {
+				if (key.indexOf(taxPrefix) === 0) {
+					var slug = key.slice(taxPrefix.length);
+					var ids = value.split(',')
+						.map(function (v) { return parseInt(v, 10); })
+						.filter(function (n) { return !isNaN(n); });
+					if (ids.length) { currentFilters.tax[slug] = ids; }
+				} else if (key.indexOf(acfPrefix) === 0) {
+					var field = key.slice(acfPrefix.length);
+					var vals = value.split(',').filter(function (v) { return v !== ''; });
+					if (vals.length) { currentFilters.acf[field] = vals; }
+				}
+			});
+
+			// Synchronise les inputs avec l'état lu depuis l'URL.
+			wrapper.querySelectorAll('.gmaps-aa-filter-input').forEach(function (input) {
+				var type = input.getAttribute('data-filter-type') || 'tax';
+				var key = type === 'acf'
+					? input.getAttribute('data-field')
+					: input.getAttribute('data-taxonomy');
+				if (!key) { return; }
+				var arr = currentFilters[type][key] || [];
+				if (input.tagName === 'SELECT') {
+					input.value = arr.length ? String(arr[0]) : '';
+				} else if (input.type === 'radio') {
+					input.checked = arr.length
+						? String(arr[0]) === input.value
+						: input.value === '';
+				} else if (input.type === 'checkbox') {
+					input.checked = arr.some(function (v) { return String(v) === input.value; });
+				}
+			});
+		}
+
+		function writeUrlFilters() {
+			if (!config.urlFilters) { return; }
+			var params = new URLSearchParams(window.location.search);
+			var prefix = urlPrefix();
+
+			// Supprime tous les params de cette carte avant de réécrire.
+			Array.from(params.keys()).forEach(function (key) {
+				if (key.indexOf(prefix) === 0) { params.delete(key); }
+			});
+
+			Object.keys(currentFilters.tax).forEach(function (slug) {
+				var arr = currentFilters.tax[slug];
+				if (arr && arr.length) {
+					params.set(prefix + 'tax_' + slug, arr.join(','));
+				}
+			});
+			Object.keys(currentFilters.acf).forEach(function (field) {
+				var arr = currentFilters.acf[field];
+				if (arr && arr.length) {
+					params.set(prefix + 'acf_' + field, arr.join(','));
+				}
+			});
+
+			var qs = params.toString();
+			var newUrl = window.location.pathname + (qs ? '?' + qs : '') + window.location.hash;
+			try {
+				history.replaceState(history.state, '', newUrl);
+			} catch (e) {
+				// Si replaceState échoue (très rare, ex: file://), on fail silencieusement.
+			}
+		}
+
+		// Lit l'URL et coche les inputs correspondants AVANT la boucle d'init —
+		// la boucle ci-dessous appelle handler() pour les inputs déjà cochés
+		// (forçage shortcode ou sync URL), donc on doit lire l'URL avant.
+		applyUrlFilters();
 
 		// Branche les inputs de filtres (taxonomies et champs ACF).
 		wrapper.querySelectorAll('.gmaps-aa-filter-input').forEach(function (input) {

@@ -88,6 +88,7 @@ final class MapConfig {
 			'taxo_labels'        => array(),
 			'acf_filters'        => array(),
 			'show_filter_counts' => 1,
+			'url_filters_enabled' => 0,
 			'limit'              => 0,
 			'per_page'           => 10,
 			'height'             => 500,
@@ -258,7 +259,8 @@ final class MapConfig {
 		}
 		$clean['acf_filters'] = $acf_filters;
 
-		$clean['show_filter_counts'] = ! empty( $raw['show_filter_counts'] ) ? 1 : 0;
+		$clean['show_filter_counts']  = ! empty( $raw['show_filter_counts'] ) ? 1 : 0;
+		$clean['url_filters_enabled'] = ! empty( $raw['url_filters_enabled'] ) ? 1 : 0;
 
 		// Display.
 		$clean['height']         = isset( $raw['height'] ) ? max( 100, min( 2000, absint( $raw['height'] ) ) ) : 500;

@@ -108,6 +108,7 @@ final class DataProvider {
 			'taxonomies'       => array_values( (array) $values['taxonomies'] ),
 			'taxoModes'        => (array) $values['taxo_modes'],
 			'showFilterCounts' => ! empty( $values['show_filter_counts'] ),
+			'urlFilters'       => ! empty( $values['url_filters_enabled'] ),
 			'defaultIconUrl'   => $marker_default_url,
 			'markerWidth'      => (int) $values['marker_default_width'],
 			'primaryTaxonomy'  => (string) $values['primary_taxonomy'],

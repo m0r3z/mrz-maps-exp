@@ -4,7 +4,7 @@ Tags: google maps, acf, map, taxonomy, spiderfier, snazzy maps
 Requires at least: 6.3
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 0.5.0
+Stable tag: 0.5.1
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -39,6 +39,9 @@ Fonctionnalités principales :
 Voir le README.md du repo pour la documentation complète (hooks, placeholders, architecture, compatibilité Salient).
 
 == Changelog ==
+
+= 0.5.1 =
+* Synchronisation des filtres avec l'URL (option opt-in dans la métabox Filtres) : à l'activation, l'URL reflète automatiquement les filtres de taxonomie et de champs ACF actifs, et les filtres présents dans l'URL au chargement sont pré-cochés. Format : `?gm_<map_id>_tax_<slug>=12,34&gm_<map_id>_acf_<field>=valeur`. Permet de partager des liens pré-filtrés. Le préfixe par ID de carte évite les conflits si plusieurs cartes coexistent sur la même page.
 
 = 0.5.0 =
 * Recherche hybride : la dropdown du champ de recherche affiche désormais les fiches dont le titre correspond à la saisie, en plus des suggestions d'adresses Google. Au clic sur une fiche, la carte se centre dessus, applique le zoom de recherche et ouvre la tooltip.
