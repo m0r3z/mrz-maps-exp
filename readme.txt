@@ -4,11 +4,13 @@ Tags: google maps, acf, map, taxonomy, spiderfier, snazzy maps
 Requires at least: 6.3
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 0.5.1
+Stable tag: 0.5.2
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
 Cartographie Google Maps basée sur les champs ACF avec filtres par taxonomie et champ ACF, Spiderfier, Snazzy Maps et recherche par adresse.
+
+Copyright (C) 2024-2026 Doublea.io. "GMaps-AA" est une marque de Doublea.io.
 
 == Description ==
 
@@ -39,6 +41,11 @@ Fonctionnalités principales :
 Voir le README.md du repo pour la documentation complète (hooks, placeholders, architecture, compatibilité Salient).
 
 == Changelog ==
+
+= 0.5.2 =
+* Mise au clair de la propriété intellectuelle : ajout d'un en-tête de copyright Doublea.io explicite dans `LICENSE`, `gmaps-aa.php` et `readme.txt`. Le nom et le logo « GMaps-AA » sont déclarés comme marques de Doublea.io.
+* Harmonisation de la licence sur GPLv3 ou ultérieure dans tous les en-têtes (le header PHP indiquait précédemment GPLv2). Le code reste libre et redistribuable sous GPL ; la marque, en revanche, n'est pas couverte par la GPL et reste exclusive à Doublea.io.
+* Correction de l'URL du repo dans le header plugin (d0ubl34/gmaps-aa) et ajout d'un Author URI.
 
 = 0.5.1 =
 * Synchronisation des filtres avec l'URL (option opt-in dans la métabox Filtres) : à l'activation, l'URL reflète automatiquement les filtres de taxonomie et de champs ACF actifs, et les filtres présents dans l'URL au chargement sont pré-cochés. Format : `?gm_<map_id>_tax_<slug>=12,34&gm_<map_id>_acf_<field>=valeur`. Permet de partager des liens pré-filtrés. Le préfixe par ID de carte évite les conflits si plusieurs cartes coexistent sur la même page.
