@@ -54,8 +54,12 @@ gmaps-aa/
 │   ├── menu-icon.svg               # Icône admin (utilisée via mask-image CSS, pas data URI)
 │   └── vendor/
 │       └── oms.min.js              # OverlappingMarkerSpiderfier 1.0.3 (TRACKED dans git, voir .gitignore)
-└── languages/
-    └── gmaps-aa.pot                # Généré via wp-cli i18n make-pot
+├── languages/
+│   └── gmaps-aa.pot                # Généré via wp-cli i18n make-pot
+└── .wordpress-org/                 # Assets pour le répertoire wordpress.org (SVN /assets/), HORS du zip distribué
+    ├── banner-1544x500.png
+    ├── icon-256x256.png
+    └── screenshot-1.png … screenshot-N.png
 ```
 
 ## Décisions architecturales (à respecter)
@@ -87,8 +91,26 @@ gmaps-aa/
    ```
 5. Tag annoté : `git -c user.email="..." -c user.name="..." tag -a vX.Y.Z -m "Release vX.Y.Z"`
 6. Push : `git push origin main && git push origin vX.Y.Z`
-7. Zip propre : `cd wp-content/plugins && rm -f /tmp/gmaps-aa-X.Y.Z.zip && zip -rq /tmp/gmaps-aa-X.Y.Z.zip gmaps-aa -x "gmaps-aa/.git/*" "gmaps-aa/.gitignore" "gmaps-aa/.DS_Store" "gmaps-aa/**/.DS_Store"`
+7. Zip propre : `cd wp-content/plugins && rm -f /tmp/gmaps-aa-X.Y.Z.zip && zip -rq /tmp/gmaps-aa-X.Y.Z.zip gmaps-aa -x "gmaps-aa/.git/*" "gmaps-aa/.gitignore" "gmaps-aa/.wordpress-org/*" "gmaps-aa/CLAUDE.md" "gmaps-aa/.DS_Store" "gmaps-aa/**/.DS_Store"`
 8. Release GitHub : `gh release create vX.Y.Z /tmp/gmaps-aa-X.Y.Z.zip --title "vX.Y.Z" --notes "..."`
+
+## Workflow wordpress.org (SVN, à activer après acceptation)
+
+Le plugin sera publié sur https://wordpress.org/plugins/gmaps-aa/ après validation par les Plugin Reviewers.
+
+- **Source de vérité** : Git (GitHub `d0ubl34/gmaps-aa`). SVN n'est qu'un miroir pour la distribution wp.org.
+- **Soumission initiale** : zip généré comme ci-dessus, soumis via https://wordpress.org/plugins/developers/add/ (compte `d0ubl34`, email `dev@doublea.io`).
+- **Après acceptation**, accès SVN reçu : `https://plugins.svn.wordpress.org/gmaps-aa/`. Trois dossiers :
+  - `trunk/` — code en développement
+  - `tags/X.Y.Z/` — versions taguées (la version servie aux utilisateurs est celle du `Stable tag` de readme.txt)
+  - `assets/` — icon / banner / screenshots (contenu de `.wordpress-org/` à pousser ici)
+- **Process release wp.org** (à scripter plus tard) :
+  1. Faire la release Git/GitHub comme d'habitude (étapes 1-8 ci-dessus).
+  2. Checkout SVN : `svn co https://plugins.svn.wordpress.org/gmaps-aa /tmp/gmaps-aa-svn` (la première fois).
+  3. Synchroniser `trunk/` avec le contenu du zip (rsync sans `.wordpress-org/`).
+  4. Synchroniser `assets/` avec le contenu de `.wordpress-org/`.
+  5. `svn cp trunk tags/X.Y.Z`.
+  6. `svn ci -m "Release X.Y.Z"`.
 
 ## Pièges connus
 

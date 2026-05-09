@@ -3,7 +3,7 @@
  * Plugin Name:       GMaps-AA
  * Plugin URI:        https://github.com/d0ubl34/gmaps-aa
  * Description:       Cartographie Google Maps basée sur les CPT et champs ACF, avec filtres par taxonomie, Snazzy Maps et recherche par adresse.
- * Version:           0.5.2
+ * Version:           0.5.3
  * Requires at least: 6.3
  * Requires PHP:      7.4
  * Author:            Doublea.io
@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'GMAPS_AA_VERSION', '0.5.2' );
+define( 'GMAPS_AA_VERSION', '0.5.3' );
 define( 'GMAPS_AA_FILE', __FILE__ );
 define( 'GMAPS_AA_DIR', plugin_dir_path( __FILE__ ) );
 define( 'GMAPS_AA_URL', plugin_dir_url( __FILE__ ) );

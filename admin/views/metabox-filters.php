@@ -33,7 +33,7 @@ $acf_filters = (array) $values['acf_filters'];
 <p>
 	<label>
 		<input type="checkbox" name="gmaps_aa[search_local_match]" value="1" <?php checked( ! empty( $values['search_local_match'] ) ); ?> />
-		<?php esc_html_e( 'Suggérer aussi les fiches dont le titre correspond à la saisie (en plus des adresses Google).', 'gmaps-aa' ); ?>
+		<?php esc_html_e( 'Suggérer aussi les posts dont le titre correspond à la saisie (en plus des adresses Google).', 'gmaps-aa' ); ?>
 	</label>
 </p>
 <p>
@@ -107,8 +107,11 @@ $acf_filters = (array) $values['acf_filters'];
 		?>
 		<div class="gmaps-aa-taxo-row" data-object-types="<?php echo esc_attr( $object_type ); ?>">
 			<label class="gmaps-aa-taxo-col gmaps-aa-taxo-col-activate">
-				<input type="checkbox" name="gmaps_aa[taxonomies][]" value="<?php echo esc_attr( $slug ); ?>" <?php checked( $checked ); ?> />
-				<span class="gmaps-aa-taxo-name"><?php echo esc_html( $tax->labels->singular_name . ' (' . $slug . ')' ); ?></span>
+				<span><?php esc_html_e( 'Taxonomie', 'gmaps-aa' ); ?></span>
+				<span class="gmaps-aa-taxo-activate-row">
+					<input type="checkbox" name="gmaps_aa[taxonomies][]" value="<?php echo esc_attr( $slug ); ?>" <?php checked( $checked ); ?> />
+					<span class="gmaps-aa-taxo-name"><?php echo esc_html( $tax->labels->singular_name . ' (' . $slug . ')' ); ?></span>
+				</span>
 			</label>
 			<label class="gmaps-aa-taxo-col">
 				<span><?php esc_html_e( 'Libellé affiché', 'gmaps-aa' ); ?></span>

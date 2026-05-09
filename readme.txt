@@ -1,46 +1,98 @@
-=== gmaps-aa ===
-Contributors: doubleA
-Tags: google maps, acf, map, taxonomy, spiderfier, snazzy maps
+=== GMaps-AA ===
+Contributors: d0ubl34
+Tags: google maps, map, acf, taxonomy, custom post type
 Requires at least: 6.3
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 0.5.2
+Stable tag: 0.5.3
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-Cartographie Google Maps basée sur les champs ACF avec filtres par taxonomie et champ ACF, Spiderfier, Snazzy Maps et recherche par adresse.
-
-Copyright (C) 2024-2026 Doublea.io. "GMaps-AA" est une marque de Doublea.io.
+Cartographie Google Maps basée sur les champs ACF, avec filtres par taxonomie et champ ACF, recherche hybride et marqueurs personnalisables.
 
 == Description ==
 
-Plugin WordPress générique et minimaliste pour afficher des custom posts sur une carte Google Maps. Les points sont tirés des champs ACF de type Google Map. Tout se configure via l'admin WordPress : type source, filtres par taxonomie et par champ ACF, pagination, templates d'infobulle et de liste, Snazzy Maps, marqueurs personnalisés par terme, layout responsive.
+GMaps-AA est un plugin générique et minimaliste pour afficher n'importe quel custom post type sur une carte Google Maps. Les coordonnées sont tirées d'un champ ACF de type Google Map déclaré sur les posts. Tout se configure depuis l'admin WordPress, sans toucher au code du thème : type source, filtres, pagination, templates HTML, marqueurs personnalisés, layout responsive.
 
-Fonctionnalités principales :
+= Fonctionnalités =
 
-* Multi-cartes via un Custom Post Type
-* Filtres par taxonomie et par champ ACF (mode dropdown/radio/checkbox, logique OU/ET)
-* Pagination front et gestion du clic sur les items de liste (tooltip, aucun, lien vers le post)
-* Recherche par adresse avec autocomplétion Google Places + filtrage par rayon
-* Marqueurs personnalisables (défaut + par terme de taxonomie)
-* Dépilement des marqueurs superposés (OverlappingMarkerSpiderfier)
-* Tooltip 100 % personnalisée (OverlayView custom, pas la InfoWindow native)
-* Snazzy Maps (styles JSON)
-* Fit bounds automatique après filtrage
-* Recentrage sur le post courant (single template)
-* Responsive : empilement forcé filtres → carte → liste en dessous de 1024 px
-* Shortcode avec filtre forcé optionnel
+* Multi-cartes via un Custom Post Type dédié — chaque carte a sa propre configuration.
+* Filtres par taxonomie et par champ ACF, en mode menu déroulant, boutons radio ou cases à cocher, avec logique OU / ET.
+* Recherche hybride dans un seul champ : suggestions d'adresses Google Places **et** posts dont le titre correspond à la saisie.
+* Synchronisation optionnelle des filtres avec l'URL — pour partager un lien pré-filtré.
+* Marqueurs personnalisables : icône par défaut, ou icône par terme de taxonomie.
+* Tooltip 100% personnalisée via OverlayView (pas la InfoWindow native), surchargeable en CSS.
+* Templates HTML configurables pour la tooltip et la liste, avec placeholders ACF / taxos.
+* Pagination front, fit bounds automatique après filtrage, recentrage sur le post courant en single template.
+* Dépilement des marqueurs superposés (OverlappingMarkerSpiderfier).
+* Snazzy Maps : collez un JSON pour styliser la carte.
+* Layout responsive — filtres au-dessus, à gauche ou à droite ; champ de recherche détachable en pleine largeur ; pliage des filtres en mobile.
+* Shortcode avec filtre forcé optionnel : `[gmaps_aa id="X" filter_taxonomy="genre" filter_term="42"]`.
+* Internationalisation prête (text-domain `gmaps-aa`, fichier .pot fourni).
+
+= Pré-requis =
+
+* WordPress 6.3 ou supérieur, PHP 7.4 ou supérieur.
+* Advanced Custom Fields (Pro recommandé) — pour le champ Google Map.
+* Une clé API Google Maps avec les API « Maps JavaScript », « Places » et « Geocoding » activées. La clé doit être déclarée dans le `functions.php` du thème via le filtre `gmaps_aa_api_key` ou la constante `GMAPS_AA_API_KEY` (le plugin ne propose volontairement pas d'UI admin pour la clé — c'est un secret qui n'a rien à faire en base de données).
+
+= Confidentialité / appels externes =
+
+GMaps-AA charge la bibliothèque Google Maps JS dans le navigateur de l'utilisateur final, comme tout plugin de cartographie. Aucune donnée n'est envoyée vers Doublea.io ou un service tiers ; aucune télémétrie n'est collectée. La clé Google Maps fournie par l'administrateur du site est exposée côté navigateur (c'est nécessaire pour appeler l'API JS Google) — il est recommandé de la restreindre par domaine HTTP referrer dans la console Google Cloud.
+
+= Code source et contributions =
+
+Le développement se fait publiquement sur GitHub : https://github.com/d0ubl34/gmaps-aa
+Issues, pull requests et forks bienvenus.
 
 == Installation ==
 
 1. Installer et activer Advanced Custom Fields (Pro recommandé).
-2. Déclarer la clé Google Maps API dans le functions.php du thème via le filtre `gmaps_aa_api_key` ou la constante `GMAPS_AA_API_KEY`.
-3. Activer gmaps-aa.
-4. Créer une carte depuis le menu « gmaps-aa » et utiliser le shortcode `[gmaps_aa id="X"]`.
+2. Déclarer la clé Google Maps API dans le `functions.php` du thème :
+   `add_filter( 'gmaps_aa_api_key', function () { return 'VOTRE_CLE_API'; } );`
+3. Installer et activer GMaps-AA depuis l'écran « Extensions » de WordPress, ou téléverser le zip.
+4. Aller dans le menu **GMaps** → **Ajouter une carte**, configurer la source, les filtres, les templates, etc.
+5. Insérer le shortcode généré dans la page de votre choix : `[gmaps_aa id="X"]`.
 
-Voir le README.md du repo pour la documentation complète (hooks, placeholders, architecture, compatibilité Salient).
+== Frequently Asked Questions ==
+
+= ACF est-il vraiment obligatoire ? =
+
+Oui. GMaps-AA s'appuie sur les champs ACF de type « Google Map » pour récupérer latitude / longitude / adresse de chaque post. Le plugin a été pensé pour s'intégrer avec ACF plutôt que dupliquer un système de coordonnées custom. La version gratuite d'ACF suffit ; ACF Pro n'est requis que si vous utilisez les fonctionnalités Pro (repeater, etc.).
+
+= Pourquoi la clé Google Maps n'est-elle pas configurable depuis l'admin ? =
+
+Choix volontaire. Une clé API est un secret qui n'a pas sa place en base de données : elle pourrait être exfiltrée via un export DB, un backup non chiffré, ou un compte admin compromis. La clé doit être déclarée dans le code du thème via le filtre `gmaps_aa_api_key` ou la constante `GMAPS_AA_API_KEY`. C'est aussi la pratique recommandée pour la rotation de clé.
+
+= Le plugin est-il compatible avec le thème Salient / d'autres plugins de cartographie ? =
+
+Oui. GMaps-AA détecte si Google Maps JS est déjà chargé par un autre plugin (par exemple Salient via `salient-core` / `nectar_gmap`) et n'enqueue pas sa propre version dans ce cas. Un filtre `gmaps_aa_skip_gmaps_enqueue` permet d'override le comportement si nécessaire.
+
+= Comment ajouter du contenu dans la tooltip ou la liste ? =
+
+Dans la métabox « Templates HTML » de la carte, des templates HTML libres sont configurables avec des placeholders : `{post_title}`, `{post_url}`, `{post_excerpt}`, `{post_thumbnail}`, `{post_thumbnail_url}`, `{%nom_du_champ_acf%}`, `{taxonomy:slug}`, `{taxonomy:slug:first}`. Des conditionnels `{#if %champ%}…{/if}` sont supportés pour n'afficher une zone que si le champ est rempli.
+
+= Peut-on filtrer la carte via l'URL pour partager un lien pré-filtré ? =
+
+Oui — option opt-in dans la métabox Filtres. Quand activée, les filtres actifs sont reflétés dans l'URL en temps réel (`?gm_<map_id>_tax_<slug>=12,34&gm_<map_id>_acf_<field>=valeur`), et un lien collé avec ces paramètres pré-active automatiquement les filtres correspondants.
+
+= Le plugin gère-t-il un grand nombre de marqueurs ? =
+
+Le rendu front gère sans souci quelques milliers de marqueurs (les données sont injectées en JSON inline et filtrées côté navigateur). Pour des volumes plus importants, envisagez de limiter l'affichage initial via un filtre forcé sur la taxonomie ou un autre filtre admin (« Nombre max de posts »).
+
+== Screenshots ==
+
+1. Métabox **Source des données** : choix du post type, du champ ACF de coordonnées, et limite optionnelle de chargement.
+2. Métabox **Templates HTML** : templates personnalisables pour l'infobulle et les items de liste, avec placeholders ACF et taxonomies.
+3. Métabox **Cosmétique** : marqueur par défaut, taille, dépilement Spiderfier, et marqueurs par terme de taxonomie.
+4. Métabox **Filtres** : configuration des filtres par taxonomie et par champ ACF (mode dropdown / radio / checkbox, logique OU / ET).
 
 == Changelog ==
+
+= 0.5.3 =
+* Préparation pour publication sur le répertoire WordPress.org : sections FAQ, Screenshots et Upgrade Notice ajoutées au readme. Banner, icon et captures d'écran organisés dans `.wordpress-org/` (hors zip distribué).
+* Correctif libellé : « fiches » → « posts » dans la description de l'option de matching local du champ de recherche, pour cohérence avec le vocabulaire WordPress.
+* Métabox Filtres : alignement vertical de la colonne « Taxonomie » avec les colonnes Libellé / Type / Logique pour un visuel cohérent avec le bloc « Filtres par champ ACF ».
 
 = 0.5.2 =
 * Mise au clair de la propriété intellectuelle : ajout d'un en-tête de copyright Doublea.io explicite dans `LICENSE`, `gmaps-aa.php` et `readme.txt`. Le nom et le logo « GMaps-AA » sont déclarés comme marques de Doublea.io.
@@ -51,10 +103,10 @@ Voir le README.md du repo pour la documentation complète (hooks, placeholders, 
 * Synchronisation des filtres avec l'URL (option opt-in dans la métabox Filtres) : à l'activation, l'URL reflète automatiquement les filtres de taxonomie et de champs ACF actifs, et les filtres présents dans l'URL au chargement sont pré-cochés. Format : `?gm_<map_id>_tax_<slug>=12,34&gm_<map_id>_acf_<field>=valeur`. Permet de partager des liens pré-filtrés. Le préfixe par ID de carte évite les conflits si plusieurs cartes coexistent sur la même page.
 
 = 0.5.0 =
-* Recherche hybride : la dropdown du champ de recherche affiche désormais les fiches dont le titre correspond à la saisie, en plus des suggestions d'adresses Google. Au clic sur une fiche, la carte se centre dessus, applique le zoom de recherche et ouvre la tooltip.
-* Nouvelle option « Suggérer aussi les fiches » dans la métabox Filtres (activée par défaut), pour activer/désactiver le matching local.
+* Recherche hybride : la dropdown du champ de recherche affiche désormais les posts dont le titre correspond à la saisie, en plus des suggestions d'adresses Google. Au clic sur un post, la carte se centre dessus, applique le zoom de recherche et ouvre la tooltip.
+* Nouvelle option « Suggérer aussi les posts » dans la métabox Filtres (activée par défaut), pour activer/désactiver le matching local.
 * Nouvelle option « Position du champ » : permet de sortir le champ de recherche du bloc des filtres pour le placer en pleine largeur au-dessus, utile lorsque les filtres sont latéraux.
-* Remplacement du widget google.maps.places.Autocomplete par AutocompleteService + une dropdown custom 100 % stylable. Navigation clavier complète (↓/↑/Entrée/Échap/Tab) avec attributs ARIA combobox.
+* Remplacement du widget google.maps.places.Autocomplete par AutocompleteService + une dropdown custom 100 % stylable. Navigation clavier complète (flèches / Entrée / Échap / Tab) avec attributs ARIA combobox.
 
 = 0.4.4 =
 * Inclusion de la librairie OverlappingMarkerSpiderfier (assets/vendor/oms.min.js) dans le repo : précédemment ignorée par .gitignore, elle manquait dans tous les zipballs auto-générés GitHub et tous les git clone, ce qui faisait que la carte et la liste ne s'affichaient pas (seuls les filtres apparaissaient).
@@ -101,3 +153,17 @@ Voir le README.md du repo pour la documentation complète (hooks, placeholders, 
 
 = 0.1.0 =
 * Version initiale : CPT, métaboxes, template parser, shortcode, JS front, clustering, filtres taxo
+
+== Upgrade Notice ==
+
+= 0.5.3 =
+Préparation pour le répertoire WordPress.org. Petits ajustements UI sans rupture. Mise à jour sans risque.
+
+= 0.5.2 =
+Clarification du copyright Doublea.io et alignement de la licence sur GPLv3+. Aucun changement fonctionnel.
+
+= 0.5.1 =
+Nouvelle option pour synchroniser les filtres avec l'URL (désactivée par défaut). Compatible avec les versions précédentes.
+
+= 0.5.0 =
+Recherche hybride dans le champ de recherche : suggère les posts dont le titre correspond, en plus des adresses Google. Activée par défaut.

@@ -5,7 +5,8 @@
 .gmaps-aa-taxo-row.is-hidden { display: none; }
 .gmaps-aa-taxo-col { display: flex; flex-direction: column; gap: 4px; }
 .gmaps-aa-taxo-col > span { font-size: 12px; color: #646970; }
-.gmaps-aa-taxo-col-activate { flex-direction: row; align-items: center; gap: 8px; min-width: 180px; padding-bottom: 6px; }
+.gmaps-aa-taxo-col-activate { min-width: 240px; }
+.gmaps-aa-taxo-activate-row { display: flex; align-items: center; gap: 8px; min-height: 30px; }
 .gmaps-aa-taxo-col-activate .gmaps-aa-taxo-name { font-size: 13px; color: inherit; }
 .gmaps-aa-picker { background: #f6f7f7; }
 .gmaps-aa-section-title { margin: 4px 0 10px; }
