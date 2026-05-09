@@ -53,7 +53,8 @@ gmaps-aa/
 │   ├── default-marker.svg
 │   ├── menu-icon.svg               # Icône admin (utilisée via mask-image CSS, pas data URI)
 │   └── vendor/
-│       └── oms.min.js              # OverlappingMarkerSpiderfier 1.0.3 (TRACKED dans git, voir .gitignore)
+│       ├── oms.js                  # OverlappingMarkerSpiderfier 1.0.1 — version non-minifiée (source pour wp.org review)
+│       └── oms.min.js              # OverlappingMarkerSpiderfier 1.0.1 — version minifiée (chargée en prod, paire avec oms.js). Source : npm "overlapping-marker-spiderfier" 1.0.1 (fork fritz-c, miroir du upstream jawj). Les DEUX fichiers TRACKED dans git, voir .gitignore.
 ├── languages/
 │   └── gmaps-aa.pot                # Généré via wp-cli i18n make-pot
 └── .wordpress-org/                 # Assets pour le répertoire wordpress.org (SVN /assets/), HORS du zip distribué
@@ -107,7 +108,7 @@ Le plugin sera publié sur https://wordpress.org/plugins/gmaps-aa/ après valida
 - **Process release wp.org** (à scripter plus tard) :
   1. Faire la release Git/GitHub comme d'habitude (étapes 1-8 ci-dessus).
   2. Checkout SVN : `svn co https://plugins.svn.wordpress.org/gmaps-aa /tmp/gmaps-aa-svn` (la première fois).
-  3. Synchroniser `trunk/` avec le contenu du zip (rsync sans `.wordpress-org/`).
+  3. Synchroniser `trunk/` avec le contenu du zip (rsync en excluant `.git/`, `.wordpress-org/`, `CLAUDE.md`, `.gitignore` — c'est-à-dire exactement ce que la commande `zip` étape 7 exclut déjà).
   4. Synchroniser `assets/` avec le contenu de `.wordpress-org/`.
   5. `svn cp trunk tags/X.Y.Z`.
   6. `svn ci -m "Release X.Y.Z"`.

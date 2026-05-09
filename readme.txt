@@ -4,7 +4,7 @@ Tags: google maps, map, acf, taxonomy, custom post type
 Requires at least: 6.3
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 0.5.3
+Stable tag: 0.5.4
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -89,6 +89,10 @@ Le rendu front gère sans souci quelques milliers de marqueurs (les données son
 
 == Changelog ==
 
+= 0.5.4 =
+* Conformité guidelines wordpress.org : ajout du source non-minifié de la librairie OverlappingMarkerSpiderfier (`assets/vendor/oms.js`) à côté du fichier minifié, comme l'exigent les guidelines pour toute lib externe minifiée. Les deux fichiers proviennent désormais du package npm officiel `overlapping-marker-spiderfier@1.0.1` (paire cohérente source/minifié), au lieu de l'ancien minifié solo issu du repo upstream `jawj/OverlappingMarkerSpiderfier`.
+* Aucun changement de comportement : l'API utilisée (`new OverlappingMarkerSpiderfier(map, options)`, `addMarker`, `addListener`) est identique entre les deux versions.
+
 = 0.5.3 =
 * Préparation pour publication sur le répertoire WordPress.org : sections FAQ, Screenshots et Upgrade Notice ajoutées au readme. Banner, icon et captures d'écran organisés dans `.wordpress-org/` (hors zip distribué).
 * Correctif libellé : « fiches » → « posts » dans la description de l'option de matching local du champ de recherche, pour cohérence avec le vocabulaire WordPress.
@@ -155,6 +159,9 @@ Le rendu front gère sans souci quelques milliers de marqueurs (les données son
 * Version initiale : CPT, métaboxes, template parser, shortcode, JS front, clustering, filtres taxo
 
 == Upgrade Notice ==
+
+= 0.5.4 =
+Ajout du source non-minifié d'OverlappingMarkerSpiderfier à côté du minifié (conformité wordpress.org). Aucun changement fonctionnel.
 
 = 0.5.3 =
 Préparation pour le répertoire WordPress.org. Petits ajustements UI sans rupture. Mise à jour sans risque.

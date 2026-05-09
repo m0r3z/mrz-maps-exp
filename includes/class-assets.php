@@ -39,7 +39,7 @@ final class Assets {
 				GMAPS_AA_URL . 'assets/vendor/oms.min.js'
 			),
 			array(),
-			'1.0.3',
+			'1.0.1',
 			true
 		);
 
