@@ -100,7 +100,7 @@ mrz-maps-exp/
 Le plugin sera publié sur https://wordpress.org/plugins/mrz-maps-exp/ après validation par les Plugin Reviewers.
 
 - **Source de vérité** : Git (GitHub `m0r3z/mrz-maps-exp`). SVN n'est qu'un miroir pour la distribution wp.org.
-- **Soumission initiale** : zip généré comme ci-dessus, soumis via https://wordpress.org/plugins/developers/add/ (compte `m0r3z`, email `hello@morez.co`).
+- **Soumission initiale** : zip généré comme ci-dessus, soumis via https://wordpress.org/plugins/developers/add/ (compte wp.org `mrzxp`, email `hello@morez.co`). Le compte GitHub `m0r3z` reste indépendant du compte wp.org `mrzxp` — ne pas confondre.
 - **Après acceptation**, accès SVN reçu : `https://plugins.svn.wordpress.org/mrz-maps-exp/`. Trois dossiers :
   - `trunk/` — code en développement
   - `tags/X.Y.Z/` — versions taguées (la version servie aux utilisateurs est celle du `Stable tag` de readme.txt)

@@ -1,10 +1,10 @@
 === MRZ Maps Experience ===
-Contributors: m0r3z
+Contributors: mrzxp
 Tags: google maps, map, acf, taxonomy, custom post type
 Requires at least: 6.3
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -110,6 +110,9 @@ It is the responsibility of site administrators to obtain a valid Google Maps AP
 
 == Changelog ==
 
+= 1.0.3 =
+* Updated the readme `Contributors:` line to point at the actual wordpress.org account that owns the plugin (`mrzxp`). The GitHub repository remains `m0r3z/mrz-maps-exp` — the two accounts are intentionally distinct.
+
 = 1.0.2 =
 * Pre-submission polish for wordpress.org. No functional change.
 * `uninstall.php`: rewrote the three `$wpdb->query()` calls using `$wpdb->prepare()` and `$wpdb->esc_like()` instead of hand-escaped LIKE patterns, matching the strictest Plugin Check expectations.
@@ -198,6 +201,9 @@ It is the responsibility of site administrators to obtain a valid Google Maps AP
 * Version initiale : CPT, métaboxes, template parser, shortcode, JS front, clustering, filtres taxo
 
 == Upgrade Notice ==
+
+= 1.0.3 =
+Updated readme `Contributors:` to the actual wp.org account (`mrzxp`). Cosmetic only.
 
 = 1.0.2 =
 Pre-submission polish for wordpress.org. No functional change, safe upgrade.
