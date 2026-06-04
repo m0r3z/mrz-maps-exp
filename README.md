@@ -252,8 +252,8 @@ Google Maps JavaScript API est chargée à la volée via la clé fournie par le 
 ## Architecture
 
 ```
-mrz-maps-exp/
-├── mrz-maps-exp.php                    # Bootstrap + autoloader PSR-4
+mrz-maps-experience/
+├── mrz-maps-experience.php                    # Bootstrap + autoloader PSR-4
 ├── uninstall.php                   # Nettoyage complet à la désinstallation
 ├── includes/
 │   ├── class-plugin.php            # Singleton, charge les modules
@@ -275,14 +275,14 @@ mrz-maps-exp/
 │   └── views/                      # Templates de chaque métabox
 ├── public/
 │   ├── css/public.css              # Layout minimal + responsive + popup
-│   ├── js/mrz-maps-exp.js              # Init map, markers, filtres, search, popup, OMS
+│   ├── js/mrz-maps-experience.js              # Init map, markers, filtres, search, popup, OMS
 │   └── views/map-wrapper.php       # HTML du shortcode
 ├── assets/
 │   ├── default-marker.svg          # Marqueur par défaut
 │   └── vendor/
 │       └── oms.min.js              # OverlappingMarkerSpiderfier
 └── languages/
-    └── mrz-maps-exp.pot
+    └── mrz-maps-experience.pot
 ```
 
 ## Licence

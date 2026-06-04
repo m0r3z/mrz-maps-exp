@@ -1,4 +1,4 @@
-/* mrz-maps-exp — layout minimal (aucun style cosmétique) */
+/* mrz-maps-experience — layout minimal (aucun style cosmétique) */
 .mrz-maps-exp-wrapper { display: block; }
 .mrz-maps-exp-wrapper.mrz-maps-exp-filters-side-left,
 .mrz-maps-exp-wrapper.mrz-maps-exp-filters-side-right { display: grid; grid-template-columns: 260px 1fr; gap: 16px; align-items: start; }

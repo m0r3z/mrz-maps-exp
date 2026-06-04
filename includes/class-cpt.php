@@ -20,19 +20,19 @@ final class CPT {
 
 	public function register_post_type() {
 		$labels = array(
-			'name'               => _x( 'Cartes', 'post type general name', 'mrz-maps-exp' ),
-			'singular_name'      => _x( 'Carte', 'post type singular name', 'mrz-maps-exp' ),
-			'menu_name'          => _x( 'MRZ Maps', 'admin menu', 'mrz-maps-exp' ),
-			'name_admin_bar'     => _x( 'Carte', 'add new on admin bar', 'mrz-maps-exp' ),
-			'add_new'            => _x( 'Ajouter', 'map', 'mrz-maps-exp' ),
-			'add_new_item'       => __( 'Ajouter une carte', 'mrz-maps-exp' ),
-			'new_item'           => __( 'Nouvelle carte', 'mrz-maps-exp' ),
-			'edit_item'          => __( 'Modifier la carte', 'mrz-maps-exp' ),
-			'view_item'          => __( 'Voir la carte', 'mrz-maps-exp' ),
-			'all_items'          => __( 'Toutes les cartes', 'mrz-maps-exp' ),
-			'search_items'       => __( 'Rechercher une carte', 'mrz-maps-exp' ),
-			'not_found'          => __( 'Aucune carte trouvée.', 'mrz-maps-exp' ),
-			'not_found_in_trash' => __( 'Aucune carte dans la corbeille.', 'mrz-maps-exp' ),
+			'name'               => _x( 'Cartes', 'post type general name', 'mrz-maps-experience' ),
+			'singular_name'      => _x( 'Carte', 'post type singular name', 'mrz-maps-experience' ),
+			'menu_name'          => _x( 'MRZ Maps', 'admin menu', 'mrz-maps-experience' ),
+			'name_admin_bar'     => _x( 'Carte', 'add new on admin bar', 'mrz-maps-experience' ),
+			'add_new'            => _x( 'Ajouter', 'map', 'mrz-maps-experience' ),
+			'add_new_item'       => __( 'Ajouter une carte', 'mrz-maps-experience' ),
+			'new_item'           => __( 'Nouvelle carte', 'mrz-maps-experience' ),
+			'edit_item'          => __( 'Modifier la carte', 'mrz-maps-experience' ),
+			'view_item'          => __( 'Voir la carte', 'mrz-maps-experience' ),
+			'all_items'          => __( 'Toutes les cartes', 'mrz-maps-experience' ),
+			'search_items'       => __( 'Rechercher une carte', 'mrz-maps-experience' ),
+			'not_found'          => __( 'Aucune carte trouvée.', 'mrz-maps-experience' ),
+			'not_found_in_trash' => __( 'Aucune carte dans la corbeille.', 'mrz-maps-experience' ),
 		);
 
 		$args = array(
@@ -94,7 +94,7 @@ final class CPT {
 		foreach ( $columns as $key => $label ) {
 			$new[ $key ] = $label;
 			if ( 'title' === $key ) {
-				$new['mrz_maps_exp_shortcode'] = __( 'Shortcode', 'mrz-maps-exp' );
+				$new['mrz_maps_exp_shortcode'] = __( 'Shortcode', 'mrz-maps-experience' );
 			}
 		}
 		return $new;

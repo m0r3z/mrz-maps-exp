@@ -1,16 +1,16 @@
 <?php
 /**
  * Plugin Name:       MRZ Maps Experience
- * Plugin URI:        https://github.com/m0r3z/mrz-maps-exp
+ * Plugin URI:        https://github.com/m0r3z/mrz-maps-experience
  * Description:       Cartographie Google Maps basée sur les CPT et champs ACF, avec filtres par taxonomie, Snazzy Maps et recherche par adresse.
- * Version:           1.0.3
+ * Version:           1.0.4
  * Requires at least: 6.3
  * Requires PHP:      7.4
  * Author:            Morez.co
  * Author URI:        https://morez.co
  * License:           GPLv3 or later
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.html
- * Text Domain:       mrz-maps-exp
+ * Text Domain:       mrz-maps-experience
  * Domain Path:       /languages
  *
  * MRZ Maps Experience — Copyright (C) 2026 Morez.co <hello@morez.co>
@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'MRZ_MAPS_EXP_VERSION', '1.0.3' );
+define( 'MRZ_MAPS_EXP_VERSION', '1.0.4' );
 define( 'MRZ_MAPS_EXP_FILE', __FILE__ );
 define( 'MRZ_MAPS_EXP_DIR', plugin_dir_path( __FILE__ ) );
 define( 'MRZ_MAPS_EXP_URL', plugin_dir_url( __FILE__ ) );

@@ -48,13 +48,13 @@ final class MapConfig {
 	}
 
 	public function add_metaboxes() {
-		add_meta_box( 'mrz_maps_exp_source', __( 'Source des données', 'mrz-maps-exp' ), array( $this, 'render' ), MRZ_MAPS_EXP_CPT, 'normal', 'high', array( 'view' => 'source' ) );
-		add_meta_box( 'mrz_maps_exp_templates', __( 'Templates HTML', 'mrz-maps-exp' ), array( $this, 'render' ), MRZ_MAPS_EXP_CPT, 'normal', 'high', array( 'view' => 'templates' ) );
-		add_meta_box( 'mrz_maps_exp_filters', __( 'Filtres', 'mrz-maps-exp' ), array( $this, 'render' ), MRZ_MAPS_EXP_CPT, 'normal', 'high', array( 'view' => 'filters' ) );
-		add_meta_box( 'mrz_maps_exp_display', __( 'Affichage', 'mrz-maps-exp' ), array( $this, 'render' ), MRZ_MAPS_EXP_CPT, 'normal', 'high', array( 'view' => 'display' ) );
-		add_meta_box( 'mrz_maps_exp_cosmetic', __( 'Cosmétique', 'mrz-maps-exp' ), array( $this, 'render' ), MRZ_MAPS_EXP_CPT, 'normal', 'default', array( 'view' => 'cosmetic' ) );
-		add_meta_box( 'mrz_maps_exp_style', __( 'Style de la carte', 'mrz-maps-exp' ), array( $this, 'render' ), MRZ_MAPS_EXP_CPT, 'normal', 'default', array( 'view' => 'style' ) );
-		add_meta_box( 'mrz_maps_exp_shortcode', __( 'Shortcode', 'mrz-maps-exp' ), array( $this, 'render' ), MRZ_MAPS_EXP_CPT, 'side', 'high', array( 'view' => 'shortcode' ) );
+		add_meta_box( 'mrz_maps_exp_source', __( 'Source des données', 'mrz-maps-experience' ), array( $this, 'render' ), MRZ_MAPS_EXP_CPT, 'normal', 'high', array( 'view' => 'source' ) );
+		add_meta_box( 'mrz_maps_exp_templates', __( 'Templates HTML', 'mrz-maps-experience' ), array( $this, 'render' ), MRZ_MAPS_EXP_CPT, 'normal', 'high', array( 'view' => 'templates' ) );
+		add_meta_box( 'mrz_maps_exp_filters', __( 'Filtres', 'mrz-maps-experience' ), array( $this, 'render' ), MRZ_MAPS_EXP_CPT, 'normal', 'high', array( 'view' => 'filters' ) );
+		add_meta_box( 'mrz_maps_exp_display', __( 'Affichage', 'mrz-maps-experience' ), array( $this, 'render' ), MRZ_MAPS_EXP_CPT, 'normal', 'high', array( 'view' => 'display' ) );
+		add_meta_box( 'mrz_maps_exp_cosmetic', __( 'Cosmétique', 'mrz-maps-experience' ), array( $this, 'render' ), MRZ_MAPS_EXP_CPT, 'normal', 'default', array( 'view' => 'cosmetic' ) );
+		add_meta_box( 'mrz_maps_exp_style', __( 'Style de la carte', 'mrz-maps-experience' ), array( $this, 'render' ), MRZ_MAPS_EXP_CPT, 'normal', 'default', array( 'view' => 'style' ) );
+		add_meta_box( 'mrz_maps_exp_shortcode', __( 'Shortcode', 'mrz-maps-experience' ), array( $this, 'render' ), MRZ_MAPS_EXP_CPT, 'side', 'high', array( 'view' => 'shortcode' ) );
 	}
 
 	public function render( $post, $metabox ) {
@@ -298,7 +298,7 @@ final class MapConfig {
 			if ( null === $decoded && json_last_error() !== JSON_ERROR_NONE ) {
 				// JSON invalide : on stocke vide et on signale.
 				$clean['snazzy'] = '';
-				add_settings_error( 'mrz_maps_exp', 'snazzy_invalid', __( 'Snazzy Maps : JSON invalide, le style a été ignoré.', 'mrz-maps-exp' ), 'error' );
+				add_settings_error( 'mrz_maps_exp', 'snazzy_invalid', __( 'Snazzy Maps : JSON invalide, le style a été ignoré.', 'mrz-maps-experience' ), 'error' );
 			} else {
 				$clean['snazzy'] = wp_json_encode( $decoded );
 			}
@@ -381,12 +381,12 @@ final class MapConfig {
 	public function ajax_fetch_terms() {
 		check_ajax_referer( 'mrz_maps_exp_fetch_terms', 'nonce' );
 		if ( ! current_user_can( 'edit_posts' ) ) {
-			wp_send_json_error( array( 'message' => __( 'Accès refusé.', 'mrz-maps-exp' ) ), 403 );
+			wp_send_json_error( array( 'message' => __( 'Accès refusé.', 'mrz-maps-experience' ) ), 403 );
 		}
 
 		$taxonomy = isset( $_POST['taxonomy'] ) ? sanitize_key( wp_unslash( $_POST['taxonomy'] ) ) : '';
 		if ( '' === $taxonomy || ! taxonomy_exists( $taxonomy ) ) {
-			wp_send_json_error( array( 'message' => __( 'Taxonomie invalide.', 'mrz-maps-exp' ) ), 400 );
+			wp_send_json_error( array( 'message' => __( 'Taxonomie invalide.', 'mrz-maps-experience' ) ), 400 );
 		}
 
 		$terms = get_terms(
@@ -524,9 +524,9 @@ final class MapConfig {
 		}
 		?>
 		<div class="notice notice-warning">
-			<p><strong><?php esc_html_e( 'mrz-maps-exp : clé Google Maps API manquante.', 'mrz-maps-exp' ); ?></strong></p>
+			<p><strong><?php esc_html_e( 'mrz-maps-experience : clé Google Maps API manquante.', 'mrz-maps-experience' ); ?></strong></p>
 			<p>
-				<?php esc_html_e( 'Ajoutez dans le functions.php de votre thème :', 'mrz-maps-exp' ); ?>
+				<?php esc_html_e( 'Ajoutez dans le functions.php de votre thème :', 'mrz-maps-experience' ); ?>
 			</p>
 			<pre style="background:#f6f7f7;padding:10px;overflow:auto;">add_filter( 'mrz_maps_exp_api_key', function () {
     return 'VOTRE_CLE_API';

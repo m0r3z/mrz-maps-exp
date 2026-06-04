@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 $allowed_code = array( 'code' => array() );
 ?>
 <p>
-	<?php esc_html_e( 'Placeholders disponibles :', 'mrz-maps-exp' ); ?>
+	<?php esc_html_e( 'Placeholders disponibles :', 'mrz-maps-experience' ); ?>
 	<?php
 	echo ' ';
 	echo wp_kses(
@@ -22,7 +22,7 @@ $allowed_code = array( 'code' => array() );
 	);
 	?>
 	<br />
-	<?php esc_html_e( 'Conditionnels :', 'mrz-maps-exp' ); ?>
+	<?php esc_html_e( 'Conditionnels :', 'mrz-maps-experience' ); ?>
 	<?php
 	echo ' ';
 	echo wp_kses(
@@ -35,20 +35,20 @@ $allowed_code = array( 'code' => array() );
 	<tbody>
 		<tr>
 			<th scope="row">
-				<label for="mrz_maps_exp_tpl_tooltip"><?php esc_html_e( 'Template infobulle', 'mrz-maps-exp' ); ?></label>
+				<label for="mrz_maps_exp_tpl_tooltip"><?php esc_html_e( 'Template infobulle', 'mrz-maps-experience' ); ?></label>
 			</th>
 			<td>
 				<textarea name="mrz_maps_exp[tpl_tooltip]" id="mrz_maps_exp_tpl_tooltip" rows="8" class="large-text code"><?php echo esc_textarea( $values['tpl_tooltip'] ); ?></textarea>
-				<p class="description"><?php esc_html_e( 'HTML affiché dans l\'infobulle de chaque marker.', 'mrz-maps-exp' ); ?></p>
+				<p class="description"><?php esc_html_e( 'HTML affiché dans l\'infobulle de chaque marker.', 'mrz-maps-experience' ); ?></p>
 			</td>
 		</tr>
 		<tr>
 			<th scope="row">
-				<label for="mrz_maps_exp_tpl_list"><?php esc_html_e( 'Template liste', 'mrz-maps-exp' ); ?></label>
+				<label for="mrz_maps_exp_tpl_list"><?php esc_html_e( 'Template liste', 'mrz-maps-experience' ); ?></label>
 			</th>
 			<td>
 				<textarea name="mrz_maps_exp[tpl_list]" id="mrz_maps_exp_tpl_list" rows="8" class="large-text code"><?php echo esc_textarea( $values['tpl_list'] ); ?></textarea>
-				<p class="description"><?php esc_html_e( 'HTML affiché pour chaque entrée de la liste/grille.', 'mrz-maps-exp' ); ?></p>
+				<p class="description"><?php esc_html_e( 'HTML affiché pour chaque entrée de la liste/grille.', 'mrz-maps-experience' ); ?></p>
 			</td>
 		</tr>
 	</tbody>
