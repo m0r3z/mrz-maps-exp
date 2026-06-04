@@ -4,7 +4,7 @@ Tags: google maps, map, acf, taxonomy, custom post type
 Requires at least: 6.3
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -51,7 +51,7 @@ Issues, pull requests et forks bienvenus.
 2. Déclarer la clé Google Maps API dans le `functions.php` du thème :
    `add_filter( 'mrz_maps_exp_api_key', function () { return 'VOTRE_CLE_API'; } );`
 3. Installer et activer MRZ Maps Experience depuis l'écran « Extensions » de WordPress, ou téléverser le zip.
-4. Aller dans le menu **GMaps** → **Ajouter une carte**, configurer la source, les filtres, les templates, etc.
+4. Aller dans le menu **MRZ Maps** → **Ajouter une carte**, configurer la source, les filtres, les templates, etc.
 5. Insérer le shortcode généré dans la page de votre choix : `[mrz_maps_exp id="X"]`.
 
 == Frequently Asked Questions ==
@@ -109,6 +109,11 @@ The plugin does not send any data to Morez.co or to any other third-party servic
 It is the responsibility of site administrators to obtain a valid Google Maps API key, accept Google's Terms of Service for the project that key belongs to, and disclose the use of Google Maps in their own site's privacy policy where required.
 
 == Changelog ==
+
+= 1.0.1 =
+* Fix admin label : le menu sidebar affichait encore « GMaps » au lieu de « MRZ Maps ». Correction du `menu_name` du CPT.
+* Fix uninstall : le script `uninstall.php` ciblait encore les anciens préfixes `_gmaps_aa_*` au lieu de `_mrz_maps_exp_*` pour le nettoyage des post_meta, term_meta et transients (les underscores échappés dans les LIKE SQL ont été manqués par le renommage en bulk de la 1.0.0).
+* Fix doc : mentions résiduelles du menu « GMaps » dans `readme.txt` et `README.md` corrigées en « MRZ Maps ».
 
 = 1.0.0 =
 * First public release under the Morez.co identity, as "MRZ Maps Experience". Full rebrand from the internal "GMaps-AA" codebase: new plugin slug (`mrz-maps-exp`), new text domain, new PHP namespace (`MrzMapsExp`), new constant / function / meta / CPT prefixes (`MRZ_MAPS_EXP_*`, `mrz_maps_exp_*`, `_mrz_maps_exp_*`, `mrz_maps_exp_map`). Existing sites coming from the internal "GMaps-AA" codebase must reconfigure their maps after upgrade — there is no automatic data migration.
@@ -187,6 +192,9 @@ It is the responsibility of site administrators to obtain a valid Google Maps AP
 * Version initiale : CPT, métaboxes, template parser, shortcode, JS front, clustering, filtres taxo
 
 == Upgrade Notice ==
+
+= 1.0.1 =
+Petits correctifs post-rebrand : libellé du menu admin (« GMaps » → « MRZ Maps »), nettoyage uninstall qui ne ciblait pas les bons préfixes. Mise à jour recommandée.
 
 = 1.0.0 =
 First public release as "MRZ Maps Experience" (Morez.co). Full rebrand from the internal "GMaps-AA" codebase — namespaces, prefixes, slug and CPT all changed. Sites previously running the internal "GMaps-AA" build must reconfigure their maps after upgrade.

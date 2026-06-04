@@ -22,7 +22,7 @@ final class CPT {
 		$labels = array(
 			'name'               => _x( 'Cartes', 'post type general name', 'mrz-maps-exp' ),
 			'singular_name'      => _x( 'Carte', 'post type singular name', 'mrz-maps-exp' ),
-			'menu_name'          => _x( 'GMaps', 'admin menu', 'mrz-maps-exp' ),
+			'menu_name'          => _x( 'MRZ Maps', 'admin menu', 'mrz-maps-exp' ),
 			'name_admin_bar'     => _x( 'Carte', 'add new on admin bar', 'mrz-maps-exp' ),
 			'add_new'            => _x( 'Ajouter', 'map', 'mrz-maps-exp' ),
 			'add_new_item'       => __( 'Ajouter une carte', 'mrz-maps-exp' ),

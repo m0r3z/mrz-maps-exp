@@ -26,17 +26,17 @@ if ( ! empty( $map_ids ) ) {
 
 // Supprime les post_meta orphelines éventuelles (_mrz_maps_exp_*).
 $wpdb->query(
-	"DELETE FROM {$wpdb->postmeta} WHERE meta_key LIKE '\\_gmaps\\_aa\\_%'"
+	"DELETE FROM {$wpdb->postmeta} WHERE meta_key LIKE '\\_mrz\\_maps\\_exp\\_%'"
 );
 
 // Supprime les term_meta icônes.
 $wpdb->query(
-	"DELETE FROM {$wpdb->termmeta} WHERE meta_key LIKE '\\_gmaps\\_aa\\_%'"
+	"DELETE FROM {$wpdb->termmeta} WHERE meta_key LIKE '\\_mrz\\_maps\\_exp\\_%'"
 );
 
 // Supprime les options et transients.
 delete_option( 'mrz_maps_exp_settings' );
 
 $wpdb->query(
-	"DELETE FROM {$wpdb->options} WHERE option_name LIKE '\\_transient\\_gmaps\\_aa\\_%' OR option_name LIKE '\\_transient\\_timeout\\_gmaps\\_aa\\_%'"
+	"DELETE FROM {$wpdb->options} WHERE option_name LIKE '\\_transient\\_mrz\\_maps\\_exp\\_%' OR option_name LIKE '\\_transient\\_timeout\\_mrz\\_maps\\_exp\\_%'"
 );

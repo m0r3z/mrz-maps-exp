@@ -113,7 +113,7 @@ Une notice s'affiche dans l'admin tant que la clé n'est pas détectée.
 
 ## Utilisation
 
-1. Créer une carte depuis le menu **GMaps** de l'admin.
+1. Créer une carte depuis le menu **MRZ Maps** de l'admin.
 2. Remplir les métaboxes (source, filtres, affichage, cosmétique, templates, style).
 3. Copier le shortcode affiché dans la sidebar (`[mrz_maps_exp id="XX"]`) et le coller sur la page voulue.
 
