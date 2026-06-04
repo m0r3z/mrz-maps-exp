@@ -4,7 +4,7 @@ Tags: google maps, map, acf, taxonomy, custom post type
 Requires at least: 6.3
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -110,6 +110,12 @@ It is the responsibility of site administrators to obtain a valid Google Maps AP
 
 == Changelog ==
 
+= 1.0.2 =
+* Pre-submission polish for wordpress.org. No functional change.
+* `uninstall.php`: rewrote the three `$wpdb->query()` calls using `$wpdb->prepare()` and `$wpdb->esc_like()` instead of hand-escaped LIKE patterns, matching the strictest Plugin Check expectations.
+* `metabox-templates.php`: wrapped the inline `<code>` placeholders documentation in `wp_kses()` with an explicit allowlist instead of `echo`ing literal HTML.
+* `map-wrapper.php`: minor cleanup of a `<?php echo ' / '; ?>` separator in the pagination markup (replaced with a literal character).
+
 = 1.0.1 =
 * Fix admin label : le menu sidebar affichait encore « GMaps » au lieu de « MRZ Maps ». Correction du `menu_name` du CPT.
 * Fix uninstall : le script `uninstall.php` ciblait encore les anciens préfixes `_gmaps_aa_*` au lieu de `_mrz_maps_exp_*` pour le nettoyage des post_meta, term_meta et transients (les underscores échappés dans les LIKE SQL ont été manqués par le renommage en bulk de la 1.0.0).
@@ -192,6 +198,9 @@ It is the responsibility of site administrators to obtain a valid Google Maps AP
 * Version initiale : CPT, métaboxes, template parser, shortcode, JS front, clustering, filtres taxo
 
 == Upgrade Notice ==
+
+= 1.0.2 =
+Pre-submission polish for wordpress.org. No functional change, safe upgrade.
 
 = 1.0.1 =
 Petits correctifs post-rebrand : libellé du menu admin (« GMaps » → « MRZ Maps »), nettoyage uninstall qui ne ciblait pas les bons préfixes. Mise à jour recommandée.

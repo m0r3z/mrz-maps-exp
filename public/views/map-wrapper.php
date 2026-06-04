@@ -200,7 +200,7 @@ $render_search_field = static function () use ( $config, $dropdown_id ) {
 						<button type="button" class="mrz-maps-exp-page-prev" aria-label="<?php esc_attr_e( 'Page précédente', 'mrz-maps-exp' ); ?>">&lsaquo;</button>
 						<span class="mrz-maps-exp-page-info">
 							<span class="mrz-maps-exp-page-current">1</span>
-							<?php echo ' / '; ?>
+							 /
 							<span class="mrz-maps-exp-page-total">1</span>
 						</span>
 						<button type="button" class="mrz-maps-exp-page-next" aria-label="<?php esc_attr_e( 'Page suivante', 'mrz-maps-exp' ); ?>">&rsaquo;</button>

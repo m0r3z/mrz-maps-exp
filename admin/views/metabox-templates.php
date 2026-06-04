@@ -9,15 +9,26 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 ?>
+<?php
+$allowed_code = array( 'code' => array() );
+?>
 <p>
+	<?php esc_html_e( 'Placeholders disponibles :', 'mrz-maps-exp' ); ?>
 	<?php
-	esc_html_e( 'Placeholders disponibles :', 'mrz-maps-exp' );
-	echo ' <code>{post_title}</code>, <code>{post_url}</code>, <code>{post_excerpt}</code>, <code>{post_thumbnail}</code>, <code>{post_thumbnail_url}</code>, <code>{%nom_champ_acf%}</code>, <code>{taxonomy:slug}</code>, <code>{taxonomy:slug:first}</code>.';
+	echo ' ';
+	echo wp_kses(
+		'<code>{post_title}</code>, <code>{post_url}</code>, <code>{post_excerpt}</code>, <code>{post_thumbnail}</code>, <code>{post_thumbnail_url}</code>, <code>{%nom_champ_acf%}</code>, <code>{taxonomy:slug}</code>, <code>{taxonomy:slug:first}</code>.',
+		$allowed_code
+	);
 	?>
 	<br />
+	<?php esc_html_e( 'Conditionnels :', 'mrz-maps-exp' ); ?>
 	<?php
-	esc_html_e( 'Conditionnels :', 'mrz-maps-exp' );
-	echo ' <code>{#if %mon_champ%}&lt;div&gt;...&lt;/div&gt;{/if}</code>';
+	echo ' ';
+	echo wp_kses(
+		'<code>{#if %mon_champ%}&lt;div&gt;...&lt;/div&gt;{/if}</code>',
+		$allowed_code
+	);
 	?>
 </p>
 <table class="form-table mrz-maps-exp-table">

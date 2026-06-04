@@ -25,18 +25,31 @@ if ( ! empty( $map_ids ) ) {
 }
 
 // Supprime les post_meta orphelines éventuelles (_mrz_maps_exp_*).
+$meta_like = $wpdb->esc_like( '_mrz_maps_exp_' ) . '%';
 $wpdb->query(
-	"DELETE FROM {$wpdb->postmeta} WHERE meta_key LIKE '\\_mrz\\_maps\\_exp\\_%'"
+	$wpdb->prepare(
+		"DELETE FROM {$wpdb->postmeta} WHERE meta_key LIKE %s",
+		$meta_like
+	)
 );
 
 // Supprime les term_meta icônes.
 $wpdb->query(
-	"DELETE FROM {$wpdb->termmeta} WHERE meta_key LIKE '\\_mrz\\_maps\\_exp\\_%'"
+	$wpdb->prepare(
+		"DELETE FROM {$wpdb->termmeta} WHERE meta_key LIKE %s",
+		$meta_like
+	)
 );
 
 // Supprime les options et transients.
 delete_option( 'mrz_maps_exp_settings' );
 
+$transient_like         = $wpdb->esc_like( '_transient_mrz_maps_exp_' ) . '%';
+$transient_timeout_like = $wpdb->esc_like( '_transient_timeout_mrz_maps_exp_' ) . '%';
 $wpdb->query(
-	"DELETE FROM {$wpdb->options} WHERE option_name LIKE '\\_transient\\_mrz\\_maps\\_exp\\_%' OR option_name LIKE '\\_transient\\_timeout\\_mrz\\_maps\\_exp\\_%'"
+	$wpdb->prepare(
+		"DELETE FROM {$wpdb->options} WHERE option_name LIKE %s OR option_name LIKE %s",
+		$transient_like,
+		$transient_timeout_like
+	)
 );
