@@ -84,7 +84,7 @@ $render_search_field = static function () use ( $config, $dropdown_id ) {
 	<?php
 };
 ?>
-<div id="<?php echo esc_attr( $uid ); ?>" class="<?php echo esc_attr( $wrapper_cls ); ?>" data-mrz-maps-experience="1">
+<div id="<?php echo esc_attr( $uid ); ?>" class="<?php echo esc_attr( $wrapper_cls ); ?>" data-mrz-maps-exp="1">
 
 	<?php if ( $search_top ) : ?>
 		<div class="mrz-maps-exp-search-top">
@@ -107,7 +107,7 @@ $render_search_field = static function () use ( $config, $dropdown_id ) {
 
 			<?php if ( ! empty( $filters ) || ! empty( $config['showClearBtn'] ) ) : ?>
 				<button type="button" class="mrz-maps-exp-filters-toggle" aria-expanded="false" aria-controls="<?php echo esc_attr( $uid ); ?>-filters-body">
-					<?php esc_html_e( 'Filtres', 'mrz-maps-experience' ); ?>
+					<?php esc_html_e( 'Filtres', 'mrz-maps-exp' ); ?>
 				</button>
 			<?php endif; ?>
 
@@ -131,7 +131,7 @@ $render_search_field = static function () use ( $config, $dropdown_id ) {
 
 					<?php if ( 'dropdown' === $filter['mode'] ) : ?>
 						<select class="mrz-maps-exp-filter-input" <?php echo $dattr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped — attributs déjà échappés ?>>
-							<option value=""><?php esc_html_e( 'Tous', 'mrz-maps-experience' ); ?></option>
+							<option value=""><?php esc_html_e( 'Tous', 'mrz-maps-exp' ); ?></option>
 							<?php foreach ( $filter['options'] as $opt ) : ?>
 								<?php
 								$is_forced = ( $forced && 'tax' === $filter['type']
@@ -147,7 +147,7 @@ $render_search_field = static function () use ( $config, $dropdown_id ) {
 						<div class="mrz-maps-exp-filter-group">
 							<label>
 								<input type="radio" name="<?php echo esc_attr( $uid . '-' . $fkey ); ?>" class="mrz-maps-exp-filter-input" <?php echo $dattr; // phpcs:ignore ?> value="" <?php checked( ! $forced || 'tax' !== $filter['type'] || $forced['taxonomy'] !== $filter['taxonomy'] ); ?> />
-								<?php esc_html_e( 'Tous', 'mrz-maps-experience' ); ?>
+								<?php esc_html_e( 'Tous', 'mrz-maps-exp' ); ?>
 							</label>
 							<?php foreach ( $filter['options'] as $opt ) : ?>
 								<?php
@@ -197,13 +197,13 @@ $render_search_field = static function () use ( $config, $dropdown_id ) {
 				<div class="mrz-maps-exp-list"></div>
 				<?php if ( (int) $config['perPage'] > 0 ) : ?>
 					<nav class="mrz-maps-exp-pagination" hidden>
-						<button type="button" class="mrz-maps-exp-page-prev" aria-label="<?php esc_attr_e( 'Page précédente', 'mrz-maps-experience' ); ?>">&lsaquo;</button>
+						<button type="button" class="mrz-maps-exp-page-prev" aria-label="<?php esc_attr_e( 'Page précédente', 'mrz-maps-exp' ); ?>">&lsaquo;</button>
 						<span class="mrz-maps-exp-page-info">
 							<span class="mrz-maps-exp-page-current">1</span>
 							 /
 							<span class="mrz-maps-exp-page-total">1</span>
 						</span>
-						<button type="button" class="mrz-maps-exp-page-next" aria-label="<?php esc_attr_e( 'Page suivante', 'mrz-maps-experience' ); ?>">&rsaquo;</button>
+						<button type="button" class="mrz-maps-exp-page-next" aria-label="<?php esc_attr_e( 'Page suivante', 'mrz-maps-exp' ); ?>">&rsaquo;</button>
 					</nav>
 				<?php endif; ?>
 			</div>

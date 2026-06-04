@@ -1,10 +1,10 @@
-=== MRZ Maps Experience ===
+=== MRZ Maps Exp ===
 Contributors: mrzxp
 Tags: google maps, map, acf, taxonomy, custom post type
 Requires at least: 6.3
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.0.4
+Stable tag: 1.0.5
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -12,7 +12,7 @@ Cartographie Google Maps basée sur les champs ACF, avec filtres par taxonomie e
 
 == Description ==
 
-MRZ Maps Experience est un plugin générique et minimaliste pour afficher n'importe quel custom post type sur une carte Google Maps. Les coordonnées sont tirées d'un champ ACF de type Google Map déclaré sur les posts. Tout se configure depuis l'admin WordPress, sans toucher au code du thème : type source, filtres, pagination, templates HTML, marqueurs personnalisés, layout responsive.
+MRZ Maps Exp est un plugin générique et minimaliste pour afficher n'importe quel custom post type sur une carte Google Maps. Les coordonnées sont tirées d'un champ ACF de type Google Map déclaré sur les posts. Tout se configure depuis l'admin WordPress, sans toucher au code du thème : type source, filtres, pagination, templates HTML, marqueurs personnalisés, layout responsive.
 
 = Fonctionnalités =
 
@@ -28,7 +28,7 @@ MRZ Maps Experience est un plugin générique et minimaliste pour afficher n'imp
 * Snazzy Maps : collez un JSON pour styliser la carte.
 * Layout responsive — filtres au-dessus, à gauche ou à droite ; champ de recherche détachable en pleine largeur ; pliage des filtres en mobile.
 * Shortcode avec filtre forcé optionnel : `[mrz_maps_exp id="X" filter_taxonomy="genre" filter_term="42"]`.
-* Internationalisation prête (text-domain `mrz-maps-experience`, fichier .pot fourni).
+* Internationalisation prête (text-domain `mrz-maps-exp`, fichier .pot fourni).
 
 = Pré-requis =
 
@@ -38,11 +38,11 @@ MRZ Maps Experience est un plugin générique et minimaliste pour afficher n'imp
 
 = Confidentialité / appels externes =
 
-MRZ Maps Experience charge la bibliothèque Google Maps JS dans le navigateur de l'utilisateur final, comme tout plugin de cartographie. Aucune donnée n'est envoyée vers Morez.co ou un service tiers ; aucune télémétrie n'est collectée. La clé Google Maps fournie par l'administrateur du site est exposée côté navigateur (c'est nécessaire pour appeler l'API JS Google) — il est recommandé de la restreindre par domaine HTTP referrer dans la console Google Cloud.
+MRZ Maps Exp charge la bibliothèque Google Maps JS dans le navigateur de l'utilisateur final, comme tout plugin de cartographie. Aucune donnée n'est envoyée vers Morez.co ou un service tiers ; aucune télémétrie n'est collectée. La clé Google Maps fournie par l'administrateur du site est exposée côté navigateur (c'est nécessaire pour appeler l'API JS Google) — il est recommandé de la restreindre par domaine HTTP referrer dans la console Google Cloud.
 
 = Code source et contributions =
 
-Le développement se fait publiquement sur GitHub : https://github.com/m0r3z/mrz-maps-experience
+Le développement se fait publiquement sur GitHub : https://github.com/m0r3z/mrz-maps-exp
 Issues, pull requests et forks bienvenus.
 
 == Installation ==
@@ -50,7 +50,7 @@ Issues, pull requests et forks bienvenus.
 1. Installer et activer Advanced Custom Fields (Pro recommandé).
 2. Déclarer la clé Google Maps API dans le `functions.php` du thème :
    `add_filter( 'mrz_maps_exp_api_key', function () { return 'VOTRE_CLE_API'; } );`
-3. Installer et activer MRZ Maps Experience depuis l'écran « Extensions » de WordPress, ou téléverser le zip.
+3. Installer et activer MRZ Maps Exp depuis l'écran « Extensions » de WordPress, ou téléverser le zip.
 4. Aller dans le menu **MRZ Maps** → **Ajouter une carte**, configurer la source, les filtres, les templates, etc.
 5. Insérer le shortcode généré dans la page de votre choix : `[mrz_maps_exp id="X"]`.
 
@@ -58,7 +58,7 @@ Issues, pull requests et forks bienvenus.
 
 = ACF est-il vraiment obligatoire ? =
 
-Oui. MRZ Maps Experience s'appuie sur les champs ACF de type « Google Map » pour récupérer latitude / longitude / adresse de chaque post. Le plugin a été pensé pour s'intégrer avec ACF plutôt que dupliquer un système de coordonnées custom. La version gratuite d'ACF suffit ; ACF Pro n'est requis que si vous utilisez les fonctionnalités Pro (repeater, etc.).
+Oui. MRZ Maps Exp s'appuie sur les champs ACF de type « Google Map » pour récupérer latitude / longitude / adresse de chaque post. Le plugin a été pensé pour s'intégrer avec ACF plutôt que dupliquer un système de coordonnées custom. La version gratuite d'ACF suffit ; ACF Pro n'est requis que si vous utilisez les fonctionnalités Pro (repeater, etc.).
 
 = Pourquoi la clé Google Maps n'est-elle pas configurable depuis l'admin ? =
 
@@ -66,7 +66,7 @@ Choix volontaire. Une clé API est un secret qui n'a pas sa place en base de don
 
 = Le plugin est-il compatible avec le thème Salient / d'autres plugins de cartographie ? =
 
-Oui. MRZ Maps Experience détecte si Google Maps JS est déjà chargé par un autre plugin (par exemple Salient via `salient-core` / `nectar_gmap`) et n'enqueue pas sa propre version dans ce cas. Un filtre `mrz_maps_exp_skip_gmaps_enqueue` permet d'override le comportement si nécessaire.
+Oui. MRZ Maps Exp détecte si Google Maps JS est déjà chargé par un autre plugin (par exemple Salient via `salient-core` / `nectar_gmap`) et n'enqueue pas sa propre version dans ce cas. Un filtre `mrz_maps_exp_skip_gmaps_enqueue` permet d'override le comportement si nécessaire.
 
 = Comment ajouter du contenu dans la tooltip ou la liste ? =
 
@@ -110,12 +110,13 @@ It is the responsibility of site administrators to obtain a valid Google Maps AP
 
 == Changelog ==
 
-= 1.0.4 =
-* Slug alignment for wordpress.org submission. The Plugin Name is `MRZ Maps Experience` and the plugin slug is now `mrz-maps-experience` — they used to be `mrz-maps-exp` which mismatched the name. The plugin folder, main file (`mrz-maps-experience.php`), text domain (`mrz-maps-experience`), POT file and GitHub repo (`m0r3z/mrz-maps-experience`) are all aligned. **Internal PHP prefixes are unchanged** (`MRZ_MAPS_EXP_*` constants, `mrz_maps_exp_*` functions and hooks, `_mrz_maps_exp_*` meta keys, `MrzMapsExp\` namespace, `mrz_maps_exp_map` CPT slug, `[mrz_maps_exp]` shortcode) — they are internal and do not affect the WordPress directory.
-* `Tested up to: 7.0` (was `6.9`).
+
+= 1.0.5 =
+* Plugin Name shortened from "MRZ Maps Experience" to "MRZ Maps Exp" so the displayed name matches the plugin slug `mrz-maps-exp`. Resolves the `textdomain_mismatch` warning of the wordpress.org automated scan without renaming the slug. All internal identifiers (constants `MRZ_MAPS_EXP_*`, function prefix `mrz_maps_exp_*`, post_meta prefix `_mrz_maps_exp_*`, namespace `MrzMapsExp\`, CPT `mrz_maps_exp_map`, shortcode `[mrz_maps_exp]`, script/style handles, CSS classes) stay unchanged.
+* `Tested up to: 7.0` (was `6.9` — outdated_tested_upto_header).
 
 = 1.0.3 =
-* Updated the readme `Contributors:` line to point at the actual wordpress.org account that owns the plugin (`mrzxp`). The GitHub repository remains `m0r3z/mrz-maps-experience` — the two accounts are intentionally distinct.
+* Updated the readme `Contributors:` line to point at the actual wordpress.org account that owns the plugin (`mrzxp`). The GitHub repository remains `m0r3z/mrz-maps-exp` — the two accounts are intentionally distinct.
 
 = 1.0.2 =
 * Pre-submission polish for wordpress.org. No functional change.
@@ -129,7 +130,7 @@ It is the responsibility of site administrators to obtain a valid Google Maps AP
 * Fix doc : mentions résiduelles du menu « GMaps » dans `readme.txt` et `README.md` corrigées en « MRZ Maps ».
 
 = 1.0.0 =
-* First public release under the Morez.co identity, as "MRZ Maps Experience". Full rebrand from the internal "GMaps-AA" codebase: new plugin slug (`mrz-maps-experience`), new text domain, new PHP namespace (`MrzMapsExp`), new constant / function / meta / CPT prefixes (`MRZ_MAPS_EXP_*`, `mrz_maps_exp_*`, `_mrz_maps_exp_*`, `mrz_maps_exp_map`). Existing sites coming from the internal "GMaps-AA" codebase must reconfigure their maps after upgrade — there is no automatic data migration.
+* First public release under the Morez.co identity, as "MRZ Maps Experience". Full rebrand from the internal "GMaps-AA" codebase: new plugin slug (`mrz-maps-exp`), new text domain, new PHP namespace (`MrzMapsExp`), new constant / function / meta / CPT prefixes (`MRZ_MAPS_EXP_*`, `mrz_maps_exp_*`, `_mrz_maps_exp_*`, `mrz_maps_exp_map`). Existing sites coming from the internal "GMaps-AA" codebase must reconfigure their maps after upgrade — there is no automatic data migration.
 * Compliance with the wordpress.org plugin guidelines:
   * The admin menu icon CSS is no longer printed inline via `admin_head`; it is now enqueued via `wp_register_style` + `wp_add_inline_style` on `admin_enqueue_scripts`.
   * Removed the now-unnecessary `load_plugin_textdomain()` call (since WordPress 4.6, translations of plugins hosted on wordpress.org are loaded automatically).
@@ -145,9 +146,9 @@ It is the responsibility of site administrators to obtain a valid Google Maps AP
 * Métabox Filtres : alignement vertical de la colonne « Taxonomie » avec les colonnes Libellé / Type / Logique pour un visuel cohérent avec le bloc « Filtres par champ ACF ».
 
 = 0.5.2 =
-* Mise au clair de la propriété intellectuelle : ajout d'un en-tête de copyright Morez.co explicite dans `LICENSE`, `mrz-maps-experience.php` et `readme.txt`. Le nom et le logo « MRZ Maps Experience » sont déclarés comme marques de Morez.co.
+* Mise au clair de la propriété intellectuelle : ajout d'un en-tête de copyright Morez.co explicite dans `LICENSE`, `mrz-maps-exp.php` et `readme.txt`. Le nom et le logo « MRZ Maps Experience » sont déclarés comme marques de Morez.co.
 * Harmonisation de la licence sur GPLv3 ou ultérieure dans tous les en-têtes (le header PHP indiquait précédemment GPLv2). Le code reste libre et redistribuable sous GPL ; la marque, en revanche, n'est pas couverte par la GPL et reste exclusive à Morez.co.
-* Correction de l'URL du repo dans le header plugin (m0r3z/mrz-maps-experience) et ajout d'un Author URI.
+* Correction de l'URL du repo dans le header plugin (m0r3z/mrz-maps-exp) et ajout d'un Author URI.
 
 = 0.5.1 =
 * Synchronisation des filtres avec l'URL (option opt-in dans la métabox Filtres) : à l'activation, l'URL reflète automatiquement les filtres de taxonomie et de champs ACF actifs, et les filtres présents dans l'URL au chargement sont pré-cochés. Format : `?gm_<map_id>_tax_<slug>=12,34&gm_<map_id>_acf_<field>=valeur`. Permet de partager des liens pré-filtrés. Le préfixe par ID de carte évite les conflits si plusieurs cartes coexistent sur la même page.
@@ -206,8 +207,9 @@ It is the responsibility of site administrators to obtain a valid Google Maps AP
 
 == Upgrade Notice ==
 
-= 1.0.4 =
-Plugin slug renamed from `mrz-maps-exp` to `mrz-maps-experience` to match the Plugin Name. The shortcode, the CPT slug, the meta keys and all internal prefixes stay the same — your existing data is not touched.
+
+= 1.0.5 =
+Plugin Name shortened to "MRZ Maps Exp" to match the existing slug `mrz-maps-exp`. No data migration needed — all internal identifiers and data are unchanged.
 
 = 1.0.3 =
 Updated readme `Contributors:` to the actual wp.org account (`mrzxp`). Cosmetic only.

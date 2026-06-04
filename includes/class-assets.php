@@ -13,8 +13,8 @@ final class Assets {
 
 	const HANDLE_GMAPS      = 'mrz-maps-exp-gmaps';
 	const HANDLE_SPIDERFIER = 'mrz-maps-exp-spiderfier';
-	const HANDLE_SCRIPT     = 'mrz-maps-experience';
-	const HANDLE_STYLE      = 'mrz-maps-experience';
+	const HANDLE_SCRIPT     = 'mrz-maps-exp';
+	const HANDLE_STYLE      = 'mrz-maps-exp';
 
 	public function register() {
 		add_action( 'wp_enqueue_scripts', array( $this, 'register_assets' ) );
@@ -45,7 +45,7 @@ final class Assets {
 
 		wp_register_script(
 			self::HANDLE_SCRIPT,
-			MRZ_MAPS_EXP_URL . 'public/js/mrz-maps-experience.js',
+			MRZ_MAPS_EXP_URL . 'public/js/mrz-maps-exp.js',
 			array( self::HANDLE_SPIDERFIER ),
 			MRZ_MAPS_EXP_VERSION,
 			true

@@ -2,40 +2,40 @@
 # This file is distributed under the GPLv3 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: MRZ Maps Experience 1.0.4\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/mrz-maps-exp\n"
+"Project-Id-Version: MRZ Maps Exp 1.0.5\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/mrz-maps-experience\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-06-04T13:28:06+00:00\n"
+"POT-Creation-Date: 2026-06-04T13:34:29+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
-"X-Domain: mrz-maps-experience\n"
+"X-Domain: mrz-maps-exp\n"
 
 #. Plugin Name of the plugin
-#: mrz-maps-experience.php
-msgid "MRZ Maps Experience"
+#: mrz-maps-exp.php
+msgid "MRZ Maps Exp"
 msgstr ""
 
 #. Plugin URI of the plugin
-#: mrz-maps-experience.php
-msgid "https://github.com/m0r3z/mrz-maps-experience"
+#: mrz-maps-exp.php
+msgid "https://github.com/m0r3z/mrz-maps-exp"
 msgstr ""
 
 #. Description of the plugin
-#: mrz-maps-experience.php
+#: mrz-maps-exp.php
 msgid "Cartographie Google Maps basée sur les CPT et champs ACF, avec filtres par taxonomie, Snazzy Maps et recherche par adresse."
 msgstr ""
 
 #. Author of the plugin
-#: mrz-maps-experience.php
+#: mrz-maps-exp.php
 msgid "Morez.co"
 msgstr ""
 
 #. Author URI of the plugin
-#: mrz-maps-experience.php
+#: mrz-maps-exp.php
 msgid "https://morez.co"
 msgstr ""
 
@@ -491,7 +491,7 @@ msgid "HTML affiché pour chaque entrée de la liste/grille."
 msgstr ""
 
 #: includes/class-activator.php:18
-msgid "mrz-maps-experience nécessite Advanced Custom Fields (Pro recommandé). Veuillez installer et activer ACF avant d'activer ce plugin."
+msgid "mrz-maps-exp nécessite Advanced Custom Fields (Pro recommandé). Veuillez installer et activer ACF avant d'activer ce plugin."
 msgstr ""
 
 #: includes/class-activator.php:19
@@ -618,7 +618,7 @@ msgid "Taxonomie invalide."
 msgstr ""
 
 #: includes/class-map-config.php:527
-msgid "mrz-maps-experience : clé Google Maps API manquante."
+msgid "mrz-maps-exp : clé Google Maps API manquante."
 msgstr ""
 
 #: includes/class-map-config.php:529
@@ -626,12 +626,12 @@ msgid "Ajoutez dans le functions.php de votre thème :"
 msgstr ""
 
 #: includes/class-plugin.php:61
-msgid "mrz-maps-experience nécessite Advanced Custom Fields (Pro recommandé) pour fonctionner."
+msgid "mrz-maps-exp nécessite Advanced Custom Fields (Pro recommandé) pour fonctionner."
 msgstr ""
 
 #: includes/class-taxonomy-markers.php:37
 #: includes/class-taxonomy-markers.php:57
-msgid "Icône marker mrz-maps-experience"
+msgid "Icône marker mrz-maps-exp"
 msgstr ""
 
 #: includes/class-taxonomy-markers.php:45

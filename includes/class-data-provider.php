@@ -37,9 +37,9 @@ final class DataProvider {
 			'filters' => array(),
 			'points'  => array(),
 			'i18n'    => array(
-				'search_placeholder' => __( 'Rechercher une adresse…', 'mrz-maps-experience' ),
-				'radius_label'       => __( 'Rayon (km)', 'mrz-maps-experience' ),
-				'clear'              => __( 'Effacer', 'mrz-maps-experience' ),
+				'search_placeholder' => __( 'Rechercher une adresse…', 'mrz-maps-exp' ),
+				'radius_label'       => __( 'Rayon (km)', 'mrz-maps-exp' ),
+				'clear'              => __( 'Effacer', 'mrz-maps-exp' ),
 			),
 		);
 
@@ -67,7 +67,7 @@ final class DataProvider {
 
 		$clear_btn_text = '' !== (string) $values['clear_btn_text']
 			? (string) $values['clear_btn_text']
-			: __( 'Effacer', 'mrz-maps-experience' );
+			: __( 'Effacer', 'mrz-maps-exp' );
 
 		$marker_default_url = '' !== (string) $values['marker_default_url']
 			? (string) $values['marker_default_url']
@@ -96,14 +96,14 @@ final class DataProvider {
 				'radius'         => (int) $values['search_radius'],
 				'label'          => '' !== (string) $values['search_label']
 					? (string) $values['search_label']
-					: __( 'Rechercher', 'mrz-maps-experience' ),
+					: __( 'Rechercher', 'mrz-maps-exp' ),
 				'placeholder'    => '' !== (string) $values['search_placeholder']
 					? (string) $values['search_placeholder']
-					: __( 'Rechercher une adresse…', 'mrz-maps-experience' ),
+					: __( 'Rechercher une adresse…', 'mrz-maps-exp' ),
 				'localMatch'     => ! empty( $values['search_local_match'] ),
 				'layout'         => (string) $values['search_layout'],
-				'sectionLocal'   => __( 'Fiches', 'mrz-maps-experience' ),
-				'sectionAddress' => __( 'Adresses', 'mrz-maps-experience' ),
+				'sectionLocal'   => __( 'Fiches', 'mrz-maps-exp' ),
+				'sectionAddress' => __( 'Adresses', 'mrz-maps-exp' ),
 			),
 			'taxonomies'       => array_values( (array) $values['taxonomies'] ),
 			'taxoModes'        => (array) $values['taxo_modes'],
@@ -374,8 +374,8 @@ final class DataProvider {
 			}
 			if ( is_array( $obj ) && isset( $obj['type'] ) && 'true_false' === $obj['type'] ) {
 				$choices = array(
-					'1' => isset( $obj['ui_on_text'] ) && '' !== $obj['ui_on_text'] ? (string) $obj['ui_on_text'] : __( 'Oui', 'mrz-maps-experience' ),
-					'0' => isset( $obj['ui_off_text'] ) && '' !== $obj['ui_off_text'] ? (string) $obj['ui_off_text'] : __( 'Non', 'mrz-maps-experience' ),
+					'1' => isset( $obj['ui_on_text'] ) && '' !== $obj['ui_on_text'] ? (string) $obj['ui_on_text'] : __( 'Oui', 'mrz-maps-exp' ),
+					'0' => isset( $obj['ui_off_text'] ) && '' !== $obj['ui_off_text'] ? (string) $obj['ui_off_text'] : __( 'Non', 'mrz-maps-exp' ),
 				);
 			}
 		}

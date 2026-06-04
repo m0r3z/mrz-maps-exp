@@ -1,4 +1,4 @@
-/* mrz-maps-experience — admin styles (minimaux) */
+/* mrz-maps-exp — admin styles (minimaux) */
 .mrz-maps-exp-table th { width: 220px; }
 .mrz-maps-exp-taxo-list { display: flex; flex-direction: column; gap: 12px; }
 .mrz-maps-exp-taxo-row { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 12px; padding: 10px; background: #f6f7f7; border: 1px solid #dcdcde; }

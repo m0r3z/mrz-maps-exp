@@ -15,8 +15,8 @@ final class Activator {
 		if ( ! mrz_maps_exp_has_acf() ) {
 			deactivate_plugins( MRZ_MAPS_EXP_BASENAME );
 			wp_die(
-				esc_html__( 'mrz-maps-experience nécessite Advanced Custom Fields (Pro recommandé). Veuillez installer et activer ACF avant d\'activer ce plugin.', 'mrz-maps-experience' ),
-				esc_html__( 'Dépendance manquante', 'mrz-maps-experience' ),
+				esc_html__( 'mrz-maps-exp nécessite Advanced Custom Fields (Pro recommandé). Veuillez installer et activer ACF avant d\'activer ce plugin.', 'mrz-maps-exp' ),
+				esc_html__( 'Dépendance manquante', 'mrz-maps-exp' ),
 				array( 'back_link' => true )
 			);
 		}

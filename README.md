@@ -1,4 +1,4 @@
-# MRZ Maps Experience
+# MRZ Maps Exp
 
 Plugin WordPress générique de cartographie Google Maps basé sur les champs ACF `google_map`.
 
@@ -103,7 +103,7 @@ define( 'MRZ_MAPS_EXP_API_KEY', 'VOTRE_CLE_API' );
 
 ### 3. Réglage ACF
 
-Si vous avez déjà configuré ACF pour les champs `google_map` (`acf_get_setting('google_api_key')`), MRZ Maps Experience réutilise automatiquement cette valeur.
+Si vous avez déjà configuré ACF pour les champs `google_map` (`acf_get_setting('google_api_key')`), MRZ Maps Exp réutilise automatiquement cette valeur.
 
 ### Restrictions recommandées
 
@@ -247,13 +247,13 @@ Google Maps JavaScript API est chargée à la volée via la clé fournie par le 
 
 ## Compatibilité
 
-- **Thème Salient** (`salient-core` / `nectar_gmap`) : les deux systèmes cohabitent sans conflit. Si Salient charge déjà Google Maps sur la même page, MRZ Maps Experience le détecte et ne le recharge pas.
+- **Thème Salient** (`salient-core` / `nectar_gmap`) : les deux systèmes cohabitent sans conflit. Si Salient charge déjà Google Maps sur la même page, MRZ Maps Exp le détecte et ne le recharge pas.
 
 ## Architecture
 
 ```
-mrz-maps-experience/
-├── mrz-maps-experience.php                    # Bootstrap + autoloader PSR-4
+mrz-maps-exp/
+├── mrz-maps-exp.php                    # Bootstrap + autoloader PSR-4
 ├── uninstall.php                   # Nettoyage complet à la désinstallation
 ├── includes/
 │   ├── class-plugin.php            # Singleton, charge les modules
@@ -275,14 +275,14 @@ mrz-maps-experience/
 │   └── views/                      # Templates de chaque métabox
 ├── public/
 │   ├── css/public.css              # Layout minimal + responsive + popup
-│   ├── js/mrz-maps-experience.js              # Init map, markers, filtres, search, popup, OMS
+│   ├── js/mrz-maps-exp.js              # Init map, markers, filtres, search, popup, OMS
 │   └── views/map-wrapper.php       # HTML du shortcode
 ├── assets/
 │   ├── default-marker.svg          # Marqueur par défaut
 │   └── vendor/
 │       └── oms.min.js              # OverlappingMarkerSpiderfier
 └── languages/
-    └── mrz-maps-experience.pot
+    └── mrz-maps-exp.pot
 ```
 
 ## Licence

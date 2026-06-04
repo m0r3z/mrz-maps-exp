@@ -5,13 +5,13 @@
 	var googleReady = false;
 
 	function bootAll() {
-		document.querySelectorAll('[data-mrz-maps-experience="1"]').forEach(function (wrapper) {
+		document.querySelectorAll('[data-mrz-maps-exp="1"]').forEach(function (wrapper) {
 			if (wrapper.__mrzMapsExpInited) { return; }
 			wrapper.__mrzMapsExpInited = true;
 			try {
 				initInstance(wrapper);
 			} catch (e) {
-				console.error('[mrz-maps-experience]', e);
+				console.error('[mrz-maps-exp]', e);
 			}
 		});
 	}
@@ -32,7 +32,7 @@
 		try {
 			return JSON.parse(node.textContent || node.innerText || '{}');
 		} catch (e) {
-			console.error('[mrz-maps-experience] invalid JSON', e);
+			console.error('[mrz-maps-exp] invalid JSON', e);
 			return null;
 		}
 	}
