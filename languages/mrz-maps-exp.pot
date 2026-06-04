@@ -1,42 +1,42 @@
-# Copyright (C) 2026 Doublea.io
+# Copyright (C) 2026 Morez.co
 # This file is distributed under the GPLv3 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: GMaps-AA 0.5.3\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/gmaps-aa\n"
+"Project-Id-Version: MRZ Maps Experience 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/mrz-maps-exp\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-05-09T14:52:28+00:00\n"
+"POT-Creation-Date: 2026-06-04T11:57:03+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
-"X-Domain: gmaps-aa\n"
+"X-Domain: mrz-maps-exp\n"
 
 #. Plugin Name of the plugin
-#: gmaps-aa.php
-msgid "GMaps-AA"
+#: mrz-maps-exp.php
+msgid "MRZ Maps Experience"
 msgstr ""
 
 #. Plugin URI of the plugin
-#: gmaps-aa.php
-msgid "https://github.com/d0ubl34/gmaps-aa"
+#: mrz-maps-exp.php
+msgid "https://github.com/m0r3z/mrz-maps-exp"
 msgstr ""
 
 #. Description of the plugin
-#: gmaps-aa.php
+#: mrz-maps-exp.php
 msgid "Cartographie Google Maps basée sur les CPT et champs ACF, avec filtres par taxonomie, Snazzy Maps et recherche par adresse."
 msgstr ""
 
 #. Author of the plugin
-#: gmaps-aa.php
-msgid "Doublea.io"
+#: mrz-maps-exp.php
+msgid "Morez.co"
 msgstr ""
 
 #. Author URI of the plugin
-#: gmaps-aa.php
-msgid "https://doublea.io"
+#: mrz-maps-exp.php
+msgid "https://morez.co"
 msgstr ""
 
 #: admin/views/metabox-cosmetic.php:38
@@ -491,7 +491,7 @@ msgid "HTML affiché pour chaque entrée de la liste/grille."
 msgstr ""
 
 #: includes/class-activator.php:18
-msgid "gmaps-aa nécessite Advanced Custom Fields (Pro recommandé). Veuillez installer et activer ACF avant d'activer ce plugin."
+msgid "mrz-maps-exp nécessite Advanced Custom Fields (Pro recommandé). Veuillez installer et activer ACF avant d'activer ce plugin."
 msgstr ""
 
 #: includes/class-activator.php:19
@@ -555,7 +555,7 @@ msgstr ""
 msgid "Aucune carte dans la corbeille."
 msgstr ""
 
-#: includes/class-cpt.php:98
+#: includes/class-cpt.php:97
 #: includes/class-map-config.php:57
 msgid "Shortcode"
 msgstr ""
@@ -618,20 +618,20 @@ msgid "Taxonomie invalide."
 msgstr ""
 
 #: includes/class-map-config.php:527
-msgid "gmaps-aa : clé Google Maps API manquante."
+msgid "mrz-maps-exp : clé Google Maps API manquante."
 msgstr ""
 
 #: includes/class-map-config.php:529
 msgid "Ajoutez dans le functions.php de votre thème :"
 msgstr ""
 
-#: includes/class-plugin.php:63
-msgid "gmaps-aa nécessite Advanced Custom Fields (Pro recommandé) pour fonctionner."
+#: includes/class-plugin.php:61
+msgid "mrz-maps-exp nécessite Advanced Custom Fields (Pro recommandé) pour fonctionner."
 msgstr ""
 
 #: includes/class-taxonomy-markers.php:37
 #: includes/class-taxonomy-markers.php:57
-msgid "Icône marker gmaps-aa"
+msgid "Icône marker mrz-maps-exp"
 msgstr ""
 
 #: includes/class-taxonomy-markers.php:45

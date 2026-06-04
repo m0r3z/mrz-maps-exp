@@ -3,7 +3,7 @@
  * Classe principale : bootstrap des modules.
  */
 
-namespace GmapsAA;
+namespace MrzMapsExp;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -36,13 +36,11 @@ final class Plugin {
 		}
 		$this->booted = true;
 
-		load_plugin_textdomain(
-			'gmaps-aa',
-			false,
-			dirname( GMAPS_AA_BASENAME ) . '/languages'
-		);
+		// Pas de load_plugin_textdomain() : depuis WordPress 4.6, les traductions
+		// hébergées sur translate.wordpress.org sont chargées automatiquement par
+		// le cœur pour les plugins publiés sur le répertoire officiel.
 
-		if ( ! gmaps_aa_has_acf() ) {
+		if ( ! mrz_maps_exp_has_acf() ) {
 			add_action( 'admin_notices', array( $this, 'notice_missing_acf' ) );
 			return;
 		}
@@ -60,7 +58,7 @@ final class Plugin {
 		}
 		printf(
 			'<div class="notice notice-error"><p>%s</p></div>',
-			esc_html__( 'gmaps-aa nécessite Advanced Custom Fields (Pro recommandé) pour fonctionner.', 'gmaps-aa' )
+			esc_html__( 'mrz-maps-exp nécessite Advanced Custom Fields (Pro recommandé) pour fonctionner.', 'mrz-maps-exp' )
 		);
 	}
 }

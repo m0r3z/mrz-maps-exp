@@ -1,22 +1,22 @@
-/* gmaps-aa — admin styles (minimaux) */
-.gmaps-aa-table th { width: 220px; }
-.gmaps-aa-taxo-list { display: flex; flex-direction: column; gap: 12px; }
-.gmaps-aa-taxo-row { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 12px; padding: 10px; background: #f6f7f7; border: 1px solid #dcdcde; }
-.gmaps-aa-taxo-row.is-hidden { display: none; }
-.gmaps-aa-taxo-col { display: flex; flex-direction: column; gap: 4px; }
-.gmaps-aa-taxo-col > span { font-size: 12px; color: #646970; }
-.gmaps-aa-taxo-col-activate { min-width: 240px; }
-.gmaps-aa-taxo-activate-row { display: flex; align-items: center; gap: 8px; min-height: 30px; }
-.gmaps-aa-taxo-col-activate .gmaps-aa-taxo-name { font-size: 13px; color: inherit; }
-.gmaps-aa-picker { background: #f6f7f7; }
-.gmaps-aa-section-title { margin: 4px 0 10px; }
-.gmaps-aa-acf-filters { display: flex; flex-direction: column; gap: 12px; margin: 12px 0; }
-.gmaps-aa-acf-row { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 12px; padding: 10px; background: #f6f7f7; border: 1px solid #dcdcde; }
-.gmaps-aa-acf-col { display: flex; flex-direction: column; gap: 4px; }
-.gmaps-aa-acf-col > span { font-size: 12px; color: #646970; }
-.gmaps-aa-media-picker { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
-.gmaps-aa-media-picker .gmaps-aa-media-url { flex: 1 1 240px; min-width: 200px; }
-.gmaps-aa-media-preview img { display: block; }
-#gmaps_aa_term_markers { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
-.gmaps-aa-term-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 8px; background: #f6f7f7; border: 1px solid #dcdcde; }
-.gmaps-aa-term-name { font-weight: 600; min-width: 180px; }
+/* mrz-maps-exp — admin styles (minimaux) */
+.mrz-maps-exp-table th { width: 220px; }
+.mrz-maps-exp-taxo-list { display: flex; flex-direction: column; gap: 12px; }
+.mrz-maps-exp-taxo-row { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 12px; padding: 10px; background: #f6f7f7; border: 1px solid #dcdcde; }
+.mrz-maps-exp-taxo-row.is-hidden { display: none; }
+.mrz-maps-exp-taxo-col { display: flex; flex-direction: column; gap: 4px; }
+.mrz-maps-exp-taxo-col > span { font-size: 12px; color: #646970; }
+.mrz-maps-exp-taxo-col-activate { min-width: 240px; }
+.mrz-maps-exp-taxo-activate-row { display: flex; align-items: center; gap: 8px; min-height: 30px; }
+.mrz-maps-exp-taxo-col-activate .mrz-maps-exp-taxo-name { font-size: 13px; color: inherit; }
+.mrz-maps-exp-picker { background: #f6f7f7; }
+.mrz-maps-exp-section-title { margin: 4px 0 10px; }
+.mrz-maps-exp-acf-filters { display: flex; flex-direction: column; gap: 12px; margin: 12px 0; }
+.mrz-maps-exp-acf-row { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 12px; padding: 10px; background: #f6f7f7; border: 1px solid #dcdcde; }
+.mrz-maps-exp-acf-col { display: flex; flex-direction: column; gap: 4px; }
+.mrz-maps-exp-acf-col > span { font-size: 12px; color: #646970; }
+.mrz-maps-exp-media-picker { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.mrz-maps-exp-media-picker .mrz-maps-exp-media-url { flex: 1 1 240px; min-width: 200px; }
+.mrz-maps-exp-media-preview img { display: block; }
+#mrz_maps_exp_term_markers { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+.mrz-maps-exp-term-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 8px; background: #f6f7f7; border: 1px solid #dcdcde; }
+.mrz-maps-exp-term-name { font-weight: 600; min-width: 180px; }

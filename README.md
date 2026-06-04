@@ -1,4 +1,4 @@
-# GMaps-AA
+# MRZ Maps Experience
 
 Plugin WordPress générique de cartographie Google Maps basé sur les champs ACF `google_map`.
 
@@ -67,7 +67,7 @@ Un plugin léger, configurable entièrement via l'admin WordPress, et pensé pou
 
 ### Shortcode et templating
 
-- Shortcode simple : `[gmaps_aa id="123"]`
+- Shortcode simple : `[mrz_maps_exp id="123"]`
 - Filtre forcé par attribut : `filter_taxonomy="…" filter_term="…"` + option `hide_forced_filter="true"` pour masquer le filtre UI
 - **Recentrage automatique sur le post courant** sur une page single du post type source (option admin)
 - Templates HTML totalement personnalisables pour l'infobulle et pour chaque item de liste (placeholders + conditionnels, échappement automatique par type)
@@ -89,7 +89,7 @@ Le plugin n'expose **aucun champ admin pour la clé** — elle doit être fourni
 
 ```php
 // functions.php du thème enfant
-add_filter( 'gmaps_aa_api_key', function () {
+add_filter( 'mrz_maps_exp_api_key', function () {
     return 'VOTRE_CLE_API';
 } );
 ```
@@ -98,12 +98,12 @@ add_filter( 'gmaps_aa_api_key', function () {
 
 ```php
 // wp-config.php ou functions.php
-define( 'GMAPS_AA_API_KEY', 'VOTRE_CLE_API' );
+define( 'MRZ_MAPS_EXP_API_KEY', 'VOTRE_CLE_API' );
 ```
 
 ### 3. Réglage ACF
 
-Si vous avez déjà configuré ACF pour les champs `google_map` (`acf_get_setting('google_api_key')`), GMaps-AA réutilise automatiquement cette valeur.
+Si vous avez déjà configuré ACF pour les champs `google_map` (`acf_get_setting('google_api_key')`), MRZ Maps Experience réutilise automatiquement cette valeur.
 
 ### Restrictions recommandées
 
@@ -115,7 +115,7 @@ Une notice s'affiche dans l'admin tant que la clé n'est pas détectée.
 
 1. Créer une carte depuis le menu **GMaps** de l'admin.
 2. Remplir les métaboxes (source, filtres, affichage, cosmétique, templates, style).
-3. Copier le shortcode affiché dans la sidebar (`[gmaps_aa id="XX"]`) et le coller sur la page voulue.
+3. Copier le shortcode affiché dans la sidebar (`[mrz_maps_exp id="XX"]`) et le coller sur la page voulue.
 
 ## Configuration par métabox
 
@@ -206,7 +206,7 @@ Le bloc est rendu uniquement si la valeur est « truthy » (non vide, non null, 
 ## Shortcode
 
 ```text
-[gmaps_aa id="123"]
+[mrz_maps_exp id="123"]
 ```
 
 Attributs supportés :
@@ -221,19 +221,19 @@ Attributs supportés :
 Exemple :
 
 ```text
-[gmaps_aa id="123" filter_taxonomy="category" filter_term="42" hide_forced_filter="true"]
+[mrz_maps_exp id="123" filter_taxonomy="category" filter_term="42" hide_forced_filter="true"]
 ```
 
 ## Hooks et filtres
 
 | Hook | Type | Description |
 |---|---|---|
-| `gmaps_aa_api_key` | filter | Retourne la clé Google Maps API |
-| `gmaps_aa_cache_ttl` | filter | Durée du cache transient en secondes (défaut 300) |
-| `gmaps_aa_template_value` | filter | Transforme la valeur d'un placeholder avant échappement |
-| `gmaps_aa_template_kses_allowed` | filter | Allowlist HTML pour les templates utilisateur |
-| `gmaps_aa_skip_gmaps_enqueue` | filter | `true` pour ne pas enqueuer Google Maps JS (si chargé par un autre plugin/thème) |
-| `gmaps_aa_spiderfier_url` | filter | URL du script OverlappingMarkerSpiderfier (par défaut : fichier local) |
+| `mrz_maps_exp_api_key` | filter | Retourne la clé Google Maps API |
+| `mrz_maps_exp_cache_ttl` | filter | Durée du cache transient en secondes (défaut 300) |
+| `mrz_maps_exp_template_value` | filter | Transforme la valeur d'un placeholder avant échappement |
+| `mrz_maps_exp_template_kses_allowed` | filter | Allowlist HTML pour les templates utilisateur |
+| `mrz_maps_exp_skip_gmaps_enqueue` | filter | `true` pour ne pas enqueuer Google Maps JS (si chargé par un autre plugin/thème) |
+| `mrz_maps_exp_spiderfier_url` | filter | URL du script OverlappingMarkerSpiderfier (par défaut : fichier local) |
 
 ## Librairies embarquées
 
@@ -247,25 +247,25 @@ Google Maps JavaScript API est chargée à la volée via la clé fournie par le 
 
 ## Compatibilité
 
-- **Thème Salient** (`salient-core` / `nectar_gmap`) : les deux systèmes cohabitent sans conflit. Si Salient charge déjà Google Maps sur la même page, GMaps-AA le détecte et ne le recharge pas.
+- **Thème Salient** (`salient-core` / `nectar_gmap`) : les deux systèmes cohabitent sans conflit. Si Salient charge déjà Google Maps sur la même page, MRZ Maps Experience le détecte et ne le recharge pas.
 
 ## Architecture
 
 ```
-gmaps-aa/
-├── gmaps-aa.php                    # Bootstrap + autoloader PSR-4
+mrz-maps-exp/
+├── mrz-maps-exp.php                    # Bootstrap + autoloader PSR-4
 ├── uninstall.php                   # Nettoyage complet à la désinstallation
 ├── includes/
 │   ├── class-plugin.php            # Singleton, charge les modules
 │   ├── class-activator.php         # Vérifie ACF, enregistre le CPT
 │   ├── class-deactivator.php
-│   ├── class-cpt.php               # CPT gmaps_aa_map
+│   ├── class-cpt.php               # CPT mrz_maps_exp_map
 │   ├── class-map-config.php        # Métaboxes + save + AJAX terms
 │   ├── class-taxonomy-markers.php  # Champ icône sur les termes (admin)
 │   ├── class-template-parser.php   # Placeholders et conditionnels
 │   ├── class-data-provider.php     # Agrège les données + cache transient
 │   ├── class-assets.php            # Enregistre/enqueue scripts et styles
-│   ├── class-shortcode.php         # Handler [gmaps_aa]
+│   ├── class-shortcode.php         # Handler [mrz_maps_exp]
 │   └── helpers.php                 # Fonctions utilitaires globales
 ├── admin/
 │   ├── css/admin.css
@@ -275,14 +275,14 @@ gmaps-aa/
 │   └── views/                      # Templates de chaque métabox
 ├── public/
 │   ├── css/public.css              # Layout minimal + responsive + popup
-│   ├── js/gmaps-aa.js              # Init map, markers, filtres, search, popup, OMS
+│   ├── js/mrz-maps-exp.js              # Init map, markers, filtres, search, popup, OMS
 │   └── views/map-wrapper.php       # HTML du shortcode
 ├── assets/
 │   ├── default-marker.svg          # Marqueur par défaut
 │   └── vendor/
 │       └── oms.min.js              # OverlappingMarkerSpiderfier
 └── languages/
-    └── gmaps-aa.pot
+    └── mrz-maps-exp.pot
 ```
 
 ## Licence

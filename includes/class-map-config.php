@@ -3,7 +3,7 @@
  * Métaboxes de configuration d'une carte + sauvegarde sécurisée.
  */
 
-namespace GmapsAA;
+namespace MrzMapsExp;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -11,8 +11,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 final class MapConfig {
 
-	const NONCE_ACTION = 'gmaps_aa_save_map';
-	const NONCE_NAME   = '_gmaps_aa_nonce';
+	const NONCE_ACTION = 'mrz_maps_exp_save_map';
+	const NONCE_NAME   = '_mrz_maps_exp_nonce';
 
 	/**
 	 * Définition des valeurs autorisées pour les champs à choix fermé.
@@ -41,20 +41,20 @@ final class MapConfig {
 
 	public function register() {
 		add_action( 'add_meta_boxes', array( $this, 'add_metaboxes' ) );
-		add_action( 'save_post_' . GMAPS_AA_CPT, array( $this, 'save' ), 10, 2 );
+		add_action( 'save_post_' . MRZ_MAPS_EXP_CPT, array( $this, 'save' ), 10, 2 );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin' ) );
 		add_action( 'admin_notices', array( $this, 'maybe_notice_missing_key' ) );
-		add_action( 'wp_ajax_gmaps_aa_fetch_terms', array( $this, 'ajax_fetch_terms' ) );
+		add_action( 'wp_ajax_mrz_maps_exp_fetch_terms', array( $this, 'ajax_fetch_terms' ) );
 	}
 
 	public function add_metaboxes() {
-		add_meta_box( 'gmaps_aa_source', __( 'Source des données', 'gmaps-aa' ), array( $this, 'render' ), GMAPS_AA_CPT, 'normal', 'high', array( 'view' => 'source' ) );
-		add_meta_box( 'gmaps_aa_templates', __( 'Templates HTML', 'gmaps-aa' ), array( $this, 'render' ), GMAPS_AA_CPT, 'normal', 'high', array( 'view' => 'templates' ) );
-		add_meta_box( 'gmaps_aa_filters', __( 'Filtres', 'gmaps-aa' ), array( $this, 'render' ), GMAPS_AA_CPT, 'normal', 'high', array( 'view' => 'filters' ) );
-		add_meta_box( 'gmaps_aa_display', __( 'Affichage', 'gmaps-aa' ), array( $this, 'render' ), GMAPS_AA_CPT, 'normal', 'high', array( 'view' => 'display' ) );
-		add_meta_box( 'gmaps_aa_cosmetic', __( 'Cosmétique', 'gmaps-aa' ), array( $this, 'render' ), GMAPS_AA_CPT, 'normal', 'default', array( 'view' => 'cosmetic' ) );
-		add_meta_box( 'gmaps_aa_style', __( 'Style de la carte', 'gmaps-aa' ), array( $this, 'render' ), GMAPS_AA_CPT, 'normal', 'default', array( 'view' => 'style' ) );
-		add_meta_box( 'gmaps_aa_shortcode', __( 'Shortcode', 'gmaps-aa' ), array( $this, 'render' ), GMAPS_AA_CPT, 'side', 'high', array( 'view' => 'shortcode' ) );
+		add_meta_box( 'mrz_maps_exp_source', __( 'Source des données', 'mrz-maps-exp' ), array( $this, 'render' ), MRZ_MAPS_EXP_CPT, 'normal', 'high', array( 'view' => 'source' ) );
+		add_meta_box( 'mrz_maps_exp_templates', __( 'Templates HTML', 'mrz-maps-exp' ), array( $this, 'render' ), MRZ_MAPS_EXP_CPT, 'normal', 'high', array( 'view' => 'templates' ) );
+		add_meta_box( 'mrz_maps_exp_filters', __( 'Filtres', 'mrz-maps-exp' ), array( $this, 'render' ), MRZ_MAPS_EXP_CPT, 'normal', 'high', array( 'view' => 'filters' ) );
+		add_meta_box( 'mrz_maps_exp_display', __( 'Affichage', 'mrz-maps-exp' ), array( $this, 'render' ), MRZ_MAPS_EXP_CPT, 'normal', 'high', array( 'view' => 'display' ) );
+		add_meta_box( 'mrz_maps_exp_cosmetic', __( 'Cosmétique', 'mrz-maps-exp' ), array( $this, 'render' ), MRZ_MAPS_EXP_CPT, 'normal', 'default', array( 'view' => 'cosmetic' ) );
+		add_meta_box( 'mrz_maps_exp_style', __( 'Style de la carte', 'mrz-maps-exp' ), array( $this, 'render' ), MRZ_MAPS_EXP_CPT, 'normal', 'default', array( 'view' => 'style' ) );
+		add_meta_box( 'mrz_maps_exp_shortcode', __( 'Shortcode', 'mrz-maps-exp' ), array( $this, 'render' ), MRZ_MAPS_EXP_CPT, 'side', 'high', array( 'view' => 'shortcode' ) );
 	}
 
 	public function render( $post, $metabox ) {
@@ -65,7 +65,7 @@ final class MapConfig {
 		}
 
 		$view = isset( $metabox['args']['view'] ) ? $metabox['args']['view'] : '';
-		$file = GMAPS_AA_DIR . 'admin/views/metabox-' . $view . '.php';
+		$file = MRZ_MAPS_EXP_DIR . 'admin/views/metabox-' . $view . '.php';
 
 		if ( ! file_exists( $file ) ) {
 			return;
@@ -108,8 +108,8 @@ final class MapConfig {
 			'layout_list'        => 'below',
 			'list_format'        => 'list',
 			'list_click_action'  => 'tooltip',
-			'tpl_tooltip'        => "<div class=\"gmaps-aa-tooltip\">\n  <h6>{post_title}</h6>\n</div>",
-			'tpl_list'           => "<div class=\"gmaps-aa-list-item\">\n  <h6>{post_title}</h6>\n</div>",
+			'tpl_tooltip'        => "<div class=\"mrz-maps-exp-tooltip\">\n  <h6>{post_title}</h6>\n</div>",
+			'tpl_list'           => "<div class=\"mrz-maps-exp-list-item\">\n  <h6>{post_title}</h6>\n</div>",
 			'snazzy'               => '',
 			'search_enabled'       => 0,
 			'search_radius'        => 25,
@@ -126,7 +126,7 @@ final class MapConfig {
 
 		$out = array();
 		foreach ( $defaults as $key => $default ) {
-			$stored = get_post_meta( $post_id, '_gmaps_aa_' . $key, true );
+			$stored = get_post_meta( $post_id, '_mrz_maps_exp_' . $key, true );
 			if ( '' === $stored || null === $stored ) {
 				$out[ $key ] = $default;
 			} elseif ( is_array( $default ) ) {
@@ -168,8 +168,8 @@ final class MapConfig {
 			return;
 		}
 
-		$raw = isset( $_POST['gmaps_aa'] ) && is_array( $_POST['gmaps_aa'] )
-			? wp_unslash( $_POST['gmaps_aa'] )
+		$raw = isset( $_POST['mrz_maps_exp'] ) && is_array( $_POST['mrz_maps_exp'] )
+			? wp_unslash( $_POST['mrz_maps_exp'] )
 			: array();
 
 		$clean = array();
@@ -298,7 +298,7 @@ final class MapConfig {
 			if ( null === $decoded && json_last_error() !== JSON_ERROR_NONE ) {
 				// JSON invalide : on stocke vide et on signale.
 				$clean['snazzy'] = '';
-				add_settings_error( 'gmaps_aa', 'snazzy_invalid', __( 'Snazzy Maps : JSON invalide, le style a été ignoré.', 'gmaps-aa' ), 'error' );
+				add_settings_error( 'mrz_maps_exp', 'snazzy_invalid', __( 'Snazzy Maps : JSON invalide, le style a été ignoré.', 'mrz-maps-exp' ), 'error' );
 			} else {
 				$clean['snazzy'] = wp_json_encode( $decoded );
 			}
@@ -329,7 +329,7 @@ final class MapConfig {
 		$clean['spiderfier']           = ! empty( $raw['spiderfier'] ) ? 1 : 0;
 
 		foreach ( $clean as $key => $value ) {
-			update_post_meta( $post_id, '_gmaps_aa_' . $key, $value );
+			update_post_meta( $post_id, '_mrz_maps_exp_' . $key, $value );
 		}
 
 		// Icônes par terme — stockées globalement en term_meta.
@@ -348,17 +348,17 @@ final class MapConfig {
 					$id = 0;
 				}
 				if ( '' === $url && 0 === $id ) {
-					delete_term_meta( $term_id, '_gmaps_aa_icon_url' );
-					delete_term_meta( $term_id, '_gmaps_aa_icon_id' );
+					delete_term_meta( $term_id, '_mrz_maps_exp_icon_url' );
+					delete_term_meta( $term_id, '_mrz_maps_exp_icon_id' );
 				} else {
-					update_term_meta( $term_id, '_gmaps_aa_icon_url', $url );
-					update_term_meta( $term_id, '_gmaps_aa_icon_id', $id );
+					update_term_meta( $term_id, '_mrz_maps_exp_icon_url', $url );
+					update_term_meta( $term_id, '_mrz_maps_exp_icon_id', $id );
 				}
 			}
 		}
 
 		// Invalide le cache transient.
-		delete_transient( 'gmaps_aa_map_' . (int) $post_id );
+		delete_transient( 'mrz_maps_exp_map_' . (int) $post_id );
 	}
 
 	/**
@@ -379,14 +379,14 @@ final class MapConfig {
 	 * Handler AJAX : récupère les termes d'une taxonomie (pour la métabox Cosmétique).
 	 */
 	public function ajax_fetch_terms() {
-		check_ajax_referer( 'gmaps_aa_fetch_terms', 'nonce' );
+		check_ajax_referer( 'mrz_maps_exp_fetch_terms', 'nonce' );
 		if ( ! current_user_can( 'edit_posts' ) ) {
-			wp_send_json_error( array( 'message' => __( 'Accès refusé.', 'gmaps-aa' ) ), 403 );
+			wp_send_json_error( array( 'message' => __( 'Accès refusé.', 'mrz-maps-exp' ) ), 403 );
 		}
 
 		$taxonomy = isset( $_POST['taxonomy'] ) ? sanitize_key( wp_unslash( $_POST['taxonomy'] ) ) : '';
 		if ( '' === $taxonomy || ! taxonomy_exists( $taxonomy ) ) {
-			wp_send_json_error( array( 'message' => __( 'Taxonomie invalide.', 'gmaps-aa' ) ), 400 );
+			wp_send_json_error( array( 'message' => __( 'Taxonomie invalide.', 'mrz-maps-exp' ) ), 400 );
 		}
 
 		$terms = get_terms(
@@ -404,8 +404,8 @@ final class MapConfig {
 			$out[] = array(
 				'id'       => (int) $term->term_id,
 				'name'     => $term->name,
-				'icon_url' => (string) get_term_meta( $term->term_id, '_gmaps_aa_icon_url', true ),
-				'icon_id'  => (int) get_term_meta( $term->term_id, '_gmaps_aa_icon_id', true ),
+				'icon_url' => (string) get_term_meta( $term->term_id, '_mrz_maps_exp_icon_url', true ),
+				'icon_id'  => (int) get_term_meta( $term->term_id, '_mrz_maps_exp_icon_id', true ),
 			);
 		}
 		wp_send_json_success( $out );
@@ -445,7 +445,7 @@ final class MapConfig {
 			}
 		}
 
-		return apply_filters( 'gmaps_aa_template_kses_allowed', $allowed );
+		return apply_filters( 'mrz_maps_exp_template_kses_allowed', $allowed );
 	}
 
 	/**
@@ -456,7 +456,7 @@ final class MapConfig {
 			return;
 		}
 		$screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
-		if ( ! $screen || GMAPS_AA_CPT !== $screen->post_type ) {
+		if ( ! $screen || MRZ_MAPS_EXP_CPT !== $screen->post_type ) {
 			return;
 		}
 
@@ -465,21 +465,21 @@ final class MapConfig {
 		wp_enqueue_style( 'wp-color-picker' );
 
 		wp_enqueue_style(
-			'gmaps-aa-admin',
-			GMAPS_AA_URL . 'admin/css/admin.css',
+			'mrz-maps-exp-admin',
+			MRZ_MAPS_EXP_URL . 'admin/css/admin.css',
 			array(),
-			GMAPS_AA_VERSION
+			MRZ_MAPS_EXP_VERSION
 		);
 
-		$api_key = gmaps_aa_get_api_key();
+		$api_key = mrz_maps_exp_get_api_key();
 
 		if ( '' !== $api_key ) {
 			wp_enqueue_script(
-				'gmaps-aa-admin-gmaps',
+				'mrz-maps-exp-admin-gmaps',
 				add_query_arg(
 					array(
 						'key'      => rawurlencode( $api_key ),
-						'callback' => 'gmapsAAAdminBoot',
+						'callback' => 'mrzMapsExpAdminBoot',
 						'loading'  => 'async',
 						'v'        => 'weekly',
 					),
@@ -495,16 +495,16 @@ final class MapConfig {
 		}
 
 		wp_enqueue_script(
-			'gmaps-aa-admin',
-			GMAPS_AA_URL . 'admin/js/admin.js',
+			'mrz-maps-exp-admin',
+			MRZ_MAPS_EXP_URL . 'admin/js/admin.js',
 			array( 'jquery', 'wp-color-picker' ),
-			GMAPS_AA_VERSION,
+			MRZ_MAPS_EXP_VERSION,
 			true
 		);
 
 		wp_localize_script(
-			'gmaps-aa-admin',
-			'gmapsAAAdmin',
+			'mrz-maps-exp-admin',
+			'mrzMapsExpAdmin',
 			array(
 				'hasApiKey' => '' !== $api_key,
 			)
@@ -516,19 +516,19 @@ final class MapConfig {
 	 */
 	public function maybe_notice_missing_key() {
 		$screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
-		if ( ! $screen || GMAPS_AA_CPT !== $screen->post_type ) {
+		if ( ! $screen || MRZ_MAPS_EXP_CPT !== $screen->post_type ) {
 			return;
 		}
-		if ( '' !== gmaps_aa_get_api_key() ) {
+		if ( '' !== mrz_maps_exp_get_api_key() ) {
 			return;
 		}
 		?>
 		<div class="notice notice-warning">
-			<p><strong><?php esc_html_e( 'gmaps-aa : clé Google Maps API manquante.', 'gmaps-aa' ); ?></strong></p>
+			<p><strong><?php esc_html_e( 'mrz-maps-exp : clé Google Maps API manquante.', 'mrz-maps-exp' ); ?></strong></p>
 			<p>
-				<?php esc_html_e( 'Ajoutez dans le functions.php de votre thème :', 'gmaps-aa' ); ?>
+				<?php esc_html_e( 'Ajoutez dans le functions.php de votre thème :', 'mrz-maps-exp' ); ?>
 			</p>
-			<pre style="background:#f6f7f7;padding:10px;overflow:auto;">add_filter( 'gmaps_aa_api_key', function () {
+			<pre style="background:#f6f7f7;padding:10px;overflow:auto;">add_filter( 'mrz_maps_exp_api_key', function () {
     return 'VOTRE_CLE_API';
 } );</pre>
 		</div>

@@ -1,10 +1,10 @@
-=== GMaps-AA ===
-Contributors: d0ubl34
+=== MRZ Maps Experience ===
+Contributors: m0r3z
 Tags: google maps, map, acf, taxonomy, custom post type
 Requires at least: 6.3
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 0.5.4
+Stable tag: 1.0.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -12,7 +12,7 @@ Cartographie Google Maps basée sur les champs ACF, avec filtres par taxonomie e
 
 == Description ==
 
-GMaps-AA est un plugin générique et minimaliste pour afficher n'importe quel custom post type sur une carte Google Maps. Les coordonnées sont tirées d'un champ ACF de type Google Map déclaré sur les posts. Tout se configure depuis l'admin WordPress, sans toucher au code du thème : type source, filtres, pagination, templates HTML, marqueurs personnalisés, layout responsive.
+MRZ Maps Experience est un plugin générique et minimaliste pour afficher n'importe quel custom post type sur une carte Google Maps. Les coordonnées sont tirées d'un champ ACF de type Google Map déclaré sur les posts. Tout se configure depuis l'admin WordPress, sans toucher au code du thème : type source, filtres, pagination, templates HTML, marqueurs personnalisés, layout responsive.
 
 = Fonctionnalités =
 
@@ -27,46 +27,46 @@ GMaps-AA est un plugin générique et minimaliste pour afficher n'importe quel c
 * Dépilement des marqueurs superposés (OverlappingMarkerSpiderfier).
 * Snazzy Maps : collez un JSON pour styliser la carte.
 * Layout responsive — filtres au-dessus, à gauche ou à droite ; champ de recherche détachable en pleine largeur ; pliage des filtres en mobile.
-* Shortcode avec filtre forcé optionnel : `[gmaps_aa id="X" filter_taxonomy="genre" filter_term="42"]`.
-* Internationalisation prête (text-domain `gmaps-aa`, fichier .pot fourni).
+* Shortcode avec filtre forcé optionnel : `[mrz_maps_exp id="X" filter_taxonomy="genre" filter_term="42"]`.
+* Internationalisation prête (text-domain `mrz-maps-exp`, fichier .pot fourni).
 
 = Pré-requis =
 
 * WordPress 6.3 ou supérieur, PHP 7.4 ou supérieur.
 * Advanced Custom Fields (Pro recommandé) — pour le champ Google Map.
-* Une clé API Google Maps avec les API « Maps JavaScript », « Places » et « Geocoding » activées. La clé doit être déclarée dans le `functions.php` du thème via le filtre `gmaps_aa_api_key` ou la constante `GMAPS_AA_API_KEY` (le plugin ne propose volontairement pas d'UI admin pour la clé — c'est un secret qui n'a rien à faire en base de données).
+* Une clé API Google Maps avec les API « Maps JavaScript », « Places » et « Geocoding » activées. La clé doit être déclarée dans le `functions.php` du thème via le filtre `mrz_maps_exp_api_key` ou la constante `MRZ_MAPS_EXP_API_KEY` (le plugin ne propose volontairement pas d'UI admin pour la clé — c'est un secret qui n'a rien à faire en base de données).
 
 = Confidentialité / appels externes =
 
-GMaps-AA charge la bibliothèque Google Maps JS dans le navigateur de l'utilisateur final, comme tout plugin de cartographie. Aucune donnée n'est envoyée vers Doublea.io ou un service tiers ; aucune télémétrie n'est collectée. La clé Google Maps fournie par l'administrateur du site est exposée côté navigateur (c'est nécessaire pour appeler l'API JS Google) — il est recommandé de la restreindre par domaine HTTP referrer dans la console Google Cloud.
+MRZ Maps Experience charge la bibliothèque Google Maps JS dans le navigateur de l'utilisateur final, comme tout plugin de cartographie. Aucune donnée n'est envoyée vers Morez.co ou un service tiers ; aucune télémétrie n'est collectée. La clé Google Maps fournie par l'administrateur du site est exposée côté navigateur (c'est nécessaire pour appeler l'API JS Google) — il est recommandé de la restreindre par domaine HTTP referrer dans la console Google Cloud.
 
 = Code source et contributions =
 
-Le développement se fait publiquement sur GitHub : https://github.com/d0ubl34/gmaps-aa
+Le développement se fait publiquement sur GitHub : https://github.com/m0r3z/mrz-maps-exp
 Issues, pull requests et forks bienvenus.
 
 == Installation ==
 
 1. Installer et activer Advanced Custom Fields (Pro recommandé).
 2. Déclarer la clé Google Maps API dans le `functions.php` du thème :
-   `add_filter( 'gmaps_aa_api_key', function () { return 'VOTRE_CLE_API'; } );`
-3. Installer et activer GMaps-AA depuis l'écran « Extensions » de WordPress, ou téléverser le zip.
+   `add_filter( 'mrz_maps_exp_api_key', function () { return 'VOTRE_CLE_API'; } );`
+3. Installer et activer MRZ Maps Experience depuis l'écran « Extensions » de WordPress, ou téléverser le zip.
 4. Aller dans le menu **GMaps** → **Ajouter une carte**, configurer la source, les filtres, les templates, etc.
-5. Insérer le shortcode généré dans la page de votre choix : `[gmaps_aa id="X"]`.
+5. Insérer le shortcode généré dans la page de votre choix : `[mrz_maps_exp id="X"]`.
 
 == Frequently Asked Questions ==
 
 = ACF est-il vraiment obligatoire ? =
 
-Oui. GMaps-AA s'appuie sur les champs ACF de type « Google Map » pour récupérer latitude / longitude / adresse de chaque post. Le plugin a été pensé pour s'intégrer avec ACF plutôt que dupliquer un système de coordonnées custom. La version gratuite d'ACF suffit ; ACF Pro n'est requis que si vous utilisez les fonctionnalités Pro (repeater, etc.).
+Oui. MRZ Maps Experience s'appuie sur les champs ACF de type « Google Map » pour récupérer latitude / longitude / adresse de chaque post. Le plugin a été pensé pour s'intégrer avec ACF plutôt que dupliquer un système de coordonnées custom. La version gratuite d'ACF suffit ; ACF Pro n'est requis que si vous utilisez les fonctionnalités Pro (repeater, etc.).
 
 = Pourquoi la clé Google Maps n'est-elle pas configurable depuis l'admin ? =
 
-Choix volontaire. Une clé API est un secret qui n'a pas sa place en base de données : elle pourrait être exfiltrée via un export DB, un backup non chiffré, ou un compte admin compromis. La clé doit être déclarée dans le code du thème via le filtre `gmaps_aa_api_key` ou la constante `GMAPS_AA_API_KEY`. C'est aussi la pratique recommandée pour la rotation de clé.
+Choix volontaire. Une clé API est un secret qui n'a pas sa place en base de données : elle pourrait être exfiltrée via un export DB, un backup non chiffré, ou un compte admin compromis. La clé doit être déclarée dans le code du thème via le filtre `mrz_maps_exp_api_key` ou la constante `MRZ_MAPS_EXP_API_KEY`. C'est aussi la pratique recommandée pour la rotation de clé.
 
 = Le plugin est-il compatible avec le thème Salient / d'autres plugins de cartographie ? =
 
-Oui. GMaps-AA détecte si Google Maps JS est déjà chargé par un autre plugin (par exemple Salient via `salient-core` / `nectar_gmap`) et n'enqueue pas sa propre version dans ce cas. Un filtre `gmaps_aa_skip_gmaps_enqueue` permet d'override le comportement si nécessaire.
+Oui. MRZ Maps Experience détecte si Google Maps JS est déjà chargé par un autre plugin (par exemple Salient via `salient-core` / `nectar_gmap`) et n'enqueue pas sa propre version dans ce cas. Un filtre `mrz_maps_exp_skip_gmaps_enqueue` permet d'override le comportement si nécessaire.
 
 = Comment ajouter du contenu dans la tooltip ou la liste ? =
 
@@ -87,7 +87,35 @@ Le rendu front gère sans souci quelques milliers de marqueurs (les données son
 3. Métabox **Cosmétique** : marqueur par défaut, taille, dépilement Spiderfier, et marqueurs par terme de taxonomie.
 4. Métabox **Filtres** : configuration des filtres par taxonomie et par champ ACF (mode dropdown / radio / checkbox, logique OU / ET).
 
+== External services ==
+
+This plugin relies on the Google Maps JavaScript API to display the interactive map, geocode addresses entered in the search field, and provide place autocomplete suggestions. The Google Maps API key is supplied by the site administrator (via the `mrz_maps_exp_api_key` filter or `MRZ_MAPS_EXP_API_KEY` constant in the theme); the plugin itself does not bundle any key.
+
+= What is sent and when =
+
+* When a page containing the `[mrz_maps_exp]` shortcode is loaded, the visitor's browser loads the Google Maps JavaScript library from `https://maps.googleapis.com/maps/api/js`, including the `places` library. The Google Maps API key is appended as a query parameter.
+* When the visitor types in the search field, each keystroke (debounced) sends the current query string to Google's Places Autocomplete service to retrieve address suggestions. If the visitor picks a suggestion, Google's Places Details service is then called to obtain the coordinates for that place.
+* The visitor's IP address is transmitted to Google as part of these HTTP requests, as it is for any third-party request initiated by their browser.
+* No data is sent to Google when the plugin is only installed or activated in the admin — only when a public page containing the shortcode is loaded.
+
+The plugin does not send any data to Morez.co or to any other third-party service. No telemetry is collected.
+
+= Provider and legal links =
+
+* Service: Google Maps Platform (Google LLC).
+* Terms of Service: https://cloud.google.com/maps-platform/terms
+* Privacy Policy: https://policies.google.com/privacy
+
+It is the responsibility of site administrators to obtain a valid Google Maps API key, accept Google's Terms of Service for the project that key belongs to, and disclose the use of Google Maps in their own site's privacy policy where required.
+
 == Changelog ==
+
+= 1.0.0 =
+* First public release under the Morez.co identity, as "MRZ Maps Experience". Full rebrand from the internal "GMaps-AA" codebase: new plugin slug (`mrz-maps-exp`), new text domain, new PHP namespace (`MrzMapsExp`), new constant / function / meta / CPT prefixes (`MRZ_MAPS_EXP_*`, `mrz_maps_exp_*`, `_mrz_maps_exp_*`, `mrz_maps_exp_map`). Existing sites coming from the internal "GMaps-AA" codebase must reconfigure their maps after upgrade — there is no automatic data migration.
+* Compliance with the wordpress.org plugin guidelines:
+  * The admin menu icon CSS is no longer printed inline via `admin_head`; it is now enqueued via `wp_register_style` + `wp_add_inline_style` on `admin_enqueue_scripts`.
+  * Removed the now-unnecessary `load_plugin_textdomain()` call (since WordPress 4.6, translations of plugins hosted on wordpress.org are loaded automatically).
+  * Added a dedicated `== External services ==` section in the readme documenting the use of the Google Maps JavaScript API, what data is sent, and links to Google's Terms of Service and Privacy Policy.
 
 = 0.5.4 =
 * Conformité guidelines wordpress.org : ajout du source non-minifié de la librairie OverlappingMarkerSpiderfier (`assets/vendor/oms.js`) à côté du fichier minifié, comme l'exigent les guidelines pour toute lib externe minifiée. Les deux fichiers proviennent désormais du package npm officiel `overlapping-marker-spiderfier@1.0.1` (paire cohérente source/minifié), au lieu de l'ancien minifié solo issu du repo upstream `jawj/OverlappingMarkerSpiderfier`.
@@ -99,9 +127,9 @@ Le rendu front gère sans souci quelques milliers de marqueurs (les données son
 * Métabox Filtres : alignement vertical de la colonne « Taxonomie » avec les colonnes Libellé / Type / Logique pour un visuel cohérent avec le bloc « Filtres par champ ACF ».
 
 = 0.5.2 =
-* Mise au clair de la propriété intellectuelle : ajout d'un en-tête de copyright Doublea.io explicite dans `LICENSE`, `gmaps-aa.php` et `readme.txt`. Le nom et le logo « GMaps-AA » sont déclarés comme marques de Doublea.io.
-* Harmonisation de la licence sur GPLv3 ou ultérieure dans tous les en-têtes (le header PHP indiquait précédemment GPLv2). Le code reste libre et redistribuable sous GPL ; la marque, en revanche, n'est pas couverte par la GPL et reste exclusive à Doublea.io.
-* Correction de l'URL du repo dans le header plugin (d0ubl34/gmaps-aa) et ajout d'un Author URI.
+* Mise au clair de la propriété intellectuelle : ajout d'un en-tête de copyright Morez.co explicite dans `LICENSE`, `mrz-maps-exp.php` et `readme.txt`. Le nom et le logo « MRZ Maps Experience » sont déclarés comme marques de Morez.co.
+* Harmonisation de la licence sur GPLv3 ou ultérieure dans tous les en-têtes (le header PHP indiquait précédemment GPLv2). Le code reste libre et redistribuable sous GPL ; la marque, en revanche, n'est pas couverte par la GPL et reste exclusive à Morez.co.
+* Correction de l'URL du repo dans le header plugin (m0r3z/mrz-maps-exp) et ajout d'un Author URI.
 
 = 0.5.1 =
 * Synchronisation des filtres avec l'URL (option opt-in dans la métabox Filtres) : à l'activation, l'URL reflète automatiquement les filtres de taxonomie et de champs ACF actifs, et les filtres présents dans l'URL au chargement sont pré-cochés. Format : `?gm_<map_id>_tax_<slug>=12,34&gm_<map_id>_acf_<field>=valeur`. Permet de partager des liens pré-filtrés. Le préfixe par ID de carte évite les conflits si plusieurs cartes coexistent sur la même page.
@@ -160,6 +188,9 @@ Le rendu front gère sans souci quelques milliers de marqueurs (les données son
 
 == Upgrade Notice ==
 
+= 1.0.0 =
+First public release as "MRZ Maps Experience" (Morez.co). Full rebrand from the internal "GMaps-AA" codebase — namespaces, prefixes, slug and CPT all changed. Sites previously running the internal "GMaps-AA" build must reconfigure their maps after upgrade.
+
 = 0.5.4 =
 Ajout du source non-minifié d'OverlappingMarkerSpiderfier à côté du minifié (conformité wordpress.org). Aucun changement fonctionnel.
 
@@ -167,7 +198,7 @@ Ajout du source non-minifié d'OverlappingMarkerSpiderfier à côté du minifié
 Préparation pour le répertoire WordPress.org. Petits ajustements UI sans rupture. Mise à jour sans risque.
 
 = 0.5.2 =
-Clarification du copyright Doublea.io et alignement de la licence sur GPLv3+. Aucun changement fonctionnel.
+Clarification du copyright Morez.co et alignement de la licence sur GPLv3+. Aucun changement fonctionnel.
 
 = 0.5.1 =
 Nouvelle option pour synchroniser les filtres avec l'URL (désactivée par défaut). Compatible avec les versions précédentes.

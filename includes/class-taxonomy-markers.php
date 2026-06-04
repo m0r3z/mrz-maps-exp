@@ -3,7 +3,7 @@
  * Permet d'attacher une icône de marker à chaque terme de taxonomie publique.
  */
 
-namespace GmapsAA;
+namespace MrzMapsExp;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -11,8 +11,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 final class TaxonomyMarkers {
 
-	const NONCE_ACTION = 'gmaps_aa_save_term';
-	const NONCE_NAME   = '_gmaps_aa_term_nonce';
+	const NONCE_ACTION = 'mrz_maps_exp_save_term';
+	const NONCE_NAME   = '_mrz_maps_exp_term_nonce';
 
 	public function register() {
 		// Les taxonomies sont enregistrées sur `init` — on hooke après.
@@ -34,41 +34,41 @@ final class TaxonomyMarkers {
 		wp_nonce_field( self::NONCE_ACTION, self::NONCE_NAME );
 		?>
 		<div class="form-field">
-			<label for="gmaps_aa_icon_url"><?php esc_html_e( 'Icône marker gmaps-aa', 'gmaps-aa' ); ?></label>
-			<div class="gmaps-aa-term-icon">
-				<input type="hidden" name="gmaps_aa_icon_id" id="gmaps_aa_icon_id" value="" />
-				<input type="text" name="gmaps_aa_icon_url" id="gmaps_aa_icon_url" value="" class="regular-text" />
-				<button type="button" class="button gmaps-aa-term-icon-choose"><?php esc_html_e( 'Choisir une image', 'gmaps-aa' ); ?></button>
-				<button type="button" class="button gmaps-aa-term-icon-clear"><?php esc_html_e( 'Retirer', 'gmaps-aa' ); ?></button>
-				<div class="gmaps-aa-term-icon-preview" style="margin-top:8px;"></div>
+			<label for="mrz_maps_exp_icon_url"><?php esc_html_e( 'Icône marker mrz-maps-exp', 'mrz-maps-exp' ); ?></label>
+			<div class="mrz-maps-exp-term-icon">
+				<input type="hidden" name="mrz_maps_exp_icon_id" id="mrz_maps_exp_icon_id" value="" />
+				<input type="text" name="mrz_maps_exp_icon_url" id="mrz_maps_exp_icon_url" value="" class="regular-text" />
+				<button type="button" class="button mrz-maps-exp-term-icon-choose"><?php esc_html_e( 'Choisir une image', 'mrz-maps-exp' ); ?></button>
+				<button type="button" class="button mrz-maps-exp-term-icon-clear"><?php esc_html_e( 'Retirer', 'mrz-maps-exp' ); ?></button>
+				<div class="mrz-maps-exp-term-icon-preview" style="margin-top:8px;"></div>
 			</div>
-			<p><?php esc_html_e( 'Image utilisée comme marker sur la carte pour les posts associés à ce terme.', 'gmaps-aa' ); ?></p>
+			<p><?php esc_html_e( 'Image utilisée comme marker sur la carte pour les posts associés à ce terme.', 'mrz-maps-exp' ); ?></p>
 		</div>
 		<?php
 	}
 
 	public function edit_form_fields( $term, $taxonomy ) {
 		wp_nonce_field( self::NONCE_ACTION, self::NONCE_NAME );
-		$icon_id  = (int) get_term_meta( $term->term_id, '_gmaps_aa_icon_id', true );
-		$icon_url = (string) get_term_meta( $term->term_id, '_gmaps_aa_icon_url', true );
+		$icon_id  = (int) get_term_meta( $term->term_id, '_mrz_maps_exp_icon_id', true );
+		$icon_url = (string) get_term_meta( $term->term_id, '_mrz_maps_exp_icon_url', true );
 		?>
 		<tr class="form-field">
 			<th scope="row">
-				<label for="gmaps_aa_icon_url"><?php esc_html_e( 'Icône marker gmaps-aa', 'gmaps-aa' ); ?></label>
+				<label for="mrz_maps_exp_icon_url"><?php esc_html_e( 'Icône marker mrz-maps-exp', 'mrz-maps-exp' ); ?></label>
 			</th>
 			<td>
-				<div class="gmaps-aa-term-icon">
-					<input type="hidden" name="gmaps_aa_icon_id" id="gmaps_aa_icon_id" value="<?php echo esc_attr( $icon_id ); ?>" />
-					<input type="text" name="gmaps_aa_icon_url" id="gmaps_aa_icon_url" value="<?php echo esc_attr( $icon_url ); ?>" class="regular-text" />
-					<button type="button" class="button gmaps-aa-term-icon-choose"><?php esc_html_e( 'Choisir une image', 'gmaps-aa' ); ?></button>
-					<button type="button" class="button gmaps-aa-term-icon-clear"><?php esc_html_e( 'Retirer', 'gmaps-aa' ); ?></button>
-					<div class="gmaps-aa-term-icon-preview" style="margin-top:8px;">
+				<div class="mrz-maps-exp-term-icon">
+					<input type="hidden" name="mrz_maps_exp_icon_id" id="mrz_maps_exp_icon_id" value="<?php echo esc_attr( $icon_id ); ?>" />
+					<input type="text" name="mrz_maps_exp_icon_url" id="mrz_maps_exp_icon_url" value="<?php echo esc_attr( $icon_url ); ?>" class="regular-text" />
+					<button type="button" class="button mrz-maps-exp-term-icon-choose"><?php esc_html_e( 'Choisir une image', 'mrz-maps-exp' ); ?></button>
+					<button type="button" class="button mrz-maps-exp-term-icon-clear"><?php esc_html_e( 'Retirer', 'mrz-maps-exp' ); ?></button>
+					<div class="mrz-maps-exp-term-icon-preview" style="margin-top:8px;">
 						<?php if ( '' !== $icon_url ) : ?>
 							<img src="<?php echo esc_url( $icon_url ); ?>" alt="" style="max-width:60px;height:auto;" />
 						<?php endif; ?>
 					</div>
 				</div>
-				<p class="description"><?php esc_html_e( 'Image utilisée comme marker sur la carte pour les posts associés à ce terme.', 'gmaps-aa' ); ?></p>
+				<p class="description"><?php esc_html_e( 'Image utilisée comme marker sur la carte pour les posts associés à ce terme.', 'mrz-maps-exp' ); ?></p>
 			</td>
 		</tr>
 		<?php
@@ -85,10 +85,10 @@ final class TaxonomyMarkers {
 			return;
 		}
 
-		$url = isset( $_POST['gmaps_aa_icon_url'] )
-			? esc_url_raw( wp_unslash( $_POST['gmaps_aa_icon_url'] ) )
+		$url = isset( $_POST['mrz_maps_exp_icon_url'] )
+			? esc_url_raw( wp_unslash( $_POST['mrz_maps_exp_icon_url'] ) )
 			: '';
-		$id  = isset( $_POST['gmaps_aa_icon_id'] ) ? absint( $_POST['gmaps_aa_icon_id'] ) : 0;
+		$id  = isset( $_POST['mrz_maps_exp_icon_id'] ) ? absint( $_POST['mrz_maps_exp_icon_id'] ) : 0;
 
 		if ( $id > 0 && ! wp_attachment_is_image( $id ) ) {
 			// Attachment invalide : on ignore l'ID, on garde juste l'URL.
@@ -96,11 +96,11 @@ final class TaxonomyMarkers {
 		}
 
 		if ( '' === $url && 0 === $id ) {
-			delete_term_meta( $term_id, '_gmaps_aa_icon_url' );
-			delete_term_meta( $term_id, '_gmaps_aa_icon_id' );
+			delete_term_meta( $term_id, '_mrz_maps_exp_icon_url' );
+			delete_term_meta( $term_id, '_mrz_maps_exp_icon_id' );
 		} else {
-			update_term_meta( $term_id, '_gmaps_aa_icon_url', $url );
-			update_term_meta( $term_id, '_gmaps_aa_icon_id', $id );
+			update_term_meta( $term_id, '_mrz_maps_exp_icon_url', $url );
+			update_term_meta( $term_id, '_mrz_maps_exp_icon_id', $id );
 		}
 	}
 
@@ -110,10 +110,10 @@ final class TaxonomyMarkers {
 		}
 		wp_enqueue_media();
 		wp_enqueue_script(
-			'gmaps-aa-term-icon',
-			GMAPS_AA_URL . 'admin/js/term-icon.js',
+			'mrz-maps-exp-term-icon',
+			MRZ_MAPS_EXP_URL . 'admin/js/term-icon.js',
 			array( 'jquery' ),
-			GMAPS_AA_VERSION,
+			MRZ_MAPS_EXP_VERSION,
 			true
 		);
 	}

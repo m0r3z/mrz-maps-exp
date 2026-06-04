@@ -2,12 +2,12 @@
 	'use strict';
 
 	function wireRow($row) {
-		var $url     = $row.find('#gmaps_aa_icon_url');
-		var $id      = $row.find('#gmaps_aa_icon_id');
-		var $preview = $row.find('.gmaps-aa-term-icon-preview');
+		var $url     = $row.find('#mrz_maps_exp_icon_url');
+		var $id      = $row.find('#mrz_maps_exp_icon_id');
+		var $preview = $row.find('.mrz-maps-exp-term-icon-preview');
 		var frame    = null;
 
-		$row.find('.gmaps-aa-term-icon-choose').on('click', function (e) {
+		$row.find('.mrz-maps-exp-term-icon-choose').on('click', function (e) {
 			e.preventDefault();
 			if (frame) { frame.open(); return; }
 
@@ -28,7 +28,7 @@
 			frame.open();
 		});
 
-		$row.find('.gmaps-aa-term-icon-clear').on('click', function (e) {
+		$row.find('.mrz-maps-exp-term-icon-clear').on('click', function (e) {
 			e.preventDefault();
 			$id.val('');
 			$url.val('');
@@ -37,7 +37,7 @@
 	}
 
 	$(function () {
-		$('.gmaps-aa-term-icon').each(function () {
+		$('.mrz-maps-exp-term-icon').each(function () {
 			wireRow($(this));
 		});
 	});

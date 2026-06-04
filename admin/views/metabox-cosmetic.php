@@ -32,84 +32,84 @@ if ( '' !== $primary_tax && taxonomy_exists( $primary_tax ) ) {
 	}
 }
 ?>
-<table class="form-table gmaps-aa-table">
+<table class="form-table mrz-maps-exp-table">
 	<tbody>
 		<tr>
-			<th scope="row"><?php esc_html_e( 'Marqueur par défaut', 'gmaps-aa' ); ?></th>
+			<th scope="row"><?php esc_html_e( 'Marqueur par défaut', 'mrz-maps-exp' ); ?></th>
 			<td>
-				<div class="gmaps-aa-media-picker">
-					<input type="hidden" name="gmaps_aa[marker_default_id]" class="gmaps-aa-media-id" value="<?php echo esc_attr( $default_id ); ?>" />
-					<input type="text" name="gmaps_aa[marker_default_url]" class="gmaps-aa-media-url regular-text" value="<?php echo esc_attr( $default_url ); ?>" placeholder="https://…/marker.svg" />
-					<button type="button" class="button gmaps-aa-media-choose"><?php esc_html_e( 'Choisir une image', 'gmaps-aa' ); ?></button>
-					<button type="button" class="button gmaps-aa-media-clear"><?php esc_html_e( 'Retirer', 'gmaps-aa' ); ?></button>
-					<div class="gmaps-aa-media-preview">
+				<div class="mrz-maps-exp-media-picker">
+					<input type="hidden" name="mrz_maps_exp[marker_default_id]" class="mrz-maps-exp-media-id" value="<?php echo esc_attr( $default_id ); ?>" />
+					<input type="text" name="mrz_maps_exp[marker_default_url]" class="mrz-maps-exp-media-url regular-text" value="<?php echo esc_attr( $default_url ); ?>" placeholder="https://…/marker.svg" />
+					<button type="button" class="button mrz-maps-exp-media-choose"><?php esc_html_e( 'Choisir une image', 'mrz-maps-exp' ); ?></button>
+					<button type="button" class="button mrz-maps-exp-media-clear"><?php esc_html_e( 'Retirer', 'mrz-maps-exp' ); ?></button>
+					<div class="mrz-maps-exp-media-preview">
 						<?php if ( '' !== $default_url ) : ?>
 							<img src="<?php echo esc_url( $default_url ); ?>" alt="" style="max-width:<?php echo (int) $width; ?>px;height:auto;" />
 						<?php endif; ?>
 					</div>
 				</div>
-				<p class="description"><?php esc_html_e( 'Image SVG ou PNG utilisée comme marqueur pour les posts sans icône de terme. Laissez vide pour utiliser le marqueur fourni par le plugin.', 'gmaps-aa' ); ?></p>
+				<p class="description"><?php esc_html_e( 'Image SVG ou PNG utilisée comme marqueur pour les posts sans icône de terme. Laissez vide pour utiliser le marqueur fourni par le plugin.', 'mrz-maps-exp' ); ?></p>
 			</td>
 		</tr>
 		<tr>
 			<th scope="row">
-				<label for="gmaps_aa_marker_default_width"><?php esc_html_e( 'Largeur du marqueur (px)', 'gmaps-aa' ); ?></label>
+				<label for="mrz_maps_exp_marker_default_width"><?php esc_html_e( 'Largeur du marqueur (px)', 'mrz-maps-exp' ); ?></label>
 			</th>
 			<td>
-				<input type="number" name="gmaps_aa[marker_default_width]" id="gmaps_aa_marker_default_width" value="<?php echo esc_attr( $width ); ?>" min="8" max="128" step="1" />
-				<p class="description"><?php esc_html_e( 'S\'applique à tous les marqueurs (défaut + marqueurs par terme).', 'gmaps-aa' ); ?></p>
+				<input type="number" name="mrz_maps_exp[marker_default_width]" id="mrz_maps_exp_marker_default_width" value="<?php echo esc_attr( $width ); ?>" min="8" max="128" step="1" />
+				<p class="description"><?php esc_html_e( 'S\'applique à tous les marqueurs (défaut + marqueurs par terme).', 'mrz-maps-exp' ); ?></p>
 			</td>
 		</tr>
 		<tr>
-			<th scope="row"><?php esc_html_e( 'Effet Spiderfier', 'gmaps-aa' ); ?></th>
+			<th scope="row"><?php esc_html_e( 'Effet Spiderfier', 'mrz-maps-exp' ); ?></th>
 			<td>
 				<label>
-					<input type="checkbox" name="gmaps_aa[spiderfier]" value="1" <?php checked( ! empty( $values['spiderfier'] ) ); ?> />
-					<?php esc_html_e( 'Dépiler en éventail les marqueurs superposés lorsqu\'un groupe est cliqué (utile quand plusieurs posts partagent les mêmes coordonnées).', 'gmaps-aa' ); ?>
+					<input type="checkbox" name="mrz_maps_exp[spiderfier]" value="1" <?php checked( ! empty( $values['spiderfier'] ) ); ?> />
+					<?php esc_html_e( 'Dépiler en éventail les marqueurs superposés lorsqu\'un groupe est cliqué (utile quand plusieurs posts partagent les mêmes coordonnées).', 'mrz-maps-exp' ); ?>
 				</label>
 			</td>
 		</tr>
 		<tr>
 			<th scope="row">
-				<label for="gmaps_aa_primary_taxonomy"><?php esc_html_e( 'Taxonomie des marqueurs', 'gmaps-aa' ); ?></label>
+				<label for="mrz_maps_exp_primary_taxonomy"><?php esc_html_e( 'Taxonomie des marqueurs', 'mrz-maps-exp' ); ?></label>
 			</th>
 			<td>
-				<select name="gmaps_aa[primary_taxonomy]" id="gmaps_aa_primary_taxonomy">
-					<option value=""><?php esc_html_e( '— Aucune —', 'gmaps-aa' ); ?></option>
+				<select name="mrz_maps_exp[primary_taxonomy]" id="mrz_maps_exp_primary_taxonomy">
+					<option value=""><?php esc_html_e( '— Aucune —', 'mrz-maps-exp' ); ?></option>
 					<?php foreach ( $all_tax as $tax ) : ?>
 						<option value="<?php echo esc_attr( $tax->name ); ?>" <?php selected( $primary_tax, $tax->name ); ?>>
 							<?php echo esc_html( $tax->labels->singular_name . ' (' . $tax->name . ')' ); ?>
 						</option>
 					<?php endforeach; ?>
 				</select>
-				<p class="description"><?php esc_html_e( 'Chaque terme de cette taxonomie peut avoir son propre marqueur (priorité sur les icônes des taxonomies de filtre).', 'gmaps-aa' ); ?></p>
+				<p class="description"><?php esc_html_e( 'Chaque terme de cette taxonomie peut avoir son propre marqueur (priorité sur les icônes des taxonomies de filtre).', 'mrz-maps-exp' ); ?></p>
 			</td>
 		</tr>
 		<tr>
-			<th scope="row"><?php esc_html_e( 'Marqueurs par terme', 'gmaps-aa' ); ?></th>
+			<th scope="row"><?php esc_html_e( 'Marqueurs par terme', 'mrz-maps-exp' ); ?></th>
 			<td>
 				<div
-					id="gmaps_aa_term_markers"
-					data-nonce="<?php echo esc_attr( wp_create_nonce( 'gmaps_aa_fetch_terms' ) ); ?>"
+					id="mrz_maps_exp_term_markers"
+					data-nonce="<?php echo esc_attr( wp_create_nonce( 'mrz_maps_exp_fetch_terms' ) ); ?>"
 					data-ajax-url="<?php echo esc_url( admin_url( 'admin-ajax.php' ) ); ?>">
 					<?php if ( empty( $primary_tax ) ) : ?>
-						<p class="description gmaps-aa-term-markers-empty"><?php esc_html_e( 'Sélectionnez d\'abord une taxonomie ci-dessus.', 'gmaps-aa' ); ?></p>
+						<p class="description mrz-maps-exp-term-markers-empty"><?php esc_html_e( 'Sélectionnez d\'abord une taxonomie ci-dessus.', 'mrz-maps-exp' ); ?></p>
 					<?php elseif ( empty( $initial_terms ) ) : ?>
-						<p class="description"><?php esc_html_e( 'Aucun terme disponible dans cette taxonomie.', 'gmaps-aa' ); ?></p>
+						<p class="description"><?php esc_html_e( 'Aucun terme disponible dans cette taxonomie.', 'mrz-maps-exp' ); ?></p>
 					<?php else : ?>
 						<?php foreach ( $initial_terms as $term ) : ?>
 							<?php
-							$icon_url = (string) get_term_meta( $term->term_id, '_gmaps_aa_icon_url', true );
-							$icon_id  = (int) get_term_meta( $term->term_id, '_gmaps_aa_icon_id', true );
+							$icon_url = (string) get_term_meta( $term->term_id, '_mrz_maps_exp_icon_url', true );
+							$icon_id  = (int) get_term_meta( $term->term_id, '_mrz_maps_exp_icon_id', true );
 							?>
-							<div class="gmaps-aa-term-row" data-term-id="<?php echo (int) $term->term_id; ?>">
-								<span class="gmaps-aa-term-name"><?php echo esc_html( $term->name ); ?></span>
-								<div class="gmaps-aa-media-picker">
-									<input type="hidden" name="gmaps_aa[term_icons][<?php echo (int) $term->term_id; ?>][id]" class="gmaps-aa-media-id" value="<?php echo esc_attr( $icon_id ); ?>" />
-									<input type="text" name="gmaps_aa[term_icons][<?php echo (int) $term->term_id; ?>][url]" class="gmaps-aa-media-url regular-text" value="<?php echo esc_attr( $icon_url ); ?>" />
-									<button type="button" class="button gmaps-aa-media-choose"><?php esc_html_e( 'Choisir', 'gmaps-aa' ); ?></button>
-									<button type="button" class="button gmaps-aa-media-clear"><?php esc_html_e( 'Retirer', 'gmaps-aa' ); ?></button>
-									<div class="gmaps-aa-media-preview">
+							<div class="mrz-maps-exp-term-row" data-term-id="<?php echo (int) $term->term_id; ?>">
+								<span class="mrz-maps-exp-term-name"><?php echo esc_html( $term->name ); ?></span>
+								<div class="mrz-maps-exp-media-picker">
+									<input type="hidden" name="mrz_maps_exp[term_icons][<?php echo (int) $term->term_id; ?>][id]" class="mrz-maps-exp-media-id" value="<?php echo esc_attr( $icon_id ); ?>" />
+									<input type="text" name="mrz_maps_exp[term_icons][<?php echo (int) $term->term_id; ?>][url]" class="mrz-maps-exp-media-url regular-text" value="<?php echo esc_attr( $icon_url ); ?>" />
+									<button type="button" class="button mrz-maps-exp-media-choose"><?php esc_html_e( 'Choisir', 'mrz-maps-exp' ); ?></button>
+									<button type="button" class="button mrz-maps-exp-media-clear"><?php esc_html_e( 'Retirer', 'mrz-maps-exp' ); ?></button>
+									<div class="mrz-maps-exp-media-preview">
 										<?php if ( '' !== $icon_url ) : ?>
 											<img src="<?php echo esc_url( $icon_url ); ?>" alt="" style="max-width:<?php echo (int) $width; ?>px;height:auto;" />
 										<?php endif; ?>
@@ -124,15 +124,15 @@ if ( '' !== $primary_tax && taxonomy_exists( $primary_tax ) ) {
 	</tbody>
 </table>
 
-<template id="gmaps-aa-term-row-template">
-	<div class="gmaps-aa-term-row" data-term-id="__TERM_ID__">
-		<span class="gmaps-aa-term-name">__TERM_NAME__</span>
-		<div class="gmaps-aa-media-picker">
-			<input type="hidden" name="gmaps_aa[term_icons][__TERM_ID__][id]" class="gmaps-aa-media-id" value="__ICON_ID__" />
-			<input type="text" name="gmaps_aa[term_icons][__TERM_ID__][url]" class="gmaps-aa-media-url regular-text" value="__ICON_URL__" />
-			<button type="button" class="button gmaps-aa-media-choose"><?php esc_html_e( 'Choisir', 'gmaps-aa' ); ?></button>
-			<button type="button" class="button gmaps-aa-media-clear"><?php esc_html_e( 'Retirer', 'gmaps-aa' ); ?></button>
-			<div class="gmaps-aa-media-preview"></div>
+<template id="mrz-maps-exp-term-row-template">
+	<div class="mrz-maps-exp-term-row" data-term-id="__TERM_ID__">
+		<span class="mrz-maps-exp-term-name">__TERM_NAME__</span>
+		<div class="mrz-maps-exp-media-picker">
+			<input type="hidden" name="mrz_maps_exp[term_icons][__TERM_ID__][id]" class="mrz-maps-exp-media-id" value="__ICON_ID__" />
+			<input type="text" name="mrz_maps_exp[term_icons][__TERM_ID__][url]" class="mrz-maps-exp-media-url regular-text" value="__ICON_URL__" />
+			<button type="button" class="button mrz-maps-exp-media-choose"><?php esc_html_e( 'Choisir', 'mrz-maps-exp' ); ?></button>
+			<button type="button" class="button mrz-maps-exp-media-clear"><?php esc_html_e( 'Retirer', 'mrz-maps-exp' ); ?></button>
+			<div class="mrz-maps-exp-media-preview"></div>
 		</div>
 	</div>
 </template>

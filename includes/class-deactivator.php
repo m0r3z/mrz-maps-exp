@@ -3,7 +3,7 @@
  * Actions exécutées à la désactivation du plugin.
  */
 
-namespace GmapsAA;
+namespace MrzMapsExp;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

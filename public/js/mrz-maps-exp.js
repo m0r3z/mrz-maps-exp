@@ -5,19 +5,19 @@
 	var googleReady = false;
 
 	function bootAll() {
-		document.querySelectorAll('[data-gmaps-aa="1"]').forEach(function (wrapper) {
-			if (wrapper.__gmapsAAInited) { return; }
-			wrapper.__gmapsAAInited = true;
+		document.querySelectorAll('[data-mrz-maps-exp="1"]').forEach(function (wrapper) {
+			if (wrapper.__mrzMapsExpInited) { return; }
+			wrapper.__mrzMapsExpInited = true;
 			try {
 				initInstance(wrapper);
 			} catch (e) {
-				console.error('[gmaps-aa]', e);
+				console.error('[mrz-maps-exp]', e);
 			}
 		});
 	}
 
 	// Callback Google Maps JS.
-	window.gmapsAABoot = function () {
+	window.mrzMapsExpBoot = function () {
 		googleReady = true;
 		bootAll();
 	};
@@ -27,12 +27,12 @@
 	});
 
 	function readData(wrapper) {
-		var node = wrapper.querySelector('.gmaps-aa-data');
+		var node = wrapper.querySelector('.mrz-maps-exp-data');
 		if (!node) { return null; }
 		try {
 			return JSON.parse(node.textContent || node.innerText || '{}');
 		} catch (e) {
-			console.error('[gmaps-aa] invalid JSON', e);
+			console.error('[mrz-maps-exp] invalid JSON', e);
 			return null;
 		}
 	}
@@ -58,19 +58,19 @@
 			this.pixelOffset = { x: 0, y: -24 };
 
 			this.container = document.createElement('div');
-			this.container.className = 'gmaps-aa-popup';
+			this.container.className = 'mrz-maps-exp-popup';
 			this.container.setAttribute('role', 'dialog');
 			this.container.setAttribute('aria-modal', 'true');
 			this.container.setAttribute('tabindex', '-1');
 
 			this.closeBtn = document.createElement('button');
 			this.closeBtn.type = 'button';
-			this.closeBtn.className = 'gmaps-aa-popup-close';
+			this.closeBtn.className = 'mrz-maps-exp-popup-close';
 			this.closeBtn.setAttribute('aria-label', 'Fermer');
 			this.closeBtn.innerHTML = '&times;';
 
 			this.body = document.createElement('div');
-			this.body.className = 'gmaps-aa-popup-body';
+			this.body.className = 'mrz-maps-exp-popup-body';
 
 			this.container.appendChild(this.closeBtn);
 			this.container.appendChild(this.body);
@@ -157,7 +157,7 @@
 		if (!data || !data.config) { return; }
 
 		var config = data.config;
-		var mapEl = wrapper.querySelector('.gmaps-aa-map');
+		var mapEl = wrapper.querySelector('.mrz-maps-exp-map');
 		if (!mapEl) { return; }
 
 		// Mobile / tactile : toujours zoom direct (greedy, un doigt déplace,
@@ -298,12 +298,12 @@
 		});
 
 		// Liste + pagination.
-		var listEl = wrapper.querySelector('.gmaps-aa-list');
-		var paginationEl = wrapper.querySelector('.gmaps-aa-pagination');
-		var pageCurrentEl = wrapper.querySelector('.gmaps-aa-page-current');
-		var pageTotalEl = wrapper.querySelector('.gmaps-aa-page-total');
-		var pagePrev = wrapper.querySelector('.gmaps-aa-page-prev');
-		var pageNext = wrapper.querySelector('.gmaps-aa-page-next');
+		var listEl = wrapper.querySelector('.mrz-maps-exp-list');
+		var paginationEl = wrapper.querySelector('.mrz-maps-exp-pagination');
+		var pageCurrentEl = wrapper.querySelector('.mrz-maps-exp-page-current');
+		var pageTotalEl = wrapper.querySelector('.mrz-maps-exp-page-total');
+		var pagePrev = wrapper.querySelector('.mrz-maps-exp-page-prev');
+		var pageNext = wrapper.querySelector('.mrz-maps-exp-page-next');
 		var perPage = parseInt(config.perPage, 10) || 0;
 		var currentPage = 1;
 		var lastVisiblePoints = [];
@@ -325,10 +325,10 @@
 				if (clickAction === 'link' && p.url) {
 					w = document.createElement('a');
 					w.href = p.url;
-					w.className = 'gmaps-aa-list-item-wrap gmaps-aa-list-item-link';
+					w.className = 'mrz-maps-exp-list-item-wrap mrz-maps-exp-list-item-link';
 				} else {
 					w = document.createElement('div');
-					w.className = 'gmaps-aa-list-item-wrap';
+					w.className = 'mrz-maps-exp-list-item-wrap';
 				}
 				w.innerHTML = p.listItem || '';
 
@@ -342,7 +342,7 @@
 						}
 					});
 				} else if (clickAction === 'none') {
-					w.classList.add('gmaps-aa-list-item-inert');
+					w.classList.add('mrz-maps-exp-list-item-inert');
 				}
 				// 'link' : comportement natif <a href> (aucun handler JS).
 
@@ -504,7 +504,7 @@
 			});
 
 			// Synchronise les inputs avec l'état lu depuis l'URL.
-			wrapper.querySelectorAll('.gmaps-aa-filter-input').forEach(function (input) {
+			wrapper.querySelectorAll('.mrz-maps-exp-filter-input').forEach(function (input) {
 				var type = input.getAttribute('data-filter-type') || 'tax';
 				var key = type === 'acf'
 					? input.getAttribute('data-field')
@@ -561,7 +561,7 @@
 		applyUrlFilters();
 
 		// Branche les inputs de filtres (taxonomies et champs ACF).
-		wrapper.querySelectorAll('.gmaps-aa-filter-input').forEach(function (input) {
+		wrapper.querySelectorAll('.mrz-maps-exp-filter-input').forEach(function (input) {
 			var type = input.getAttribute('data-filter-type') || 'tax';
 			var key = type === 'acf'
 				? input.getAttribute('data-field')
@@ -608,9 +608,9 @@
 		});
 
 		// Recherche : dropdown unifiée (fiches locales + suggestions d'adresses Google).
-		var searchInput = wrapper.querySelector('.gmaps-aa-search');
-		var searchDropdown = wrapper.querySelector('.gmaps-aa-search-dropdown');
-		var clearBtn = wrapper.querySelector('.gmaps-aa-search-clear');
+		var searchInput = wrapper.querySelector('.mrz-maps-exp-search');
+		var searchDropdown = wrapper.querySelector('.mrz-maps-exp-search-dropdown');
+		var clearBtn = wrapper.querySelector('.mrz-maps-exp-search-clear');
 
 		function clearSearch() {
 			searchCenter = null;
@@ -620,7 +620,7 @@
 		function resetAllFilters() {
 			currentFilters.tax = {};
 			currentFilters.acf = {};
-			wrapper.querySelectorAll('.gmaps-aa-filter-input').forEach(function (input) {
+			wrapper.querySelectorAll('.mrz-maps-exp-filter-input').forEach(function (input) {
 				if (input.type === 'checkbox') {
 					input.checked = false;
 				} else if (input.type === 'radio') {
@@ -746,7 +746,7 @@
 
 			function buildSection(labelText) {
 				var li = document.createElement('li');
-				li.className = 'gmaps-aa-search-section';
+				li.className = 'mrz-maps-exp-search-section';
 				li.setAttribute('role', 'presentation');
 				li.textContent = labelText;
 				return li;
@@ -754,7 +754,7 @@
 
 			function buildOption(text, idx, onSelect) {
 				var li = document.createElement('li');
-				li.className = 'gmaps-aa-search-option';
+				li.className = 'mrz-maps-exp-search-option';
 				li.id = dropdownId + '-opt-' + idx;
 				li.setAttribute('role', 'option');
 				li.setAttribute('aria-selected', 'false');
@@ -914,8 +914,8 @@
 		}
 
 		// Toggle mobile : repli/dépli du bloc de filtres.
-		var filtersBlock = wrapper.querySelector('.gmaps-aa-filters');
-		var filtersToggle = wrapper.querySelector('.gmaps-aa-filters-toggle');
+		var filtersBlock = wrapper.querySelector('.mrz-maps-exp-filters');
+		var filtersToggle = wrapper.querySelector('.mrz-maps-exp-filters-toggle');
 		if (filtersBlock && filtersToggle) {
 			filtersToggle.addEventListener('click', function () {
 				var isOpen = filtersBlock.classList.toggle('is-open');

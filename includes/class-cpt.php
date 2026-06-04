@@ -3,7 +3,7 @@
  * Enregistre le Custom Post Type des cartes.
  */
 
-namespace GmapsAA;
+namespace MrzMapsExp;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -13,26 +13,26 @@ final class CPT {
 
 	public function register() {
 		add_action( 'init', array( $this, 'register_post_type' ) );
-		add_filter( 'manage_' . GMAPS_AA_CPT . '_posts_columns', array( $this, 'columns' ) );
-		add_action( 'manage_' . GMAPS_AA_CPT . '_posts_custom_column', array( $this, 'column_content' ), 10, 2 );
-		add_action( 'admin_head', array( $this, 'print_menu_icon_css' ) );
+		add_filter( 'manage_' . MRZ_MAPS_EXP_CPT . '_posts_columns', array( $this, 'columns' ) );
+		add_action( 'manage_' . MRZ_MAPS_EXP_CPT . '_posts_custom_column', array( $this, 'column_content' ), 10, 2 );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_menu_icon_style' ) );
 	}
 
 	public function register_post_type() {
 		$labels = array(
-			'name'               => _x( 'Cartes', 'post type general name', 'gmaps-aa' ),
-			'singular_name'      => _x( 'Carte', 'post type singular name', 'gmaps-aa' ),
-			'menu_name'          => _x( 'GMaps', 'admin menu', 'gmaps-aa' ),
-			'name_admin_bar'     => _x( 'Carte', 'add new on admin bar', 'gmaps-aa' ),
-			'add_new'            => _x( 'Ajouter', 'map', 'gmaps-aa' ),
-			'add_new_item'       => __( 'Ajouter une carte', 'gmaps-aa' ),
-			'new_item'           => __( 'Nouvelle carte', 'gmaps-aa' ),
-			'edit_item'          => __( 'Modifier la carte', 'gmaps-aa' ),
-			'view_item'          => __( 'Voir la carte', 'gmaps-aa' ),
-			'all_items'          => __( 'Toutes les cartes', 'gmaps-aa' ),
-			'search_items'       => __( 'Rechercher une carte', 'gmaps-aa' ),
-			'not_found'          => __( 'Aucune carte trouvée.', 'gmaps-aa' ),
-			'not_found_in_trash' => __( 'Aucune carte dans la corbeille.', 'gmaps-aa' ),
+			'name'               => _x( 'Cartes', 'post type general name', 'mrz-maps-exp' ),
+			'singular_name'      => _x( 'Carte', 'post type singular name', 'mrz-maps-exp' ),
+			'menu_name'          => _x( 'GMaps', 'admin menu', 'mrz-maps-exp' ),
+			'name_admin_bar'     => _x( 'Carte', 'add new on admin bar', 'mrz-maps-exp' ),
+			'add_new'            => _x( 'Ajouter', 'map', 'mrz-maps-exp' ),
+			'add_new_item'       => __( 'Ajouter une carte', 'mrz-maps-exp' ),
+			'new_item'           => __( 'Nouvelle carte', 'mrz-maps-exp' ),
+			'edit_item'          => __( 'Modifier la carte', 'mrz-maps-exp' ),
+			'view_item'          => __( 'Voir la carte', 'mrz-maps-exp' ),
+			'all_items'          => __( 'Toutes les cartes', 'mrz-maps-exp' ),
+			'search_items'       => __( 'Rechercher une carte', 'mrz-maps-exp' ),
+			'not_found'          => __( 'Aucune carte trouvée.', 'mrz-maps-exp' ),
+			'not_found_in_trash' => __( 'Aucune carte dans la corbeille.', 'mrz-maps-exp' ),
 		);
 
 		$args = array(
@@ -55,39 +55,38 @@ final class CPT {
 			'query_var'          => false,
 		);
 
-		register_post_type( GMAPS_AA_CPT, $args );
+		register_post_type( MRZ_MAPS_EXP_CPT, $args );
 	}
 
 	/**
 	 * Injecte l'icône du menu via CSS mask-image : pas de flash de la couleur
 	 * native du SVG au chargement, couleur directement conforme au thème admin
 	 * (gris 60% au repos, blanc au hover / submenu ouvert / page active).
+	 *
+	 * Implémenté via wp_register_style + wp_add_inline_style plutôt qu'un
+	 * <style> imprimé en dur dans admin_head, pour respecter le pattern
+	 * d'enqueue attendu par les guidelines wordpress.org.
 	 */
-	public function print_menu_icon_css() {
-		$url = GMAPS_AA_URL . 'assets/menu-icon.svg?ver=' . GMAPS_AA_VERSION;
+	public function enqueue_menu_icon_style() {
+		$handle = 'mrz-maps-exp-menu-icon';
+		wp_register_style( $handle, false, array(), MRZ_MAPS_EXP_VERSION );
+		wp_enqueue_style( $handle );
+
+		$url = esc_url( MRZ_MAPS_EXP_URL . 'assets/menu-icon.svg?ver=' . MRZ_MAPS_EXP_VERSION );
 		// L'ID exact du <li> varie selon la façon dont WP sanitise le menu_file
 		// (edit.php?post_type=...). Sélecteur tolérant : tout menu_top dont l'ID
 		// contient le slug du CPT.
-		$sel = '#adminmenu li.menu-top[id*="' . GMAPS_AA_CPT . '"]';
-		?>
-		<style>
-			<?php echo $sel; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped — sélecteur construit à partir d'un slug contrôlé ?> .wp-menu-image {
-				background: none !important;
-				background-color: rgba(240, 246, 252, 0.6) !important;
-				-webkit-mask: url('<?php echo esc_url( $url ); ?>') no-repeat 9px 7px / 20px;
-				        mask: url('<?php echo esc_url( $url ); ?>') no-repeat 9px 7px / 20px;
-			}
-			<?php echo $sel; // phpcs:ignore ?> .wp-menu-image::before {
-				display: none;
-			}
-			<?php echo $sel; // phpcs:ignore ?>:hover .wp-menu-image,
-			<?php echo $sel; // phpcs:ignore ?>.wp-has-current-submenu .wp-menu-image,
-			<?php echo $sel; // phpcs:ignore ?>.current .wp-menu-image,
-			<?php echo $sel; // phpcs:ignore ?>.wp-menu-open .wp-menu-image {
-				background-color: #fff !important;
-			}
-		</style>
-		<?php
+		$sel = '#adminmenu li.menu-top[id*="' . MRZ_MAPS_EXP_CPT . '"]';
+
+		$css  = $sel . ' .wp-menu-image{background:none!important;background-color:rgba(240,246,252,.6)!important;';
+		$css .= '-webkit-mask:url(\'' . $url . '\') no-repeat 9px 7px/20px;mask:url(\'' . $url . '\') no-repeat 9px 7px/20px;}';
+		$css .= $sel . ' .wp-menu-image::before{display:none;}';
+		$css .= $sel . ':hover .wp-menu-image,';
+		$css .= $sel . '.wp-has-current-submenu .wp-menu-image,';
+		$css .= $sel . '.current .wp-menu-image,';
+		$css .= $sel . '.wp-menu-open .wp-menu-image{background-color:#fff!important;}';
+
+		wp_add_inline_style( $handle, $css );
 	}
 
 	public function columns( $columns ) {
@@ -95,18 +94,18 @@ final class CPT {
 		foreach ( $columns as $key => $label ) {
 			$new[ $key ] = $label;
 			if ( 'title' === $key ) {
-				$new['gmaps_aa_shortcode'] = __( 'Shortcode', 'gmaps-aa' );
+				$new['mrz_maps_exp_shortcode'] = __( 'Shortcode', 'mrz-maps-exp' );
 			}
 		}
 		return $new;
 	}
 
 	public function column_content( $column, $post_id ) {
-		if ( 'gmaps_aa_shortcode' !== $column ) {
+		if ( 'mrz_maps_exp_shortcode' !== $column ) {
 			return;
 		}
 		printf(
-			'<code>[gmaps_aa id="%d"]</code>',
+			'<code>[mrz_maps_exp id="%d"]</code>',
 			(int) $post_id
 		);
 	}

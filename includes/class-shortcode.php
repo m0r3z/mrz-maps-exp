@@ -1,9 +1,9 @@
 <?php
 /**
- * Shortcode [gmaps_aa id="X"].
+ * Shortcode [mrz_maps_exp id="X"].
  */
 
-namespace GmapsAA;
+namespace MrzMapsExp;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 final class Shortcode {
 
 	public function register() {
-		add_shortcode( 'gmaps_aa', array( $this, 'render' ) );
+		add_shortcode( 'mrz_maps_exp', array( $this, 'render' ) );
 	}
 
 	public function render( $atts ) {
@@ -24,11 +24,11 @@ final class Shortcode {
 				'hide_forced_filter' => 'false',
 			),
 			$atts,
-			'gmaps_aa'
+			'mrz_maps_exp'
 		);
 
 		$map_id = absint( $atts['id'] );
-		if ( $map_id <= 0 || get_post_type( $map_id ) !== GMAPS_AA_CPT ) {
+		if ( $map_id <= 0 || get_post_type( $map_id ) !== MRZ_MAPS_EXP_CPT ) {
 			return '';
 		}
 
@@ -81,15 +81,15 @@ final class Shortcode {
 		$assets = new Assets();
 		if ( ! $assets->enqueue_for_shortcode() ) {
 			if ( current_user_can( 'edit_posts' ) ) {
-				return '<!-- gmaps-aa: clé API Google Maps manquante (visible uniquement par les rédacteurs) -->';
+				return '<!-- mrz-maps-exp: clé API Google Maps manquante (visible uniquement par les rédacteurs) -->';
 			}
 			return '';
 		}
 
-		$uid = 'gmaps-aa-' . $map_id . '-' . wp_generate_uuid4();
+		$uid = 'mrz-maps-exp-' . $map_id . '-' . wp_generate_uuid4();
 
 		ob_start();
-		include GMAPS_AA_DIR . 'public/views/map-wrapper.php';
+		include MRZ_MAPS_EXP_DIR . 'public/views/map-wrapper.php';
 		return ob_get_clean();
 	}
 }

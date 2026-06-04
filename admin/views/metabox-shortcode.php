@@ -11,10 +11,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 global $post;
-$shortcode = '[gmaps_aa id="' . (int) $post->ID . '"]';
+$shortcode = '[mrz_maps_exp id="' . (int) $post->ID . '"]';
 ?>
-<p><?php esc_html_e( 'Collez ce shortcode dans vos contenus :', 'gmaps-aa' ); ?></p>
+<p><?php esc_html_e( 'Collez ce shortcode dans vos contenus :', 'mrz-maps-exp' ); ?></p>
 <input type="text" readonly value="<?php echo esc_attr( $shortcode ); ?>" onclick="this.select();" class="widefat code" />
-<p class="description"><?php esc_html_e( 'Exemple avec filtre forcé :', 'gmaps-aa' ); ?>
-	<code>[gmaps_aa id="<?php echo (int) $post->ID; ?>" filter_taxonomy="category" filter_term="5"]</code>
+<p class="description"><?php esc_html_e( 'Exemple avec filtre forcé :', 'mrz-maps-exp' ); ?>
+	<code>[mrz_maps_exp id="<?php echo (int) $post->ID; ?>" filter_taxonomy="category" filter_term="5"]</code>
 </p>

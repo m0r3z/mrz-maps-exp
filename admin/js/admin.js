@@ -5,13 +5,13 @@
 	var pickerMarker = null;
 
 	function currentPostType() {
-		var sel = document.getElementById('gmaps_aa_source_pt');
+		var sel = document.getElementById('mrz_maps_exp_source_pt');
 		return sel ? sel.value : '';
 	}
 
 	function updateTaxonomyVisibility() {
 		var pt = currentPostType();
-		var rows = document.querySelectorAll('.gmaps-aa-taxo-row');
+		var rows = document.querySelectorAll('.mrz-maps-exp-taxo-row');
 		rows.forEach(function (row) {
 			var types = (row.getAttribute('data-object-types') || '').split(',');
 			var visible = types.indexOf(pt) !== -1;
@@ -24,12 +24,12 @@
 	}
 
 	function initPicker() {
-		var el = document.getElementById('gmaps_aa_picker');
+		var el = document.getElementById('mrz_maps_exp_picker');
 		if (!el || typeof google === 'undefined' || !google.maps) { return; }
 
-		var latEl = document.getElementById('gmaps_aa_center_lat');
-		var lngEl = document.getElementById('gmaps_aa_center_lng');
-		var zoomEl = document.getElementById('gmaps_aa_zoom');
+		var latEl = document.getElementById('mrz_maps_exp_center_lat');
+		var lngEl = document.getElementById('mrz_maps_exp_center_lng');
+		var zoomEl = document.getElementById('mrz_maps_exp_zoom');
 
 		var lat = parseFloat(latEl.value) || 46.603354;
 		var lng = parseFloat(lngEl.value) || 1.888334;
@@ -60,8 +60,8 @@
 	}
 
 	function setLatLng(lat, lng) {
-		var latEl = document.getElementById('gmaps_aa_center_lat');
-		var lngEl = document.getElementById('gmaps_aa_center_lng');
+		var latEl = document.getElementById('mrz_maps_exp_center_lat');
+		var lngEl = document.getElementById('mrz_maps_exp_center_lng');
 		latEl.value = lat.toFixed(6);
 		lngEl.value = lng.toFixed(6);
 		if (pickerMarker) {
@@ -70,7 +70,7 @@
 	}
 
 	// Callback global déclenché par le loader Google Maps.
-	window.gmapsAAAdminBoot = initPicker;
+	window.mrzMapsExpAdminBoot = initPicker;
 
 	// Le sélecteur OU/ET n'a de sens qu'en mode « Cases à cocher ». On le masque
 	// pour les autres modes, en ligne taxonomie et en ligne filtre ACF.
@@ -87,13 +87,13 @@
 	}
 
 	function initAcfRepeater() {
-		var wrap = document.querySelector('.gmaps-aa-acf-filters');
-		var tpl = document.getElementById('gmaps-aa-acf-row-template');
-		var addBtn = document.querySelector('.gmaps-aa-acf-add');
+		var wrap = document.querySelector('.mrz-maps-exp-acf-filters');
+		var tpl = document.getElementById('mrz-maps-exp-acf-row-template');
+		var addBtn = document.querySelector('.mrz-maps-exp-acf-add');
 		if (!wrap || !tpl || !addBtn) { return; }
 
 		function bindRow(row) {
-			var removeBtn = row.querySelector('.gmaps-aa-acf-remove');
+			var removeBtn = row.querySelector('.mrz-maps-exp-acf-remove');
 			if (removeBtn) {
 				removeBtn.addEventListener('click', function (e) {
 					e.preventDefault();
@@ -106,12 +106,12 @@
 				'select[name*="[mode]"]',
 				function (r) {
 					var logicSel = r.querySelector('select[name*="[logic]"]');
-					return logicSel ? logicSel.closest('.gmaps-aa-acf-col') : null;
+					return logicSel ? logicSel.closest('.mrz-maps-exp-acf-col') : null;
 				}
 			);
 		}
 
-		wrap.querySelectorAll('.gmaps-aa-acf-row').forEach(bindRow);
+		wrap.querySelectorAll('.mrz-maps-exp-acf-row').forEach(bindRow);
 
 		addBtn.addEventListener('click', function (e) {
 			e.preventDefault();
@@ -127,30 +127,30 @@
 	}
 
 	function initTaxoLogicToggle() {
-		document.querySelectorAll('.gmaps-aa-taxo-row').forEach(function (row) {
+		document.querySelectorAll('.mrz-maps-exp-taxo-row').forEach(function (row) {
 			wireLogicToggle(
 				row,
-				'.gmaps-aa-taxo-mode',
+				'.mrz-maps-exp-taxo-mode',
 				function (r) {
-					var logicSel = r.querySelector('.gmaps-aa-taxo-logic');
-					return logicSel ? logicSel.closest('.gmaps-aa-taxo-col') : null;
+					var logicSel = r.querySelector('.mrz-maps-exp-taxo-logic');
+					return logicSel ? logicSel.closest('.mrz-maps-exp-taxo-col') : null;
 				}
 			);
 		});
 	}
 
-	// Media picker générique : fonctionne sur tout élément .gmaps-aa-media-picker
-	// contenant .gmaps-aa-media-id, .gmaps-aa-media-url, .gmaps-aa-media-choose,
-	// .gmaps-aa-media-clear et .gmaps-aa-media-preview.
+	// Media picker générique : fonctionne sur tout élément .mrz-maps-exp-media-picker
+	// contenant .mrz-maps-exp-media-id, .mrz-maps-exp-media-url, .mrz-maps-exp-media-choose,
+	// .mrz-maps-exp-media-clear et .mrz-maps-exp-media-preview.
 	function bindMediaPicker(container) {
-		if (container.__gmapsAAMediaBound) { return; }
-		container.__gmapsAAMediaBound = true;
+		if (container.__mrzMapsExpMediaBound) { return; }
+		container.__mrzMapsExpMediaBound = true;
 
-		var idInput = container.querySelector('.gmaps-aa-media-id');
-		var urlInput = container.querySelector('.gmaps-aa-media-url');
-		var choose = container.querySelector('.gmaps-aa-media-choose');
-		var clear = container.querySelector('.gmaps-aa-media-clear');
-		var preview = container.querySelector('.gmaps-aa-media-preview');
+		var idInput = container.querySelector('.mrz-maps-exp-media-id');
+		var urlInput = container.querySelector('.mrz-maps-exp-media-url');
+		var choose = container.querySelector('.mrz-maps-exp-media-choose');
+		var clear = container.querySelector('.mrz-maps-exp-media-clear');
+		var preview = container.querySelector('.mrz-maps-exp-media-preview');
 
 		function renderPreview(url) {
 			if (!preview) { return; }
@@ -195,20 +195,20 @@
 	}
 
 	function initMediaPickers(root) {
-		(root || document).querySelectorAll('.gmaps-aa-media-picker').forEach(bindMediaPicker);
+		(root || document).querySelectorAll('.mrz-maps-exp-media-picker').forEach(bindMediaPicker);
 	}
 
 	// Color picker (WP Color Picker).
 	function initColorPicker() {
 		if (typeof jQuery === 'undefined' || !jQuery.fn.wpColorPicker) { return; }
-		jQuery('.gmaps-aa-color-picker').wpColorPicker();
+		jQuery('.mrz-maps-exp-color-picker').wpColorPicker();
 	}
 
 	// Chargement AJAX des termes de la taxonomie choisie + reconstruction des lignes.
 	function initPrimaryTaxonomy() {
-		var sel = document.getElementById('gmaps_aa_primary_taxonomy');
-		var container = document.getElementById('gmaps_aa_term_markers');
-		var tpl = document.getElementById('gmaps-aa-term-row-template');
+		var sel = document.getElementById('mrz_maps_exp_primary_taxonomy');
+		var container = document.getElementById('mrz_maps_exp_term_markers');
+		var tpl = document.getElementById('mrz-maps-exp-term-row-template');
 		if (!sel || !container || !tpl) { return; }
 
 		var ajaxUrl = container.getAttribute('data-ajax-url');
@@ -226,7 +226,7 @@
 			temp.innerHTML = html.trim();
 			var row = temp.firstChild;
 			if (term.icon_url) {
-				var preview = row.querySelector('.gmaps-aa-media-preview');
+				var preview = row.querySelector('.mrz-maps-exp-media-preview');
 				if (preview) {
 					var img = document.createElement('img');
 					img.alt = '';
@@ -247,7 +247,7 @@
 				return;
 			}
 			var form = new FormData();
-			form.append('action', 'gmaps_aa_fetch_terms');
+			form.append('action', 'mrz_maps_exp_fetch_terms');
 			form.append('nonce', nonce);
 			form.append('taxonomy', tax);
 
@@ -278,7 +278,7 @@
 
 	document.addEventListener('DOMContentLoaded', function () {
 		updateTaxonomyVisibility();
-		var sel = document.getElementById('gmaps_aa_source_pt');
+		var sel = document.getElementById('mrz_maps_exp_source_pt');
 		if (sel) {
 			sel.addEventListener('change', updateTaxonomyVisibility);
 		}
@@ -287,11 +287,11 @@
 		initMediaPickers();
 		initColorPicker();
 		initPrimaryTaxonomy();
-		if (window.gmapsAAAdmin && !window.gmapsAAAdmin.hasApiKey) {
-			var el = document.getElementById('gmaps_aa_picker');
+		if (window.mrzMapsExpAdmin && !window.mrzMapsExpAdmin.hasApiKey) {
+			var el = document.getElementById('mrz_maps_exp_picker');
 			if (el) {
 				el.innerHTML = '<p style="padding:10px;color:#666;">' +
-					'Clé Google Maps API manquante — la mini-carte est désactivée. Ajoutez la clé via le filtre gmaps_aa_api_key.' +
+					'Clé Google Maps API manquante — la mini-carte est désactivée. Ajoutez la clé via le filtre mrz_maps_exp_api_key.' +
 					'</p>';
 			}
 		}

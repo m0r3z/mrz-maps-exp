@@ -3,7 +3,7 @@
  * Agrège les données d'une carte pour le rendu front.
  */
 
-namespace GmapsAA;
+namespace MrzMapsExp;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 final class DataProvider {
 
-	const CACHE_PREFIX = 'gmaps_aa_map_';
+	const CACHE_PREFIX = 'mrz_maps_exp_map_';
 
 	public static function invalidate( $map_id ) {
 		delete_transient( self::CACHE_PREFIX . (int) $map_id );
@@ -19,7 +19,7 @@ final class DataProvider {
 
 	public static function get_map_data( $map_id ) {
 		$map_id = (int) $map_id;
-		if ( $map_id <= 0 || get_post_type( $map_id ) !== GMAPS_AA_CPT ) {
+		if ( $map_id <= 0 || get_post_type( $map_id ) !== MRZ_MAPS_EXP_CPT ) {
 			return null;
 		}
 
@@ -37,9 +37,9 @@ final class DataProvider {
 			'filters' => array(),
 			'points'  => array(),
 			'i18n'    => array(
-				'search_placeholder' => __( 'Rechercher une adresse…', 'gmaps-aa' ),
-				'radius_label'       => __( 'Rayon (km)', 'gmaps-aa' ),
-				'clear'              => __( 'Effacer', 'gmaps-aa' ),
+				'search_placeholder' => __( 'Rechercher une adresse…', 'mrz-maps-exp' ),
+				'radius_label'       => __( 'Rayon (km)', 'mrz-maps-exp' ),
+				'clear'              => __( 'Effacer', 'mrz-maps-exp' ),
 			),
 		);
 
@@ -48,7 +48,7 @@ final class DataProvider {
 		$data['points']  = $points;
 		$data['filters'] = self::build_filters( $values, $points );
 
-		$ttl = (int) apply_filters( 'gmaps_aa_cache_ttl', 5 * MINUTE_IN_SECONDS );
+		$ttl = (int) apply_filters( 'mrz_maps_exp_cache_ttl', 5 * MINUTE_IN_SECONDS );
 		if ( $ttl > 0 ) {
 			set_transient( $cache_key, $data, $ttl );
 		}
@@ -67,11 +67,11 @@ final class DataProvider {
 
 		$clear_btn_text = '' !== (string) $values['clear_btn_text']
 			? (string) $values['clear_btn_text']
-			: __( 'Effacer', 'gmaps-aa' );
+			: __( 'Effacer', 'mrz-maps-exp' );
 
 		$marker_default_url = '' !== (string) $values['marker_default_url']
 			? (string) $values['marker_default_url']
-			: GMAPS_AA_URL . 'assets/default-marker.svg';
+			: MRZ_MAPS_EXP_URL . 'assets/default-marker.svg';
 
 		return array(
 			'height'         => (int) $values['height'],
@@ -96,14 +96,14 @@ final class DataProvider {
 				'radius'         => (int) $values['search_radius'],
 				'label'          => '' !== (string) $values['search_label']
 					? (string) $values['search_label']
-					: __( 'Rechercher', 'gmaps-aa' ),
+					: __( 'Rechercher', 'mrz-maps-exp' ),
 				'placeholder'    => '' !== (string) $values['search_placeholder']
 					? (string) $values['search_placeholder']
-					: __( 'Rechercher une adresse…', 'gmaps-aa' ),
+					: __( 'Rechercher une adresse…', 'mrz-maps-exp' ),
 				'localMatch'     => ! empty( $values['search_local_match'] ),
 				'layout'         => (string) $values['search_layout'],
-				'sectionLocal'   => __( 'Fiches', 'gmaps-aa' ),
-				'sectionAddress' => __( 'Adresses', 'gmaps-aa' ),
+				'sectionLocal'   => __( 'Fiches', 'mrz-maps-exp' ),
+				'sectionAddress' => __( 'Adresses', 'mrz-maps-exp' ),
 			),
 			'taxonomies'       => array_values( (array) $values['taxonomies'] ),
 			'taxoModes'        => (array) $values['taxo_modes'],
@@ -205,7 +205,7 @@ final class DataProvider {
 				$primary_terms = get_the_terms( $post->ID, $primary_tax );
 				if ( ! empty( $primary_terms ) && ! is_wp_error( $primary_terms ) ) {
 					foreach ( $primary_terms as $term ) {
-						$icon = get_term_meta( $term->term_id, '_gmaps_aa_icon_url', true );
+						$icon = get_term_meta( $term->term_id, '_mrz_maps_exp_icon_url', true );
 						if ( $icon ) {
 							$point['icon'] = esc_url_raw( $icon );
 							break;
@@ -224,7 +224,7 @@ final class DataProvider {
 				foreach ( $terms as $term ) {
 					$ids[] = (int) $term->term_id;
 					if ( '' === $point['icon'] ) {
-						$icon = get_term_meta( $term->term_id, '_gmaps_aa_icon_url', true );
+						$icon = get_term_meta( $term->term_id, '_mrz_maps_exp_icon_url', true );
 						if ( $icon ) {
 							$point['icon'] = esc_url_raw( $icon );
 						}
@@ -374,8 +374,8 @@ final class DataProvider {
 			}
 			if ( is_array( $obj ) && isset( $obj['type'] ) && 'true_false' === $obj['type'] ) {
 				$choices = array(
-					'1' => isset( $obj['ui_on_text'] ) && '' !== $obj['ui_on_text'] ? (string) $obj['ui_on_text'] : __( 'Oui', 'gmaps-aa' ),
-					'0' => isset( $obj['ui_off_text'] ) && '' !== $obj['ui_off_text'] ? (string) $obj['ui_off_text'] : __( 'Non', 'gmaps-aa' ),
+					'1' => isset( $obj['ui_on_text'] ) && '' !== $obj['ui_on_text'] ? (string) $obj['ui_on_text'] : __( 'Oui', 'mrz-maps-exp' ),
+					'0' => isset( $obj['ui_off_text'] ) && '' !== $obj['ui_off_text'] ? (string) $obj['ui_off_text'] : __( 'Non', 'mrz-maps-exp' ),
 				);
 			}
 		}

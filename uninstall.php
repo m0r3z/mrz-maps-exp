@@ -10,7 +10,7 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 global $wpdb;
 
 // Supprime tous les posts du CPT et leurs métas associées.
-$cpt       = 'gmaps_aa_map';
+$cpt       = 'mrz_maps_exp_map';
 $map_ids   = $wpdb->get_col(
 	$wpdb->prepare(
 		"SELECT ID FROM {$wpdb->posts} WHERE post_type = %s",
@@ -24,7 +24,7 @@ if ( ! empty( $map_ids ) ) {
 	}
 }
 
-// Supprime les post_meta orphelines éventuelles (_gmaps_aa_*).
+// Supprime les post_meta orphelines éventuelles (_mrz_maps_exp_*).
 $wpdb->query(
 	"DELETE FROM {$wpdb->postmeta} WHERE meta_key LIKE '\\_gmaps\\_aa\\_%'"
 );
@@ -35,7 +35,7 @@ $wpdb->query(
 );
 
 // Supprime les options et transients.
-delete_option( 'gmaps_aa_settings' );
+delete_option( 'mrz_maps_exp_settings' );
 
 $wpdb->query(
 	"DELETE FROM {$wpdb->options} WHERE option_name LIKE '\\_transient\\_gmaps\\_aa\\_%' OR option_name LIKE '\\_transient\\_timeout\\_gmaps\\_aa\\_%'"
