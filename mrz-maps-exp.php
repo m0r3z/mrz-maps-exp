@@ -3,7 +3,7 @@
  * Plugin Name:       MRZ Maps Exp
  * Plugin URI:        https://github.com/m0r3z/mrz-maps-exp
  * Description:       Cartographie Google Maps basée sur les CPT et champs ACF, avec filtres par taxonomie, Snazzy Maps et recherche par adresse.
- * Version:           1.0.5
+ * Version:           1.0.6
  * Requires at least: 6.3
  * Requires PHP:      7.4
  * Author:            Morez.co
@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'MRZ_MAPS_EXP_VERSION', '1.0.5' );
+define( 'MRZ_MAPS_EXP_VERSION', '1.0.6' );
 define( 'MRZ_MAPS_EXP_FILE', __FILE__ );
 define( 'MRZ_MAPS_EXP_DIR', plugin_dir_path( __FILE__ ) );
 define( 'MRZ_MAPS_EXP_URL', plugin_dir_url( __FILE__ ) );
