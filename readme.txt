@@ -4,7 +4,7 @@ Tags: google maps, map, acf, taxonomy, custom post type
 Requires at least: 6.3
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.0.6
+Stable tag: 1.0.7
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -110,6 +110,9 @@ It is the responsibility of site administrators to obtain a valid Google Maps AP
 
 == Changelog ==
 
+= 1.0.7 =
+* CI: first automated deployment to wordpress.org via the new `Deploy to WordPress.org` GitHub Action (10up/action-wordpress-plugin-deploy). No code change.
+
 = 1.0.6 =
 * Translated the readme description, FAQ, installation steps and requirements to English (wordpress.org guideline). The shipped code already uses English-friendly identifiers; only the documentation was localized to French.
 * Made the GitHub repository public so the Plugin URI and Repository URL resolve correctly for the review team (previously 404 due to the private repo).
@@ -140,6 +143,9 @@ It is the responsibility of site administrators to obtain a valid Google Maps AP
   * Added a dedicated `== External services ==` section in the readme documenting the use of the Google Maps JavaScript API, what data is sent, and links to Google's Terms of Service and Privacy Policy.
 
 == Upgrade Notice ==
+
+= 1.0.7 =
+First automated SVN deployment. No code change.
 
 = 1.0.6 =
 Readme description translated to English (wordpress.org requirement) and GitHub repository made public so the Plugin URI resolves. No code change.
