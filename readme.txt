@@ -1,10 +1,10 @@
 === MRZ Maps Exp ===
-Contributors: mrzxp
+Contributors: m0r3z
 Tags: google maps, map, acf, taxonomy, custom post type
 Requires at least: 6.3
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.0.7
+Stable tag: 1.0.8
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -110,6 +110,9 @@ It is the responsibility of site administrators to obtain a valid Google Maps AP
 
 == Changelog ==
 
+= 1.0.8 =
+* Ownership transferred to the wp.org account `m0r3z` (was `mrzxp`). Same Morez agency behind the plugin — the `mrzxp` account was a temporary workaround while access to `m0r3z` was being recovered. GitHub Action's SVN credentials updated accordingly.
+
 = 1.0.7 =
 * CI: first automated deployment to wordpress.org via the new `Deploy to WordPress.org` GitHub Action (10up/action-wordpress-plugin-deploy). No code change.
 
@@ -143,6 +146,9 @@ It is the responsibility of site administrators to obtain a valid Google Maps AP
   * Added a dedicated `== External services ==` section in the readme documenting the use of the Google Maps JavaScript API, what data is sent, and links to Google's Terms of Service and Privacy Policy.
 
 == Upgrade Notice ==
+
+= 1.0.8 =
+Internal ownership transfer within the Morez agency (mrzxp → m0r3z). No functional change, no data migration.
 
 = 1.0.7 =
 First automated SVN deployment. No code change.
