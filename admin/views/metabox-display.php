@@ -13,45 +13,45 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<tbody>
 		<tr>
 			<th scope="row">
-				<label for="mrz_maps_exp_height"><?php esc_html_e( 'Hauteur (px)', 'mrz-maps-exp' ); ?></label>
+				<label for="mrzme_height"><?php esc_html_e( 'Hauteur (px)', 'mrz-maps-exp' ); ?></label>
 			</th>
 			<td>
-				<input type="number" name="mrz_maps_exp[height]" id="mrz_maps_exp_height" value="<?php echo esc_attr( $values['height'] ); ?>" min="100" max="2000" step="10" />
+				<input type="number" name="mrz_maps_exp[height]" id="mrzme_height" value="<?php echo esc_attr( $values['height'] ); ?>" min="100" max="2000" step="10" />
 			</td>
 		</tr>
 		<tr>
 			<th scope="row">
-				<label for="mrz_maps_exp_zoom"><?php esc_html_e( 'Zoom initial', 'mrz-maps-exp' ); ?></label>
+				<label for="mrzme_zoom"><?php esc_html_e( 'Zoom initial', 'mrz-maps-exp' ); ?></label>
 			</th>
 			<td>
-				<input type="number" name="mrz_maps_exp[zoom]" id="mrz_maps_exp_zoom" value="<?php echo esc_attr( $values['zoom'] ); ?>" min="1" max="22" step="1" />
+				<input type="number" name="mrz_maps_exp[zoom]" id="mrzme_zoom" value="<?php echo esc_attr( $values['zoom'] ); ?>" min="1" max="22" step="1" />
 				<p class="description"><?php esc_html_e( 'Niveau de zoom au chargement de la page. De 1 (monde) à 22 (bâtiment).', 'mrz-maps-exp' ); ?></p>
 			</td>
 		</tr>
 		<tr>
 			<th scope="row">
-				<label for="mrz_maps_exp_zoom_min"><?php esc_html_e( 'Zoom minimum', 'mrz-maps-exp' ); ?></label>
+				<label for="mrzme_zoom_min"><?php esc_html_e( 'Zoom minimum', 'mrz-maps-exp' ); ?></label>
 			</th>
 			<td>
-				<input type="number" name="mrz_maps_exp[zoom_min]" id="mrz_maps_exp_zoom_min" value="<?php echo esc_attr( $values['zoom_min'] ); ?>" min="1" max="22" step="1" />
+				<input type="number" name="mrz_maps_exp[zoom_min]" id="mrzme_zoom_min" value="<?php echo esc_attr( $values['zoom_min'] ); ?>" min="1" max="22" step="1" />
 				<p class="description"><?php esc_html_e( 'Niveau de dézoom maximal autorisé à l\'utilisateur.', 'mrz-maps-exp' ); ?></p>
 			</td>
 		</tr>
 		<tr>
 			<th scope="row">
-				<label for="mrz_maps_exp_zoom_max"><?php esc_html_e( 'Zoom maximum', 'mrz-maps-exp' ); ?></label>
+				<label for="mrzme_zoom_max"><?php esc_html_e( 'Zoom maximum', 'mrz-maps-exp' ); ?></label>
 			</th>
 			<td>
-				<input type="number" name="mrz_maps_exp[zoom_max]" id="mrz_maps_exp_zoom_max" value="<?php echo esc_attr( $values['zoom_max'] ); ?>" min="1" max="22" step="1" />
+				<input type="number" name="mrz_maps_exp[zoom_max]" id="mrzme_zoom_max" value="<?php echo esc_attr( $values['zoom_max'] ); ?>" min="1" max="22" step="1" />
 				<p class="description"><?php esc_html_e( 'Niveau de zoom maximal autorisé à l\'utilisateur.', 'mrz-maps-exp' ); ?></p>
 			</td>
 		</tr>
 		<tr>
 			<th scope="row">
-				<label for="mrz_maps_exp_zoom_search"><?php esc_html_e( 'Zoom après recherche', 'mrz-maps-exp' ); ?></label>
+				<label for="mrzme_zoom_search"><?php esc_html_e( 'Zoom après recherche', 'mrz-maps-exp' ); ?></label>
 			</th>
 			<td>
-				<input type="number" name="mrz_maps_exp[zoom_search]" id="mrz_maps_exp_zoom_search" value="<?php echo esc_attr( $values['zoom_search'] ); ?>" min="1" max="22" step="1" />
+				<input type="number" name="mrz_maps_exp[zoom_search]" id="mrzme_zoom_search" value="<?php echo esc_attr( $values['zoom_search'] ); ?>" min="1" max="22" step="1" />
 				<p class="description"><?php esc_html_e( 'Zoom appliqué après la sélection d\'une adresse dans la barre de recherche.', 'mrz-maps-exp' ); ?></p>
 			</td>
 		</tr>
@@ -114,14 +114,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<td>
 				<label>
 					<?php esc_html_e( 'Latitude :', 'mrz-maps-exp' ); ?>
-					<input type="number" name="mrz_maps_exp[center_lat]" id="mrz_maps_exp_center_lat" value="<?php echo esc_attr( $values['center_lat'] ); ?>" step="any" min="-90" max="90" class="small-text" />
+					<input type="number" name="mrz_maps_exp[center_lat]" id="mrzme_center_lat" value="<?php echo esc_attr( $values['center_lat'] ); ?>" step="any" min="-90" max="90" class="small-text" />
 				</label>
 				<label>
 					<?php esc_html_e( 'Longitude :', 'mrz-maps-exp' ); ?>
-					<input type="number" name="mrz_maps_exp[center_lng]" id="mrz_maps_exp_center_lng" value="<?php echo esc_attr( $values['center_lng'] ); ?>" step="any" min="-180" max="180" class="small-text" />
+					<input type="number" name="mrz_maps_exp[center_lng]" id="mrzme_center_lng" value="<?php echo esc_attr( $values['center_lng'] ); ?>" step="any" min="-180" max="180" class="small-text" />
 				</label>
 				<p class="description"><?php esc_html_e( 'Cliquez sur la carte ci-dessous pour définir le centre.', 'mrz-maps-exp' ); ?></p>
-				<div id="mrz_maps_exp_picker" class="mrz-maps-exp-picker" style="width:100%;height:300px;border:1px solid #ccd0d4;margin-top:8px;"></div>
+				<div id="mrzme_picker" class="mrz-maps-exp-picker" style="width:100%;height:300px;border:1px solid #ccd0d4;margin-top:8px;"></div>
 			</td>
 		</tr>
 		<tr>

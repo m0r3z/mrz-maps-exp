@@ -3,7 +3,7 @@
  * Métaboxes de configuration d'une carte + sauvegarde sécurisée.
  */
 
-namespace MrzMapsExp;
+namespace Mrzme;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -11,8 +11,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 final class MapConfig {
 
-	const NONCE_ACTION = 'mrz_maps_exp_save_map';
-	const NONCE_NAME   = '_mrz_maps_exp_nonce';
+	const NONCE_ACTION = 'mrzme_save_map';
+	const NONCE_NAME   = '_mrzme_nonce';
 
 	/**
 	 * Définition des valeurs autorisées pour les champs à choix fermé.
@@ -41,20 +41,20 @@ final class MapConfig {
 
 	public function register() {
 		add_action( 'add_meta_boxes', array( $this, 'add_metaboxes' ) );
-		add_action( 'save_post_' . MRZ_MAPS_EXP_CPT, array( $this, 'save' ), 10, 2 );
+		add_action( 'save_post_' . MRZME_CPT, array( $this, 'save' ), 10, 2 );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin' ) );
 		add_action( 'admin_notices', array( $this, 'maybe_notice_missing_key' ) );
-		add_action( 'wp_ajax_mrz_maps_exp_fetch_terms', array( $this, 'ajax_fetch_terms' ) );
+		add_action( 'wp_ajax_mrzme_fetch_terms', array( $this, 'ajax_fetch_terms' ) );
 	}
 
 	public function add_metaboxes() {
-		add_meta_box( 'mrz_maps_exp_source', __( 'Source des données', 'mrz-maps-exp' ), array( $this, 'render' ), MRZ_MAPS_EXP_CPT, 'normal', 'high', array( 'view' => 'source' ) );
-		add_meta_box( 'mrz_maps_exp_templates', __( 'Templates HTML', 'mrz-maps-exp' ), array( $this, 'render' ), MRZ_MAPS_EXP_CPT, 'normal', 'high', array( 'view' => 'templates' ) );
-		add_meta_box( 'mrz_maps_exp_filters', __( 'Filtres', 'mrz-maps-exp' ), array( $this, 'render' ), MRZ_MAPS_EXP_CPT, 'normal', 'high', array( 'view' => 'filters' ) );
-		add_meta_box( 'mrz_maps_exp_display', __( 'Affichage', 'mrz-maps-exp' ), array( $this, 'render' ), MRZ_MAPS_EXP_CPT, 'normal', 'high', array( 'view' => 'display' ) );
-		add_meta_box( 'mrz_maps_exp_cosmetic', __( 'Cosmétique', 'mrz-maps-exp' ), array( $this, 'render' ), MRZ_MAPS_EXP_CPT, 'normal', 'default', array( 'view' => 'cosmetic' ) );
-		add_meta_box( 'mrz_maps_exp_style', __( 'Style de la carte', 'mrz-maps-exp' ), array( $this, 'render' ), MRZ_MAPS_EXP_CPT, 'normal', 'default', array( 'view' => 'style' ) );
-		add_meta_box( 'mrz_maps_exp_shortcode', __( 'Shortcode', 'mrz-maps-exp' ), array( $this, 'render' ), MRZ_MAPS_EXP_CPT, 'side', 'high', array( 'view' => 'shortcode' ) );
+		add_meta_box( 'mrzme_source', __( 'Source des données', 'mrz-maps-exp' ), array( $this, 'render' ), MRZME_CPT, 'normal', 'high', array( 'view' => 'source' ) );
+		add_meta_box( 'mrzme_templates', __( 'Templates HTML', 'mrz-maps-exp' ), array( $this, 'render' ), MRZME_CPT, 'normal', 'high', array( 'view' => 'templates' ) );
+		add_meta_box( 'mrzme_filters', __( 'Filtres', 'mrz-maps-exp' ), array( $this, 'render' ), MRZME_CPT, 'normal', 'high', array( 'view' => 'filters' ) );
+		add_meta_box( 'mrzme_display', __( 'Affichage', 'mrz-maps-exp' ), array( $this, 'render' ), MRZME_CPT, 'normal', 'high', array( 'view' => 'display' ) );
+		add_meta_box( 'mrzme_cosmetic', __( 'Cosmétique', 'mrz-maps-exp' ), array( $this, 'render' ), MRZME_CPT, 'normal', 'default', array( 'view' => 'cosmetic' ) );
+		add_meta_box( 'mrzme_style', __( 'Style de la carte', 'mrz-maps-exp' ), array( $this, 'render' ), MRZME_CPT, 'normal', 'default', array( 'view' => 'style' ) );
+		add_meta_box( 'mrzme_shortcode', __( 'Shortcode', 'mrz-maps-exp' ), array( $this, 'render' ), MRZME_CPT, 'side', 'high', array( 'view' => 'shortcode' ) );
 	}
 
 	public function render( $post, $metabox ) {
@@ -65,7 +65,7 @@ final class MapConfig {
 		}
 
 		$view = isset( $metabox['args']['view'] ) ? $metabox['args']['view'] : '';
-		$file = MRZ_MAPS_EXP_DIR . 'admin/views/metabox-' . $view . '.php';
+		$file = MRZME_DIR . 'admin/views/metabox-' . $view . '.php';
 
 		if ( ! file_exists( $file ) ) {
 			return;
@@ -126,7 +126,7 @@ final class MapConfig {
 
 		$out = array();
 		foreach ( $defaults as $key => $default ) {
-			$stored = get_post_meta( $post_id, '_mrz_maps_exp_' . $key, true );
+			$stored = get_post_meta( $post_id, '_mrzme_' . $key, true );
 			if ( '' === $stored || null === $stored ) {
 				$out[ $key ] = $default;
 			} elseif ( is_array( $default ) ) {
@@ -329,7 +329,7 @@ final class MapConfig {
 		$clean['spiderfier']           = ! empty( $raw['spiderfier'] ) ? 1 : 0;
 
 		foreach ( $clean as $key => $value ) {
-			update_post_meta( $post_id, '_mrz_maps_exp_' . $key, $value );
+			update_post_meta( $post_id, '_mrzme_' . $key, $value );
 		}
 
 		// Icônes par terme — stockées globalement en term_meta.
@@ -348,17 +348,17 @@ final class MapConfig {
 					$id = 0;
 				}
 				if ( '' === $url && 0 === $id ) {
-					delete_term_meta( $term_id, '_mrz_maps_exp_icon_url' );
-					delete_term_meta( $term_id, '_mrz_maps_exp_icon_id' );
+					delete_term_meta( $term_id, '_mrzme_icon_url' );
+					delete_term_meta( $term_id, '_mrzme_icon_id' );
 				} else {
-					update_term_meta( $term_id, '_mrz_maps_exp_icon_url', $url );
-					update_term_meta( $term_id, '_mrz_maps_exp_icon_id', $id );
+					update_term_meta( $term_id, '_mrzme_icon_url', $url );
+					update_term_meta( $term_id, '_mrzme_icon_id', $id );
 				}
 			}
 		}
 
 		// Invalide le cache transient.
-		delete_transient( 'mrz_maps_exp_map_' . (int) $post_id );
+		delete_transient( 'mrzme_map_' . (int) $post_id );
 	}
 
 	/**
@@ -379,7 +379,7 @@ final class MapConfig {
 	 * Handler AJAX : récupère les termes d'une taxonomie (pour la métabox Cosmétique).
 	 */
 	public function ajax_fetch_terms() {
-		check_ajax_referer( 'mrz_maps_exp_fetch_terms', 'nonce' );
+		check_ajax_referer( 'mrzme_fetch_terms', 'nonce' );
 		if ( ! current_user_can( 'edit_posts' ) ) {
 			wp_send_json_error( array( 'message' => __( 'Accès refusé.', 'mrz-maps-exp' ) ), 403 );
 		}
@@ -404,8 +404,8 @@ final class MapConfig {
 			$out[] = array(
 				'id'       => (int) $term->term_id,
 				'name'     => $term->name,
-				'icon_url' => (string) get_term_meta( $term->term_id, '_mrz_maps_exp_icon_url', true ),
-				'icon_id'  => (int) get_term_meta( $term->term_id, '_mrz_maps_exp_icon_id', true ),
+				'icon_url' => (string) get_term_meta( $term->term_id, '_mrzme_icon_url', true ),
+				'icon_id'  => (int) get_term_meta( $term->term_id, '_mrzme_icon_id', true ),
 			);
 		}
 		wp_send_json_success( $out );
@@ -445,7 +445,7 @@ final class MapConfig {
 			}
 		}
 
-		return apply_filters( 'mrz_maps_exp_template_kses_allowed', $allowed );
+		return apply_filters( 'mrzme_template_kses_allowed', $allowed );
 	}
 
 	/**
@@ -456,7 +456,7 @@ final class MapConfig {
 			return;
 		}
 		$screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
-		if ( ! $screen || MRZ_MAPS_EXP_CPT !== $screen->post_type ) {
+		if ( ! $screen || MRZME_CPT !== $screen->post_type ) {
 			return;
 		}
 
@@ -466,12 +466,12 @@ final class MapConfig {
 
 		wp_enqueue_style(
 			'mrz-maps-exp-admin',
-			MRZ_MAPS_EXP_URL . 'admin/css/admin.css',
+			MRZME_URL . 'admin/css/admin.css',
 			array(),
-			MRZ_MAPS_EXP_VERSION
+			MRZME_VERSION
 		);
 
-		$api_key = mrz_maps_exp_get_api_key();
+		$api_key = mrzme_get_api_key();
 
 		if ( '' !== $api_key ) {
 			wp_enqueue_script(
@@ -496,9 +496,9 @@ final class MapConfig {
 
 		wp_enqueue_script(
 			'mrz-maps-exp-admin',
-			MRZ_MAPS_EXP_URL . 'admin/js/admin.js',
+			MRZME_URL . 'admin/js/admin.js',
 			array( 'jquery', 'wp-color-picker' ),
-			MRZ_MAPS_EXP_VERSION,
+			MRZME_VERSION,
 			true
 		);
 
@@ -516,10 +516,10 @@ final class MapConfig {
 	 */
 	public function maybe_notice_missing_key() {
 		$screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
-		if ( ! $screen || MRZ_MAPS_EXP_CPT !== $screen->post_type ) {
+		if ( ! $screen || MRZME_CPT !== $screen->post_type ) {
 			return;
 		}
-		if ( '' !== mrz_maps_exp_get_api_key() ) {
+		if ( '' !== mrzme_get_api_key() ) {
 			return;
 		}
 		?>
@@ -528,7 +528,7 @@ final class MapConfig {
 			<p>
 				<?php esc_html_e( 'Ajoutez dans le functions.php de votre thème :', 'mrz-maps-exp' ); ?>
 			</p>
-			<pre style="background:#f6f7f7;padding:10px;overflow:auto;">add_filter( 'mrz_maps_exp_api_key', function () {
+			<pre style="background:#f6f7f7;padding:10px;overflow:auto;">add_filter( 'mrzme_api_key', function () {
     return 'VOTRE_CLE_API';
 } );</pre>
 		</div>

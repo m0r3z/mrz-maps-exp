@@ -35,19 +35,19 @@ $allowed_code = array( 'code' => array() );
 	<tbody>
 		<tr>
 			<th scope="row">
-				<label for="mrz_maps_exp_tpl_tooltip"><?php esc_html_e( 'Template infobulle', 'mrz-maps-exp' ); ?></label>
+				<label for="mrzme_tpl_tooltip"><?php esc_html_e( 'Template infobulle', 'mrz-maps-exp' ); ?></label>
 			</th>
 			<td>
-				<textarea name="mrz_maps_exp[tpl_tooltip]" id="mrz_maps_exp_tpl_tooltip" rows="8" class="large-text code"><?php echo esc_textarea( $values['tpl_tooltip'] ); ?></textarea>
+				<textarea name="mrz_maps_exp[tpl_tooltip]" id="mrzme_tpl_tooltip" rows="8" class="large-text code"><?php echo esc_textarea( $values['tpl_tooltip'] ); ?></textarea>
 				<p class="description"><?php esc_html_e( 'HTML affiché dans l\'infobulle de chaque marker.', 'mrz-maps-exp' ); ?></p>
 			</td>
 		</tr>
 		<tr>
 			<th scope="row">
-				<label for="mrz_maps_exp_tpl_list"><?php esc_html_e( 'Template liste', 'mrz-maps-exp' ); ?></label>
+				<label for="mrzme_tpl_list"><?php esc_html_e( 'Template liste', 'mrz-maps-exp' ); ?></label>
 			</th>
 			<td>
-				<textarea name="mrz_maps_exp[tpl_list]" id="mrz_maps_exp_tpl_list" rows="8" class="large-text code"><?php echo esc_textarea( $values['tpl_list'] ); ?></textarea>
+				<textarea name="mrz_maps_exp[tpl_list]" id="mrzme_tpl_list" rows="8" class="large-text code"><?php echo esc_textarea( $values['tpl_list'] ); ?></textarea>
 				<p class="description"><?php esc_html_e( 'HTML affiché pour chaque entrée de la liste/grille.', 'mrz-maps-exp' ); ?></p>
 			</td>
 		</tr>

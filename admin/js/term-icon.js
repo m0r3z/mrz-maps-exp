@@ -2,8 +2,8 @@
 	'use strict';
 
 	function wireRow($row) {
-		var $url     = $row.find('#mrz_maps_exp_icon_url');
-		var $id      = $row.find('#mrz_maps_exp_icon_id');
+		var $url     = $row.find('#mrzme_icon_url');
+		var $id      = $row.find('#mrzme_icon_id');
 		var $preview = $row.find('.mrz-maps-exp-term-icon-preview');
 		var frame    = null;
 

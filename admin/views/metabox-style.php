@@ -13,10 +13,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<tbody>
 		<tr>
 			<th scope="row">
-				<label for="mrz_maps_exp_snazzy"><?php esc_html_e( 'JSON Snazzy Maps', 'mrz-maps-exp' ); ?></label>
+				<label for="mrzme_snazzy"><?php esc_html_e( 'JSON Snazzy Maps', 'mrz-maps-exp' ); ?></label>
 			</th>
 			<td>
-				<textarea name="mrz_maps_exp[snazzy]" id="mrz_maps_exp_snazzy" rows="8" class="large-text code" placeholder="[ { &quot;featureType&quot;: &quot;all&quot;, ... } ]"><?php echo esc_textarea( $values['snazzy'] ); ?></textarea>
+				<textarea name="mrz_maps_exp[snazzy]" id="mrzme_snazzy" rows="8" class="large-text code" placeholder="[ { &quot;featureType&quot;: &quot;all&quot;, ... } ]"><?php echo esc_textarea( $values['snazzy'] ); ?></textarea>
 				<p class="description">
 					<?php
 					echo wp_kses(

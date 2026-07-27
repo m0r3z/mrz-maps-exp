@@ -1,9 +1,10 @@
 <?php
 /**
- * Shortcode [mrz_maps_exp id="X"].
+ * Shortcodes [mrzme id="X"] (canonical since v1.1.0)
+ * and [mrz_maps_exp id="X"] (legacy alias kept for existing sites).
  */
 
-namespace MrzMapsExp;
+namespace Mrzme;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -11,8 +12,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 final class Shortcode {
 
+	const CANONICAL_TAG = 'mrzme';
+	const LEGACY_TAG    = 'mrz_maps_exp';
+
 	public function register() {
-		add_shortcode( 'mrz_maps_exp', array( $this, 'render' ) );
+		add_shortcode( self::CANONICAL_TAG, array( $this, 'render' ) );
+		// Rétrocompat : les sites en production peuvent avoir [mrz_maps_exp]
+		// en dur dans leurs pages. On garde l'alias en vie pour ne pas les
+		// casser au bump 1.1.0. Ne sera pas retiré tant qu'une majorité de
+		// sites ne l'aura pas migré.
+		add_shortcode( self::LEGACY_TAG, array( $this, 'render' ) );
 	}
 
 	public function render( $atts ) {
@@ -28,7 +37,7 @@ final class Shortcode {
 		);
 
 		$map_id = absint( $atts['id'] );
-		if ( $map_id <= 0 || get_post_type( $map_id ) !== MRZ_MAPS_EXP_CPT ) {
+		if ( $map_id <= 0 || get_post_type( $map_id ) !== MRZME_CPT ) {
 			return '';
 		}
 
@@ -89,7 +98,7 @@ final class Shortcode {
 		$uid = 'mrz-maps-exp-' . $map_id . '-' . wp_generate_uuid4();
 
 		ob_start();
-		include MRZ_MAPS_EXP_DIR . 'public/views/map-wrapper.php';
+		include MRZME_DIR . 'public/views/map-wrapper.php';
 		return ob_get_clean();
 	}
 }

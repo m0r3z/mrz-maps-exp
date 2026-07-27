@@ -3,7 +3,7 @@
  * Enregistre le Custom Post Type des cartes.
  */
 
-namespace MrzMapsExp;
+namespace Mrzme;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -13,8 +13,8 @@ final class CPT {
 
 	public function register() {
 		add_action( 'init', array( $this, 'register_post_type' ) );
-		add_filter( 'manage_' . MRZ_MAPS_EXP_CPT . '_posts_columns', array( $this, 'columns' ) );
-		add_action( 'manage_' . MRZ_MAPS_EXP_CPT . '_posts_custom_column', array( $this, 'column_content' ), 10, 2 );
+		add_filter( 'manage_' . MRZME_CPT . '_posts_columns', array( $this, 'columns' ) );
+		add_action( 'manage_' . MRZME_CPT . '_posts_custom_column', array( $this, 'column_content' ), 10, 2 );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_menu_icon_style' ) );
 	}
 
@@ -55,7 +55,7 @@ final class CPT {
 			'query_var'          => false,
 		);
 
-		register_post_type( MRZ_MAPS_EXP_CPT, $args );
+		register_post_type( MRZME_CPT, $args );
 	}
 
 	/**
@@ -69,14 +69,14 @@ final class CPT {
 	 */
 	public function enqueue_menu_icon_style() {
 		$handle = 'mrz-maps-exp-menu-icon';
-		wp_register_style( $handle, false, array(), MRZ_MAPS_EXP_VERSION );
+		wp_register_style( $handle, false, array(), MRZME_VERSION );
 		wp_enqueue_style( $handle );
 
-		$url = esc_url( MRZ_MAPS_EXP_URL . 'assets/menu-icon.svg?ver=' . MRZ_MAPS_EXP_VERSION );
+		$url = esc_url( MRZME_URL . 'assets/menu-icon.svg?ver=' . MRZME_VERSION );
 		// L'ID exact du <li> varie selon la façon dont WP sanitise le menu_file
 		// (edit.php?post_type=...). Sélecteur tolérant : tout menu_top dont l'ID
 		// contient le slug du CPT.
-		$sel = '#adminmenu li.menu-top[id*="' . MRZ_MAPS_EXP_CPT . '"]';
+		$sel = '#adminmenu li.menu-top[id*="' . MRZME_CPT . '"]';
 
 		$css  = $sel . ' .wp-menu-image{background:none!important;background-color:rgba(240,246,252,.6)!important;';
 		$css .= '-webkit-mask:url(\'' . $url . '\') no-repeat 9px 7px/20px;mask:url(\'' . $url . '\') no-repeat 9px 7px/20px;}';
@@ -94,18 +94,18 @@ final class CPT {
 		foreach ( $columns as $key => $label ) {
 			$new[ $key ] = $label;
 			if ( 'title' === $key ) {
-				$new['mrz_maps_exp_shortcode'] = __( 'Shortcode', 'mrz-maps-exp' );
+				$new['mrzme_shortcode'] = __( 'Shortcode', 'mrz-maps-exp' );
 			}
 		}
 		return $new;
 	}
 
 	public function column_content( $column, $post_id ) {
-		if ( 'mrz_maps_exp_shortcode' !== $column ) {
+		if ( 'mrzme_shortcode' !== $column ) {
 			return;
 		}
 		printf(
-			'<code>[mrz_maps_exp id="%d"]</code>',
+			'<code>[mrzme id="%d"]</code>',
 			(int) $post_id
 		);
 	}

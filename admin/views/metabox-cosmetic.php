@@ -53,10 +53,10 @@ if ( '' !== $primary_tax && taxonomy_exists( $primary_tax ) ) {
 		</tr>
 		<tr>
 			<th scope="row">
-				<label for="mrz_maps_exp_marker_default_width"><?php esc_html_e( 'Largeur du marqueur (px)', 'mrz-maps-exp' ); ?></label>
+				<label for="mrzme_marker_default_width"><?php esc_html_e( 'Largeur du marqueur (px)', 'mrz-maps-exp' ); ?></label>
 			</th>
 			<td>
-				<input type="number" name="mrz_maps_exp[marker_default_width]" id="mrz_maps_exp_marker_default_width" value="<?php echo esc_attr( $width ); ?>" min="8" max="128" step="1" />
+				<input type="number" name="mrz_maps_exp[marker_default_width]" id="mrzme_marker_default_width" value="<?php echo esc_attr( $width ); ?>" min="8" max="128" step="1" />
 				<p class="description"><?php esc_html_e( 'S\'applique à tous les marqueurs (défaut + marqueurs par terme).', 'mrz-maps-exp' ); ?></p>
 			</td>
 		</tr>
@@ -71,10 +71,10 @@ if ( '' !== $primary_tax && taxonomy_exists( $primary_tax ) ) {
 		</tr>
 		<tr>
 			<th scope="row">
-				<label for="mrz_maps_exp_primary_taxonomy"><?php esc_html_e( 'Taxonomie des marqueurs', 'mrz-maps-exp' ); ?></label>
+				<label for="mrzme_primary_taxonomy"><?php esc_html_e( 'Taxonomie des marqueurs', 'mrz-maps-exp' ); ?></label>
 			</th>
 			<td>
-				<select name="mrz_maps_exp[primary_taxonomy]" id="mrz_maps_exp_primary_taxonomy">
+				<select name="mrz_maps_exp[primary_taxonomy]" id="mrzme_primary_taxonomy">
 					<option value=""><?php esc_html_e( '— Aucune —', 'mrz-maps-exp' ); ?></option>
 					<?php foreach ( $all_tax as $tax ) : ?>
 						<option value="<?php echo esc_attr( $tax->name ); ?>" <?php selected( $primary_tax, $tax->name ); ?>>
@@ -89,8 +89,8 @@ if ( '' !== $primary_tax && taxonomy_exists( $primary_tax ) ) {
 			<th scope="row"><?php esc_html_e( 'Marqueurs par terme', 'mrz-maps-exp' ); ?></th>
 			<td>
 				<div
-					id="mrz_maps_exp_term_markers"
-					data-nonce="<?php echo esc_attr( wp_create_nonce( 'mrz_maps_exp_fetch_terms' ) ); ?>"
+					id="mrzme_term_markers"
+					data-nonce="<?php echo esc_attr( wp_create_nonce( 'mrzme_fetch_terms' ) ); ?>"
 					data-ajax-url="<?php echo esc_url( admin_url( 'admin-ajax.php' ) ); ?>">
 					<?php if ( empty( $primary_tax ) ) : ?>
 						<p class="description mrz-maps-exp-term-markers-empty"><?php esc_html_e( 'Sélectionnez d\'abord une taxonomie ci-dessus.', 'mrz-maps-exp' ); ?></p>
@@ -99,8 +99,8 @@ if ( '' !== $primary_tax && taxonomy_exists( $primary_tax ) ) {
 					<?php else : ?>
 						<?php foreach ( $initial_terms as $term ) : ?>
 							<?php
-							$icon_url = (string) get_term_meta( $term->term_id, '_mrz_maps_exp_icon_url', true );
-							$icon_id  = (int) get_term_meta( $term->term_id, '_mrz_maps_exp_icon_id', true );
+							$icon_url = (string) get_term_meta( $term->term_id, '_mrzme_icon_url', true );
+							$icon_id  = (int) get_term_meta( $term->term_id, '_mrzme_icon_id', true );
 							?>
 							<div class="mrz-maps-exp-term-row" data-term-id="<?php echo (int) $term->term_id; ?>">
 								<span class="mrz-maps-exp-term-name"><?php echo esc_html( $term->name ); ?></span>

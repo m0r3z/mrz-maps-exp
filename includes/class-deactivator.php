@@ -3,7 +3,7 @@
  * Actions exécutées à la désactivation du plugin.
  */
 
-namespace MrzMapsExp;
+namespace Mrzme;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

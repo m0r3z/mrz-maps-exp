@@ -4,7 +4,7 @@ Tags: google maps, map, acf, taxonomy, custom post type
 Requires at least: 6.3
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.0.8
+Stable tag: 1.1.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -27,14 +27,14 @@ MRZ Maps Exp is a generic, minimalist plugin to display any custom post type on 
 * Overlapping marker spiderfier (OverlappingMarkerSpiderfier).
 * Snazzy Maps: paste a JSON to style the map.
 * Responsive layout — filters above, left or right; detachable full-width search field; collapsible filters on mobile.
-* Shortcode with optional forced filter: `[mrz_maps_exp id="X" filter_taxonomy="genre" filter_term="42"]`.
+* Shortcode with optional forced filter: `[mrzme id="X" filter_taxonomy="genre" filter_term="42"]`.
 * Translation-ready (text-domain `mrz-maps-exp`, .pot file provided).
 
 = Requirements =
 
 * WordPress 6.3 or later, PHP 7.4 or later.
 * Advanced Custom Fields (Pro recommended) — for the Google Map field.
-* A Google Maps API key with the "Maps JavaScript", "Places" and "Geocoding" APIs enabled. The key must be declared in the theme's `functions.php` via the `mrz_maps_exp_api_key` filter or the `MRZ_MAPS_EXP_API_KEY` constant (the plugin deliberately does not expose an admin field for the key — it is a secret that has no place in the database).
+* A Google Maps API key with the "Maps JavaScript", "Places" and "Geocoding" APIs enabled. The key must be declared in the theme's `functions.php` via the `mrzme_api_key` filter or the `MRZME_API_KEY` constant (the plugin deliberately does not expose an admin field for the key — it is a secret that has no place in the database).
 
 = Privacy / external calls =
 
@@ -49,10 +49,10 @@ Issues, pull requests and forks welcome.
 
 1. Install and activate Advanced Custom Fields (Pro recommended).
 2. Declare your Google Maps API key in the theme's `functions.php`:
-   `add_filter( 'mrz_maps_exp_api_key', function () { return 'YOUR_API_KEY'; } );`
+   `add_filter( 'mrzme_api_key', function () { return 'YOUR_API_KEY'; } );`
 3. Install and activate MRZ Maps Exp from the WordPress "Plugins" screen, or upload the zip.
 4. Go to the **MRZ Maps** menu → **Add a map**, then configure the source post type, filters, templates, etc.
-5. Insert the generated shortcode on any page: `[mrz_maps_exp id="X"]`.
+5. Insert the generated shortcode on any page: `[mrzme id="X"]`.
 
 == Frequently Asked Questions ==
 
@@ -62,11 +62,11 @@ Yes. MRZ Maps Exp relies on ACF Google Map fields to retrieve each post's latitu
 
 = Why is the Google Maps API key not configurable from the admin? =
 
-This is a deliberate choice. An API key is a secret that has no place in the database: it could be exfiltrated via a DB export, an unencrypted backup, or a compromised admin account. The key must be declared in the theme code via the `mrz_maps_exp_api_key` filter or the `MRZ_MAPS_EXP_API_KEY` constant. This is also the recommended pattern for key rotation.
+This is a deliberate choice. An API key is a secret that has no place in the database: it could be exfiltrated via a DB export, an unencrypted backup, or a compromised admin account. The key must be declared in the theme code via the `mrzme_api_key` filter or the `MRZME_API_KEY` constant. This is also the recommended pattern for key rotation.
 
 = Is the plugin compatible with the Salient theme or with other mapping plugins? =
 
-Yes. MRZ Maps Exp detects whether Google Maps JS is already loaded by another plugin (e.g. Salient via `salient-core` / `nectar_gmap`) and does not re-enqueue it in that case. A `mrz_maps_exp_skip_gmaps_enqueue` filter lets you override the behavior if needed.
+Yes. MRZ Maps Exp detects whether Google Maps JS is already loaded by another plugin (e.g. Salient via `salient-core` / `nectar_gmap`) and does not re-enqueue it in that case. A `mrzme_skip_gmaps_enqueue` filter lets you override the behavior if needed.
 
 = How do I add content inside the tooltip or list items? =
 
@@ -89,11 +89,11 @@ The front rendering easily handles a few thousand markers (data is injected as i
 
 == External services ==
 
-This plugin relies on the Google Maps JavaScript API to display the interactive map, geocode addresses entered in the search field, and provide place autocomplete suggestions. The Google Maps API key is supplied by the site administrator (via the `mrz_maps_exp_api_key` filter or `MRZ_MAPS_EXP_API_KEY` constant in the theme); the plugin itself does not bundle any key.
+This plugin relies on the Google Maps JavaScript API to display the interactive map, geocode addresses entered in the search field, and provide place autocomplete suggestions. The Google Maps API key is supplied by the site administrator (via the `mrzme_api_key` filter or `MRZME_API_KEY` constant in the theme); the plugin itself does not bundle any key.
 
 = What is sent and when =
 
-* When a page containing the `[mrz_maps_exp]` shortcode is loaded, the visitor's browser loads the Google Maps JavaScript library from `https://maps.googleapis.com/maps/api/js`, including the `places` library. The Google Maps API key is appended as a query parameter.
+* When a page containing the `[mrzme]` shortcode is loaded, the visitor's browser loads the Google Maps JavaScript library from `https://maps.googleapis.com/maps/api/js`, including the `places` library. The Google Maps API key is appended as a query parameter.
 * When the visitor types in the search field, each keystroke (debounced) sends the current query string to Google's Places Autocomplete service to retrieve address suggestions. If the visitor picks a suggestion, Google's Places Details service is then called to obtain the coordinates for that place.
 * The visitor's IP address is transmitted to Google as part of these HTTP requests, as it is for any third-party request initiated by their browser.
 * No data is sent to Google when the plugin is only installed or activated in the admin — only when a public page containing the shortcode is loaded.
@@ -108,7 +108,7 @@ The plugin does not send any data to Morez.co or to any other third-party servic
 
 It is the responsibility of site administrators to obtain a valid Google Maps API key, accept Google's Terms of Service for the project that key belongs to, and disclose the use of Google Maps in their own site's privacy policy where required.
 
-== Changelog ==
+
 
 = 1.0.8 =
 * Ownership transferred to the wp.org account `m0r3z` (was `mrzxp`). Same Morez agency behind the plugin — the `mrzxp` account was a temporary workaround while access to `m0r3z` was being recovered. GitHub Action's SVN credentials updated accordingly.
@@ -146,6 +146,9 @@ It is the responsibility of site administrators to obtain a valid Google Maps AP
   * Added a dedicated `== External services ==` section in the readme documenting the use of the Google Maps JavaScript API, what data is sent, and links to Google's Terms of Service and Privacy Policy.
 
 == Upgrade Notice ==
+
+= 1.1.0 =
+Internal prefix refactor for wordpress.org compliance (`mrz_maps_exp_*` → `mrzme_*`). Existing map data is migrated automatically on the first admin page load. The old `[mrz_maps_exp]` shortcode still works as an alias. Theme code using the old filter names (`mrz_maps_exp_api_key`, etc.) must be updated to the new names.
 
 = 1.0.8 =
 Internal ownership transfer within the Morez agency (mrzxp → m0r3z). No functional change, no data migration.

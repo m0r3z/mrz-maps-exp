@@ -3,7 +3,7 @@
  * Enregistrement centralisé des assets front.
  */
 
-namespace MrzMapsExp;
+namespace Mrzme;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -27,16 +27,16 @@ final class Assets {
 	public function register_assets() {
 		wp_register_style(
 			self::HANDLE_STYLE,
-			MRZ_MAPS_EXP_URL . 'public/css/public.css',
+			MRZME_URL . 'public/css/public.css',
 			array(),
-			MRZ_MAPS_EXP_VERSION
+			MRZME_VERSION
 		);
 
 		wp_register_script(
 			self::HANDLE_SPIDERFIER,
 			apply_filters(
-				'mrz_maps_exp_spiderfier_url',
-				MRZ_MAPS_EXP_URL . 'assets/vendor/oms.min.js'
+				'mrzme_spiderfier_url',
+				MRZME_URL . 'assets/vendor/oms.min.js'
 			),
 			array(),
 			'1.0.1',
@@ -45,9 +45,9 @@ final class Assets {
 
 		wp_register_script(
 			self::HANDLE_SCRIPT,
-			MRZ_MAPS_EXP_URL . 'public/js/mrz-maps-exp.js',
+			MRZME_URL . 'public/js/mrz-maps-exp.js',
 			array( self::HANDLE_SPIDERFIER ),
-			MRZ_MAPS_EXP_VERSION,
+			MRZME_VERSION,
 			true
 		);
 	}
@@ -66,7 +66,7 @@ final class Assets {
 	 * Enqueue pour un shortcode donné. Retourne false si la clé API est absente.
 	 */
 	public function enqueue_for_shortcode() {
-		$api_key = mrz_maps_exp_get_api_key();
+		$api_key = mrzme_get_api_key();
 		if ( '' === $api_key ) {
 			return false;
 		}
@@ -78,7 +78,7 @@ final class Assets {
 			|| wp_script_is( 'nectar-gmap', 'enqueued' )
 			|| wp_script_is( 'nectar-gmaps', 'enqueued' );
 
-		$skip_gmaps = apply_filters( 'mrz_maps_exp_skip_gmaps_enqueue', $already_loaded );
+		$skip_gmaps = apply_filters( 'mrzme_skip_gmaps_enqueue', $already_loaded );
 		if ( ! $skip_gmaps ) {
 			wp_enqueue_script(
 				self::HANDLE_GMAPS,
@@ -109,7 +109,7 @@ final class Assets {
 	}
 
 	public function invalidate_on_post_save( $post_id, $post ) {
-		if ( MRZ_MAPS_EXP_CPT === $post->post_type ) {
+		if ( MRZME_CPT === $post->post_type ) {
 			DataProvider::invalidate( $post_id );
 			return;
 		}
@@ -120,7 +120,7 @@ final class Assets {
 	public function invalidate_all() {
 		$maps = get_posts(
 			array(
-				'post_type'      => MRZ_MAPS_EXP_CPT,
+				'post_type'      => MRZME_CPT,
 				'post_status'    => 'any',
 				'posts_per_page' => -1,
 				'fields'         => 'ids',

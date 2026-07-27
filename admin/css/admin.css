@@ -17,6 +17,6 @@
 .mrz-maps-exp-media-picker { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
 .mrz-maps-exp-media-picker .mrz-maps-exp-media-url { flex: 1 1 240px; min-width: 200px; }
 .mrz-maps-exp-media-preview img { display: block; }
-#mrz_maps_exp_term_markers { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+#mrzme_term_markers { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
 .mrz-maps-exp-term-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 8px; background: #f6f7f7; border: 1px solid #dcdcde; }
 .mrz-maps-exp-term-name { font-weight: 600; min-width: 180px; }

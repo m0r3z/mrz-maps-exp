@@ -5,7 +5,7 @@
 	var pickerMarker = null;
 
 	function currentPostType() {
-		var sel = document.getElementById('mrz_maps_exp_source_pt');
+		var sel = document.getElementById('mrzme_source_pt');
 		return sel ? sel.value : '';
 	}
 
@@ -24,12 +24,12 @@
 	}
 
 	function initPicker() {
-		var el = document.getElementById('mrz_maps_exp_picker');
+		var el = document.getElementById('mrzme_picker');
 		if (!el || typeof google === 'undefined' || !google.maps) { return; }
 
-		var latEl = document.getElementById('mrz_maps_exp_center_lat');
-		var lngEl = document.getElementById('mrz_maps_exp_center_lng');
-		var zoomEl = document.getElementById('mrz_maps_exp_zoom');
+		var latEl = document.getElementById('mrzme_center_lat');
+		var lngEl = document.getElementById('mrzme_center_lng');
+		var zoomEl = document.getElementById('mrzme_zoom');
 
 		var lat = parseFloat(latEl.value) || 46.603354;
 		var lng = parseFloat(lngEl.value) || 1.888334;
@@ -60,8 +60,8 @@
 	}
 
 	function setLatLng(lat, lng) {
-		var latEl = document.getElementById('mrz_maps_exp_center_lat');
-		var lngEl = document.getElementById('mrz_maps_exp_center_lng');
+		var latEl = document.getElementById('mrzme_center_lat');
+		var lngEl = document.getElementById('mrzme_center_lng');
 		latEl.value = lat.toFixed(6);
 		lngEl.value = lng.toFixed(6);
 		if (pickerMarker) {
@@ -206,8 +206,8 @@
 
 	// Chargement AJAX des termes de la taxonomie choisie + reconstruction des lignes.
 	function initPrimaryTaxonomy() {
-		var sel = document.getElementById('mrz_maps_exp_primary_taxonomy');
-		var container = document.getElementById('mrz_maps_exp_term_markers');
+		var sel = document.getElementById('mrzme_primary_taxonomy');
+		var container = document.getElementById('mrzme_term_markers');
 		var tpl = document.getElementById('mrz-maps-exp-term-row-template');
 		if (!sel || !container || !tpl) { return; }
 
@@ -247,7 +247,7 @@
 				return;
 			}
 			var form = new FormData();
-			form.append('action', 'mrz_maps_exp_fetch_terms');
+			form.append('action', 'mrzme_fetch_terms');
 			form.append('nonce', nonce);
 			form.append('taxonomy', tax);
 
@@ -278,7 +278,7 @@
 
 	document.addEventListener('DOMContentLoaded', function () {
 		updateTaxonomyVisibility();
-		var sel = document.getElementById('mrz_maps_exp_source_pt');
+		var sel = document.getElementById('mrzme_source_pt');
 		if (sel) {
 			sel.addEventListener('change', updateTaxonomyVisibility);
 		}
@@ -288,10 +288,10 @@
 		initColorPicker();
 		initPrimaryTaxonomy();
 		if (window.mrzMapsExpAdmin && !window.mrzMapsExpAdmin.hasApiKey) {
-			var el = document.getElementById('mrz_maps_exp_picker');
+			var el = document.getElementById('mrzme_picker');
 			if (el) {
 				el.innerHTML = '<p style="padding:10px;color:#666;">' +
-					'Clé Google Maps API manquante — la mini-carte est désactivée. Ajoutez la clé via le filtre mrz_maps_exp_api_key.' +
+					'Clé Google Maps API manquante — la mini-carte est désactivée. Ajoutez la clé via le filtre mrzme_api_key.' +
 					'</p>';
 			}
 		}

@@ -89,7 +89,7 @@ Le plugin n'expose **aucun champ admin pour la clé** — elle doit être fourni
 
 ```php
 // functions.php du thème enfant
-add_filter( 'mrz_maps_exp_api_key', function () {
+add_filter( 'mrzme_api_key', function () {
     return 'VOTRE_CLE_API';
 } );
 ```
@@ -98,7 +98,7 @@ add_filter( 'mrz_maps_exp_api_key', function () {
 
 ```php
 // wp-config.php ou functions.php
-define( 'MRZ_MAPS_EXP_API_KEY', 'VOTRE_CLE_API' );
+define( 'MRZME_API_KEY', 'VOTRE_CLE_API' );
 ```
 
 ### 3. Réglage ACF
@@ -228,12 +228,12 @@ Exemple :
 
 | Hook | Type | Description |
 |---|---|---|
-| `mrz_maps_exp_api_key` | filter | Retourne la clé Google Maps API |
-| `mrz_maps_exp_cache_ttl` | filter | Durée du cache transient en secondes (défaut 300) |
-| `mrz_maps_exp_template_value` | filter | Transforme la valeur d'un placeholder avant échappement |
-| `mrz_maps_exp_template_kses_allowed` | filter | Allowlist HTML pour les templates utilisateur |
-| `mrz_maps_exp_skip_gmaps_enqueue` | filter | `true` pour ne pas enqueuer Google Maps JS (si chargé par un autre plugin/thème) |
-| `mrz_maps_exp_spiderfier_url` | filter | URL du script OverlappingMarkerSpiderfier (par défaut : fichier local) |
+| `mrzme_api_key` | filter | Retourne la clé Google Maps API |
+| `mrzme_cache_ttl` | filter | Durée du cache transient en secondes (défaut 300) |
+| `mrzme_template_value` | filter | Transforme la valeur d'un placeholder avant échappement |
+| `mrzme_template_kses_allowed` | filter | Allowlist HTML pour les templates utilisateur |
+| `mrzme_skip_gmaps_enqueue` | filter | `true` pour ne pas enqueuer Google Maps JS (si chargé par un autre plugin/thème) |
+| `mrzme_spiderfier_url` | filter | URL du script OverlappingMarkerSpiderfier (par défaut : fichier local) |
 
 ## Librairies embarquées
 
@@ -259,7 +259,7 @@ mrz-maps-exp/
 │   ├── class-plugin.php            # Singleton, charge les modules
 │   ├── class-activator.php         # Vérifie ACF, enregistre le CPT
 │   ├── class-deactivator.php
-│   ├── class-cpt.php               # CPT mrz_maps_exp_map
+│   ├── class-cpt.php               # CPT mrzme_map
 │   ├── class-map-config.php        # Métaboxes + save + AJAX terms
 │   ├── class-taxonomy-markers.php  # Champ icône sur les termes (admin)
 │   ├── class-template-parser.php   # Placeholders et conditionnels

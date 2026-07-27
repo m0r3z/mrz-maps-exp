@@ -3,7 +3,7 @@
  * Agrège les données d'une carte pour le rendu front.
  */
 
-namespace MrzMapsExp;
+namespace Mrzme;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 final class DataProvider {
 
-	const CACHE_PREFIX = 'mrz_maps_exp_map_';
+	const CACHE_PREFIX = 'mrzme_map_';
 
 	public static function invalidate( $map_id ) {
 		delete_transient( self::CACHE_PREFIX . (int) $map_id );
@@ -19,7 +19,7 @@ final class DataProvider {
 
 	public static function get_map_data( $map_id ) {
 		$map_id = (int) $map_id;
-		if ( $map_id <= 0 || get_post_type( $map_id ) !== MRZ_MAPS_EXP_CPT ) {
+		if ( $map_id <= 0 || get_post_type( $map_id ) !== MRZME_CPT ) {
 			return null;
 		}
 
@@ -48,7 +48,7 @@ final class DataProvider {
 		$data['points']  = $points;
 		$data['filters'] = self::build_filters( $values, $points );
 
-		$ttl = (int) apply_filters( 'mrz_maps_exp_cache_ttl', 5 * MINUTE_IN_SECONDS );
+		$ttl = (int) apply_filters( 'mrzme_cache_ttl', 5 * MINUTE_IN_SECONDS );
 		if ( $ttl > 0 ) {
 			set_transient( $cache_key, $data, $ttl );
 		}
@@ -71,7 +71,7 @@ final class DataProvider {
 
 		$marker_default_url = '' !== (string) $values['marker_default_url']
 			? (string) $values['marker_default_url']
-			: MRZ_MAPS_EXP_URL . 'assets/default-marker.svg';
+			: MRZME_URL . 'assets/default-marker.svg';
 
 		return array(
 			'height'         => (int) $values['height'],
@@ -205,7 +205,7 @@ final class DataProvider {
 				$primary_terms = get_the_terms( $post->ID, $primary_tax );
 				if ( ! empty( $primary_terms ) && ! is_wp_error( $primary_terms ) ) {
 					foreach ( $primary_terms as $term ) {
-						$icon = get_term_meta( $term->term_id, '_mrz_maps_exp_icon_url', true );
+						$icon = get_term_meta( $term->term_id, '_mrzme_icon_url', true );
 						if ( $icon ) {
 							$point['icon'] = esc_url_raw( $icon );
 							break;
@@ -224,7 +224,7 @@ final class DataProvider {
 				foreach ( $terms as $term ) {
 					$ids[] = (int) $term->term_id;
 					if ( '' === $point['icon'] ) {
-						$icon = get_term_meta( $term->term_id, '_mrz_maps_exp_icon_url', true );
+						$icon = get_term_meta( $term->term_id, '_mrzme_icon_url', true );
 						if ( $icon ) {
 							$point['icon'] = esc_url_raw( $icon );
 						}

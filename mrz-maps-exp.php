@@ -3,7 +3,7 @@
  * Plugin Name:       MRZ Maps Exp
  * Plugin URI:        https://github.com/m0r3z/mrz-maps-exp
  * Description:       Cartographie Google Maps basée sur les CPT et champs ACF, avec filtres par taxonomie, Snazzy Maps et recherche par adresse.
- * Version:           1.0.8
+ * Version:           1.1.0
  * Requires at least: 6.3
  * Requires PHP:      7.4
  * Author:            Morez.co
@@ -25,22 +25,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'MRZ_MAPS_EXP_VERSION', '1.0.8' );
-define( 'MRZ_MAPS_EXP_FILE', __FILE__ );
-define( 'MRZ_MAPS_EXP_DIR', plugin_dir_path( __FILE__ ) );
-define( 'MRZ_MAPS_EXP_URL', plugin_dir_url( __FILE__ ) );
-define( 'MRZ_MAPS_EXP_BASENAME', plugin_basename( __FILE__ ) );
-define( 'MRZ_MAPS_EXP_CPT', 'mrz_maps_exp_map' );
+define( 'MRZME_VERSION', '1.1.0' );
+define( 'MRZME_FILE', __FILE__ );
+define( 'MRZME_DIR', plugin_dir_path( __FILE__ ) );
+define( 'MRZME_URL', plugin_dir_url( __FILE__ ) );
+define( 'MRZME_BASENAME', plugin_basename( __FILE__ ) );
+define( 'MRZME_CPT', 'mrzme_map' );
 
-require_once MRZ_MAPS_EXP_DIR . 'includes/helpers.php';
+require_once MRZME_DIR . 'includes/helpers.php';
 
 spl_autoload_register(
 	static function ( $class ) {
-		if ( strpos( $class, 'MrzMapsExp\\' ) !== 0 ) {
+		if ( strpos( $class, 'Mrzme\\' ) !== 0 ) {
 			return;
 		}
 
-		$relative = substr( $class, strlen( 'MrzMapsExp\\' ) );
+		$relative = substr( $class, strlen( 'Mrzme\\' ) );
 		$relative = str_replace( '\\', '/', $relative );
 		$parts    = explode( '/', $relative );
 		$last     = array_pop( $parts );
@@ -49,7 +49,7 @@ spl_autoload_register(
 		$last     = preg_replace( '/(?<=[a-z0-9])[A-Z]|(?<=[A-Z])[A-Z](?=[a-z])/', '-$0', $last );
 		$last     = strtolower( $last );
 		$prefix   = empty( $parts ) ? '' : strtolower( implode( '/', $parts ) ) . '/';
-		$path     = MRZ_MAPS_EXP_DIR . 'includes/' . $prefix . 'class-' . $last . '.php';
+		$path     = MRZME_DIR . 'includes/' . $prefix . 'class-' . $last . '.php';
 
 		if ( file_exists( $path ) ) {
 			require_once $path;
@@ -57,12 +57,12 @@ spl_autoload_register(
 	}
 );
 
-register_activation_hook( __FILE__, array( 'MrzMapsExp\\Activator', 'activate' ) );
-register_deactivation_hook( __FILE__, array( 'MrzMapsExp\\Deactivator', 'deactivate' ) );
+register_activation_hook( __FILE__, array( 'Mrzme\\Activator', 'activate' ) );
+register_deactivation_hook( __FILE__, array( 'Mrzme\\Deactivator', 'deactivate' ) );
 
 add_action(
 	'plugins_loaded',
 	static function () {
-		MrzMapsExp\Plugin::instance()->boot();
+		Mrzme\Plugin::instance()->boot();
 	}
 );

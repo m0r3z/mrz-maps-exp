@@ -3,7 +3,7 @@
  * Permet d'attacher une icône de marker à chaque terme de taxonomie publique.
  */
 
-namespace MrzMapsExp;
+namespace Mrzme;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -11,8 +11,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 final class TaxonomyMarkers {
 
-	const NONCE_ACTION = 'mrz_maps_exp_save_term';
-	const NONCE_NAME   = '_mrz_maps_exp_term_nonce';
+	const NONCE_ACTION = 'mrzme_save_term';
+	const NONCE_NAME   = '_mrzme_term_nonce';
 
 	public function register() {
 		// Les taxonomies sont enregistrées sur `init` — on hooke après.
@@ -34,10 +34,10 @@ final class TaxonomyMarkers {
 		wp_nonce_field( self::NONCE_ACTION, self::NONCE_NAME );
 		?>
 		<div class="form-field">
-			<label for="mrz_maps_exp_icon_url"><?php esc_html_e( 'Icône marker mrz-maps-exp', 'mrz-maps-exp' ); ?></label>
+			<label for="mrzme_icon_url"><?php esc_html_e( 'Icône marker mrz-maps-exp', 'mrz-maps-exp' ); ?></label>
 			<div class="mrz-maps-exp-term-icon">
-				<input type="hidden" name="mrz_maps_exp_icon_id" id="mrz_maps_exp_icon_id" value="" />
-				<input type="text" name="mrz_maps_exp_icon_url" id="mrz_maps_exp_icon_url" value="" class="regular-text" />
+				<input type="hidden" name="mrzme_icon_id" id="mrzme_icon_id" value="" />
+				<input type="text" name="mrzme_icon_url" id="mrzme_icon_url" value="" class="regular-text" />
 				<button type="button" class="button mrz-maps-exp-term-icon-choose"><?php esc_html_e( 'Choisir une image', 'mrz-maps-exp' ); ?></button>
 				<button type="button" class="button mrz-maps-exp-term-icon-clear"><?php esc_html_e( 'Retirer', 'mrz-maps-exp' ); ?></button>
 				<div class="mrz-maps-exp-term-icon-preview" style="margin-top:8px;"></div>
@@ -49,17 +49,17 @@ final class TaxonomyMarkers {
 
 	public function edit_form_fields( $term, $taxonomy ) {
 		wp_nonce_field( self::NONCE_ACTION, self::NONCE_NAME );
-		$icon_id  = (int) get_term_meta( $term->term_id, '_mrz_maps_exp_icon_id', true );
-		$icon_url = (string) get_term_meta( $term->term_id, '_mrz_maps_exp_icon_url', true );
+		$icon_id  = (int) get_term_meta( $term->term_id, '_mrzme_icon_id', true );
+		$icon_url = (string) get_term_meta( $term->term_id, '_mrzme_icon_url', true );
 		?>
 		<tr class="form-field">
 			<th scope="row">
-				<label for="mrz_maps_exp_icon_url"><?php esc_html_e( 'Icône marker mrz-maps-exp', 'mrz-maps-exp' ); ?></label>
+				<label for="mrzme_icon_url"><?php esc_html_e( 'Icône marker mrz-maps-exp', 'mrz-maps-exp' ); ?></label>
 			</th>
 			<td>
 				<div class="mrz-maps-exp-term-icon">
-					<input type="hidden" name="mrz_maps_exp_icon_id" id="mrz_maps_exp_icon_id" value="<?php echo esc_attr( $icon_id ); ?>" />
-					<input type="text" name="mrz_maps_exp_icon_url" id="mrz_maps_exp_icon_url" value="<?php echo esc_attr( $icon_url ); ?>" class="regular-text" />
+					<input type="hidden" name="mrzme_icon_id" id="mrzme_icon_id" value="<?php echo esc_attr( $icon_id ); ?>" />
+					<input type="text" name="mrzme_icon_url" id="mrzme_icon_url" value="<?php echo esc_attr( $icon_url ); ?>" class="regular-text" />
 					<button type="button" class="button mrz-maps-exp-term-icon-choose"><?php esc_html_e( 'Choisir une image', 'mrz-maps-exp' ); ?></button>
 					<button type="button" class="button mrz-maps-exp-term-icon-clear"><?php esc_html_e( 'Retirer', 'mrz-maps-exp' ); ?></button>
 					<div class="mrz-maps-exp-term-icon-preview" style="margin-top:8px;">
@@ -85,10 +85,10 @@ final class TaxonomyMarkers {
 			return;
 		}
 
-		$url = isset( $_POST['mrz_maps_exp_icon_url'] )
-			? esc_url_raw( wp_unslash( $_POST['mrz_maps_exp_icon_url'] ) )
+		$url = isset( $_POST['mrzme_icon_url'] )
+			? esc_url_raw( wp_unslash( $_POST['mrzme_icon_url'] ) )
 			: '';
-		$id  = isset( $_POST['mrz_maps_exp_icon_id'] ) ? absint( $_POST['mrz_maps_exp_icon_id'] ) : 0;
+		$id  = isset( $_POST['mrzme_icon_id'] ) ? absint( $_POST['mrzme_icon_id'] ) : 0;
 
 		if ( $id > 0 && ! wp_attachment_is_image( $id ) ) {
 			// Attachment invalide : on ignore l'ID, on garde juste l'URL.
@@ -96,11 +96,11 @@ final class TaxonomyMarkers {
 		}
 
 		if ( '' === $url && 0 === $id ) {
-			delete_term_meta( $term_id, '_mrz_maps_exp_icon_url' );
-			delete_term_meta( $term_id, '_mrz_maps_exp_icon_id' );
+			delete_term_meta( $term_id, '_mrzme_icon_url' );
+			delete_term_meta( $term_id, '_mrzme_icon_id' );
 		} else {
-			update_term_meta( $term_id, '_mrz_maps_exp_icon_url', $url );
-			update_term_meta( $term_id, '_mrz_maps_exp_icon_id', $id );
+			update_term_meta( $term_id, '_mrzme_icon_url', $url );
+			update_term_meta( $term_id, '_mrzme_icon_id', $id );
 		}
 	}
 
@@ -111,9 +111,9 @@ final class TaxonomyMarkers {
 		wp_enqueue_media();
 		wp_enqueue_script(
 			'mrz-maps-exp-term-icon',
-			MRZ_MAPS_EXP_URL . 'admin/js/term-icon.js',
+			MRZME_URL . 'admin/js/term-icon.js',
 			array( 'jquery' ),
-			MRZ_MAPS_EXP_VERSION,
+			MRZME_VERSION,
 			true
 		);
 	}

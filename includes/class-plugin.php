@@ -3,7 +3,7 @@
  * Classe principale : bootstrap des modules.
  */
 
-namespace MrzMapsExp;
+namespace Mrzme;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -40,7 +40,12 @@ final class Plugin {
 		// hébergées sur translate.wordpress.org sont chargées automatiquement par
 		// le cœur pour les plugins publiés sur le répertoire officiel.
 
-		if ( ! mrz_maps_exp_has_acf() ) {
+		// Migration one-shot des data pré-1.1.0 (renommage des préfixes internes
+		// de _mrz_maps_exp_ / _gmaps_aa_ vers _mrzme_). Idempotent, coût nul
+		// après la première exécution.
+		Migrator::maybe_migrate();
+
+		if ( ! mrzme_has_acf() ) {
 			add_action( 'admin_notices', array( $this, 'notice_missing_acf' ) );
 			return;
 		}
