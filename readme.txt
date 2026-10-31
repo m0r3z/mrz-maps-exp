@@ -114,6 +114,7 @@ It is the responsibility of site administrators to obtain a valid Google Maps AP
 * Restored the Changelog section of the readme, lost in 1.1.0.
 * Declared Advanced Custom Fields as a required plugin (`Requires Plugins` header, WordPress 6.5+).
 * All source strings (admin, front end, JavaScript and plugin description) are now in English, as expected by translate.wordpress.org. French is provided as a fr_FR translation.
+* The French (fr_FR) translation now ships with the plugin and is loaded from its `languages/` folder, so French sites stay in French. A translate.wordpress.org language pack, when available, takes precedence.
 * Hard-coded JavaScript strings (media frame, popup close button, loading and error messages) are now translatable.
 
 = 1.1.0 =
