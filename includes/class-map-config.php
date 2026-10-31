@@ -48,12 +48,12 @@ final class MapConfig {
 	}
 
 	public function add_metaboxes() {
-		add_meta_box( 'mrzme_source', __( 'Source des données', 'mrz-maps-exp' ), array( $this, 'render' ), MRZME_CPT, 'normal', 'high', array( 'view' => 'source' ) );
-		add_meta_box( 'mrzme_templates', __( 'Templates HTML', 'mrz-maps-exp' ), array( $this, 'render' ), MRZME_CPT, 'normal', 'high', array( 'view' => 'templates' ) );
-		add_meta_box( 'mrzme_filters', __( 'Filtres', 'mrz-maps-exp' ), array( $this, 'render' ), MRZME_CPT, 'normal', 'high', array( 'view' => 'filters' ) );
-		add_meta_box( 'mrzme_display', __( 'Affichage', 'mrz-maps-exp' ), array( $this, 'render' ), MRZME_CPT, 'normal', 'high', array( 'view' => 'display' ) );
-		add_meta_box( 'mrzme_cosmetic', __( 'Cosmétique', 'mrz-maps-exp' ), array( $this, 'render' ), MRZME_CPT, 'normal', 'default', array( 'view' => 'cosmetic' ) );
-		add_meta_box( 'mrzme_style', __( 'Style de la carte', 'mrz-maps-exp' ), array( $this, 'render' ), MRZME_CPT, 'normal', 'default', array( 'view' => 'style' ) );
+		add_meta_box( 'mrzme_source', __( 'Data source', 'mrz-maps-exp' ), array( $this, 'render' ), MRZME_CPT, 'normal', 'high', array( 'view' => 'source' ) );
+		add_meta_box( 'mrzme_templates', __( 'HTML templates', 'mrz-maps-exp' ), array( $this, 'render' ), MRZME_CPT, 'normal', 'high', array( 'view' => 'templates' ) );
+		add_meta_box( 'mrzme_filters', __( 'Filters', 'mrz-maps-exp' ), array( $this, 'render' ), MRZME_CPT, 'normal', 'high', array( 'view' => 'filters' ) );
+		add_meta_box( 'mrzme_display', __( 'Display', 'mrz-maps-exp' ), array( $this, 'render' ), MRZME_CPT, 'normal', 'high', array( 'view' => 'display' ) );
+		add_meta_box( 'mrzme_cosmetic', __( 'Appearance', 'mrz-maps-exp' ), array( $this, 'render' ), MRZME_CPT, 'normal', 'default', array( 'view' => 'cosmetic' ) );
+		add_meta_box( 'mrzme_style', __( 'Map style', 'mrz-maps-exp' ), array( $this, 'render' ), MRZME_CPT, 'normal', 'default', array( 'view' => 'style' ) );
 		add_meta_box( 'mrzme_shortcode', __( 'Shortcode', 'mrz-maps-exp' ), array( $this, 'render' ), MRZME_CPT, 'side', 'high', array( 'view' => 'shortcode' ) );
 	}
 
@@ -298,7 +298,7 @@ final class MapConfig {
 			if ( null === $decoded && json_last_error() !== JSON_ERROR_NONE ) {
 				// JSON invalide : on stocke vide et on signale.
 				$clean['snazzy'] = '';
-				add_settings_error( 'mrz_maps_exp', 'snazzy_invalid', __( 'Snazzy Maps : JSON invalide, le style a été ignoré.', 'mrz-maps-exp' ), 'error' );
+				add_settings_error( 'mrz_maps_exp', 'snazzy_invalid', __( 'Snazzy Maps: invalid JSON, the style was ignored.', 'mrz-maps-exp' ), 'error' );
 			} else {
 				$clean['snazzy'] = wp_json_encode( $decoded );
 			}
@@ -381,12 +381,12 @@ final class MapConfig {
 	public function ajax_fetch_terms() {
 		check_ajax_referer( 'mrzme_fetch_terms', 'nonce' );
 		if ( ! current_user_can( 'edit_posts' ) ) {
-			wp_send_json_error( array( 'message' => __( 'Accès refusé.', 'mrz-maps-exp' ) ), 403 );
+			wp_send_json_error( array( 'message' => __( 'Access denied.', 'mrz-maps-exp' ) ), 403 );
 		}
 
 		$taxonomy = isset( $_POST['taxonomy'] ) ? sanitize_key( wp_unslash( $_POST['taxonomy'] ) ) : '';
 		if ( '' === $taxonomy || ! taxonomy_exists( $taxonomy ) ) {
-			wp_send_json_error( array( 'message' => __( 'Taxonomie invalide.', 'mrz-maps-exp' ) ), 400 );
+			wp_send_json_error( array( 'message' => __( 'Invalid taxonomy.', 'mrz-maps-exp' ) ), 400 );
 		}
 
 		$terms = get_terms(
@@ -480,7 +480,7 @@ final class MapConfig {
 					array(
 						'key'      => rawurlencode( $api_key ),
 						'callback' => 'mrzMapsExpAdminBoot',
-						'loading'  => 'async',
+						'loading'        => 'async',
 						'v'        => 'weekly',
 					),
 					'https://maps.googleapis.com/maps/api/js'
@@ -507,6 +507,16 @@ final class MapConfig {
 			'mrzMapsExpAdmin',
 			array(
 				'hasApiKey' => '' !== $api_key,
+				'i18n'      => array(
+					'chooseImage'    => __( 'Choose an image', 'mrz-maps-exp' ),
+					'useImage'       => __( 'Use this image', 'mrz-maps-exp' ),
+					'loading'        => __( 'Loading…', 'mrz-maps-exp' ),
+					'selectTaxFirst' => __( 'Select a taxonomy above first.', 'mrz-maps-exp' ),
+					'loadError'      => __( 'Loading error.', 'mrz-maps-exp' ),
+					'noTerms'        => __( 'No terms available in this taxonomy.', 'mrz-maps-exp' ),
+					'networkError'   => __( 'Network error.', 'mrz-maps-exp' ),
+					'missingApiKey'  => __( 'Missing Google Maps API key — the mini map is disabled. Add the key with the mrzme_api_key filter.', 'mrz-maps-exp' ),
+				),
 			)
 		);
 	}
@@ -524,9 +534,9 @@ final class MapConfig {
 		}
 		?>
 		<div class="notice notice-warning">
-			<p><strong><?php esc_html_e( 'mrz-maps-exp : clé Google Maps API manquante.', 'mrz-maps-exp' ); ?></strong></p>
+			<p><strong><?php esc_html_e( 'mrz-maps-exp: missing Google Maps API key.', 'mrz-maps-exp' ); ?></strong></p>
 			<p>
-				<?php esc_html_e( 'Ajoutez dans le functions.php de votre thème :', 'mrz-maps-exp' ); ?>
+				<?php esc_html_e( 'Add this to your theme\'s functions.php:', 'mrz-maps-exp' ); ?>
 			</p>
 			<pre style="background:#f6f7f7;padding:10px;overflow:auto;">add_filter( 'mrzme_api_key', function () {
     return 'VOTRE_CLE_API';

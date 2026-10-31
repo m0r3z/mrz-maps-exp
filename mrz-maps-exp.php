@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       MRZ Maps Exp
  * Plugin URI:        https://github.com/m0r3z/mrz-maps-exp
- * Description:       Cartographie Google Maps basée sur les CPT et champs ACF, avec filtres par taxonomie, Snazzy Maps et recherche par adresse.
+ * Description:       Display custom posts on a Google Map using ACF-based coordinates, with taxonomy and ACF filters, hybrid search and customizable markers.
  * Version:           1.1.0
  * Requires at least: 6.3
  * Requires PHP:      7.4

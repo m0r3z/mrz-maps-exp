@@ -90,7 +90,7 @@ final class Shortcode {
 		$assets = new Assets();
 		if ( ! $assets->enqueue_for_shortcode() ) {
 			if ( current_user_can( 'edit_posts' ) ) {
-				return '<!-- mrz-maps-exp: clé API Google Maps manquante (visible uniquement par les rédacteurs) -->';
+				return '<!-- mrz-maps-exp: Google Maps API key missing (visible to editors only) -->';
 			}
 			return '';
 		}

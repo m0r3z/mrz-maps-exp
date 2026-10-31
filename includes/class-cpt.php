@@ -20,19 +20,19 @@ final class CPT {
 
 	public function register_post_type() {
 		$labels = array(
-			'name'               => _x( 'Cartes', 'post type general name', 'mrz-maps-exp' ),
-			'singular_name'      => _x( 'Carte', 'post type singular name', 'mrz-maps-exp' ),
+			'name'               => _x( 'Maps', 'post type general name', 'mrz-maps-exp' ),
+			'singular_name'      => _x( 'Map', 'post type singular name', 'mrz-maps-exp' ),
 			'menu_name'          => _x( 'MRZ Maps', 'admin menu', 'mrz-maps-exp' ),
-			'name_admin_bar'     => _x( 'Carte', 'add new on admin bar', 'mrz-maps-exp' ),
-			'add_new'            => _x( 'Ajouter', 'map', 'mrz-maps-exp' ),
-			'add_new_item'       => __( 'Ajouter une carte', 'mrz-maps-exp' ),
-			'new_item'           => __( 'Nouvelle carte', 'mrz-maps-exp' ),
-			'edit_item'          => __( 'Modifier la carte', 'mrz-maps-exp' ),
-			'view_item'          => __( 'Voir la carte', 'mrz-maps-exp' ),
-			'all_items'          => __( 'Toutes les cartes', 'mrz-maps-exp' ),
-			'search_items'       => __( 'Rechercher une carte', 'mrz-maps-exp' ),
-			'not_found'          => __( 'Aucune carte trouvée.', 'mrz-maps-exp' ),
-			'not_found_in_trash' => __( 'Aucune carte dans la corbeille.', 'mrz-maps-exp' ),
+			'name_admin_bar'     => _x( 'Map', 'add new on admin bar', 'mrz-maps-exp' ),
+			'add_new'            => _x( 'Add New', 'map', 'mrz-maps-exp' ),
+			'add_new_item'       => __( 'Add New Map', 'mrz-maps-exp' ),
+			'new_item'           => __( 'New Map', 'mrz-maps-exp' ),
+			'edit_item'          => __( 'Edit Map', 'mrz-maps-exp' ),
+			'view_item'          => __( 'View Map', 'mrz-maps-exp' ),
+			'all_items'          => __( 'All Maps', 'mrz-maps-exp' ),
+			'search_items'       => __( 'Search Maps', 'mrz-maps-exp' ),
+			'not_found'          => __( 'No maps found.', 'mrz-maps-exp' ),
+			'not_found_in_trash' => __( 'No maps found in Trash.', 'mrz-maps-exp' ),
 		);
 
 		$args = array(

@@ -34,15 +34,15 @@ final class TaxonomyMarkers {
 		wp_nonce_field( self::NONCE_ACTION, self::NONCE_NAME );
 		?>
 		<div class="form-field">
-			<label for="mrzme_icon_url"><?php esc_html_e( 'Icône marker mrz-maps-exp', 'mrz-maps-exp' ); ?></label>
+			<label for="mrzme_icon_url"><?php esc_html_e( 'mrz-maps-exp marker icon', 'mrz-maps-exp' ); ?></label>
 			<div class="mrz-maps-exp-term-icon">
 				<input type="hidden" name="mrzme_icon_id" id="mrzme_icon_id" value="" />
 				<input type="text" name="mrzme_icon_url" id="mrzme_icon_url" value="" class="regular-text" />
-				<button type="button" class="button mrz-maps-exp-term-icon-choose"><?php esc_html_e( 'Choisir une image', 'mrz-maps-exp' ); ?></button>
-				<button type="button" class="button mrz-maps-exp-term-icon-clear"><?php esc_html_e( 'Retirer', 'mrz-maps-exp' ); ?></button>
+				<button type="button" class="button mrz-maps-exp-term-icon-choose"><?php esc_html_e( 'Choose an image', 'mrz-maps-exp' ); ?></button>
+				<button type="button" class="button mrz-maps-exp-term-icon-clear"><?php esc_html_e( 'Remove', 'mrz-maps-exp' ); ?></button>
 				<div class="mrz-maps-exp-term-icon-preview" style="margin-top:8px;"></div>
 			</div>
-			<p><?php esc_html_e( 'Image utilisée comme marker sur la carte pour les posts associés à ce terme.', 'mrz-maps-exp' ); ?></p>
+			<p><?php esc_html_e( 'Image used as the map marker for posts assigned to this term.', 'mrz-maps-exp' ); ?></p>
 		</div>
 		<?php
 	}
@@ -54,21 +54,21 @@ final class TaxonomyMarkers {
 		?>
 		<tr class="form-field">
 			<th scope="row">
-				<label for="mrzme_icon_url"><?php esc_html_e( 'Icône marker mrz-maps-exp', 'mrz-maps-exp' ); ?></label>
+				<label for="mrzme_icon_url"><?php esc_html_e( 'mrz-maps-exp marker icon', 'mrz-maps-exp' ); ?></label>
 			</th>
 			<td>
 				<div class="mrz-maps-exp-term-icon">
 					<input type="hidden" name="mrzme_icon_id" id="mrzme_icon_id" value="<?php echo esc_attr( $icon_id ); ?>" />
 					<input type="text" name="mrzme_icon_url" id="mrzme_icon_url" value="<?php echo esc_attr( $icon_url ); ?>" class="regular-text" />
-					<button type="button" class="button mrz-maps-exp-term-icon-choose"><?php esc_html_e( 'Choisir une image', 'mrz-maps-exp' ); ?></button>
-					<button type="button" class="button mrz-maps-exp-term-icon-clear"><?php esc_html_e( 'Retirer', 'mrz-maps-exp' ); ?></button>
+					<button type="button" class="button mrz-maps-exp-term-icon-choose"><?php esc_html_e( 'Choose an image', 'mrz-maps-exp' ); ?></button>
+					<button type="button" class="button mrz-maps-exp-term-icon-clear"><?php esc_html_e( 'Remove', 'mrz-maps-exp' ); ?></button>
 					<div class="mrz-maps-exp-term-icon-preview" style="margin-top:8px;">
 						<?php if ( '' !== $icon_url ) : ?>
 							<img src="<?php echo esc_url( $icon_url ); ?>" alt="" style="max-width:60px;height:auto;" />
 						<?php endif; ?>
 					</div>
 				</div>
-				<p class="description"><?php esc_html_e( 'Image utilisée comme marker sur la carte pour les posts associés à ce terme.', 'mrz-maps-exp' ); ?></p>
+				<p class="description"><?php esc_html_e( 'Image used as the map marker for posts assigned to this term.', 'mrz-maps-exp' ); ?></p>
 			</td>
 		</tr>
 		<?php
@@ -115,6 +115,14 @@ final class TaxonomyMarkers {
 			array( 'jquery' ),
 			MRZME_VERSION,
 			true
+		);
+		wp_localize_script(
+			'mrz-maps-exp-term-icon',
+			'mrzmeTermIcon',
+			array(
+				'frameTitle'  => __( 'Choose an image', 'mrz-maps-exp' ),
+				'frameButton' => __( 'Use this image', 'mrz-maps-exp' ),
+			)
 		);
 	}
 }

@@ -11,11 +11,12 @@
 			e.preventDefault();
 			if (frame) { frame.open(); return; }
 
+			var i18n = window.mrzmeTermIcon || {};
 			frame = wp.media({
-				title: 'Choisir une image',
+				title: i18n.frameTitle || 'Choose an image',
 				multiple: false,
 				library: { type: 'image' },
-				button: { text: 'Utiliser cette image' }
+				button: { text: i18n.frameButton || 'Use this image' }
 			});
 
 			frame.on('select', function () {

@@ -51,7 +51,7 @@
 	function deg2rad(d) { return d * Math.PI / 180; }
 
 	// Popup personnalisée basée sur google.maps.OverlayView (DOM sous notre contrôle).
-	function createPopupClass() {
+	function createPopupClass(closeLabel) {
 		function Popup() {
 			google.maps.OverlayView.call(this);
 			this.position = null;
@@ -66,7 +66,7 @@
 			this.closeBtn = document.createElement('button');
 			this.closeBtn.type = 'button';
 			this.closeBtn.className = 'mrz-maps-exp-popup-close';
-			this.closeBtn.setAttribute('aria-label', 'Fermer');
+			this.closeBtn.setAttribute('aria-label', closeLabel || 'Close');
 			this.closeBtn.innerHTML = '&times;';
 
 			this.body = document.createElement('div');
@@ -197,7 +197,7 @@
 		var markerSize = new google.maps.Size(markerW, markerW);
 		var defaultIconUrl = config.defaultIconUrl || '';
 
-		var Popup = createPopupClass();
+		var Popup = createPopupClass(config.i18n && config.i18n.close);
 		var popup = new Popup();
 		// L'anchor par défaut du Marker est au bas-centre de l'image :
 		// la position lat/lng correspond donc à la pointe du pin.
@@ -695,8 +695,8 @@
 		if (searchInput && searchDropdown) {
 			var searchCfg = config.search || {};
 			var localMatchEnabled = !!searchCfg.localMatch;
-			var sectionLocalLabel = searchCfg.sectionLocal || 'Fiches';
-			var sectionAddressLabel = searchCfg.sectionAddress || 'Adresses';
+			var sectionLocalLabel = searchCfg.sectionLocal || 'Entries';
+			var sectionAddressLabel = searchCfg.sectionAddress || 'Addresses';
 			var dropdownId = searchDropdown.id || '';
 
 			// Index local pour le matching titre des fiches.

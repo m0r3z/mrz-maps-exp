@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 $allowed_code = array( 'code' => array() );
 ?>
 <p>
-	<?php esc_html_e( 'Placeholders disponibles :', 'mrz-maps-exp' ); ?>
+	<?php esc_html_e( 'Available placeholders:', 'mrz-maps-exp' ); ?>
 	<?php
 	echo ' ';
 	echo wp_kses(
@@ -22,7 +22,7 @@ $allowed_code = array( 'code' => array() );
 	);
 	?>
 	<br />
-	<?php esc_html_e( 'Conditionnels :', 'mrz-maps-exp' ); ?>
+	<?php esc_html_e( 'Conditionals:', 'mrz-maps-exp' ); ?>
 	<?php
 	echo ' ';
 	echo wp_kses(
@@ -35,20 +35,20 @@ $allowed_code = array( 'code' => array() );
 	<tbody>
 		<tr>
 			<th scope="row">
-				<label for="mrzme_tpl_tooltip"><?php esc_html_e( 'Template infobulle', 'mrz-maps-exp' ); ?></label>
+				<label for="mrzme_tpl_tooltip"><?php esc_html_e( 'Tooltip template', 'mrz-maps-exp' ); ?></label>
 			</th>
 			<td>
 				<textarea name="mrz_maps_exp[tpl_tooltip]" id="mrzme_tpl_tooltip" rows="8" class="large-text code"><?php echo esc_textarea( $values['tpl_tooltip'] ); ?></textarea>
-				<p class="description"><?php esc_html_e( 'HTML affiché dans l\'infobulle de chaque marker.', 'mrz-maps-exp' ); ?></p>
+				<p class="description"><?php esc_html_e( 'HTML displayed in each marker\'s tooltip.', 'mrz-maps-exp' ); ?></p>
 			</td>
 		</tr>
 		<tr>
 			<th scope="row">
-				<label for="mrzme_tpl_list"><?php esc_html_e( 'Template liste', 'mrz-maps-exp' ); ?></label>
+				<label for="mrzme_tpl_list"><?php esc_html_e( 'List template', 'mrz-maps-exp' ); ?></label>
 			</th>
 			<td>
 				<textarea name="mrz_maps_exp[tpl_list]" id="mrzme_tpl_list" rows="8" class="large-text code"><?php echo esc_textarea( $values['tpl_list'] ); ?></textarea>
-				<p class="description"><?php esc_html_e( 'HTML affiché pour chaque entrée de la liste/grille.', 'mrz-maps-exp' ); ?></p>
+				<p class="description"><?php esc_html_e( 'HTML displayed for each list/grid entry.', 'mrz-maps-exp' ); ?></p>
 			</td>
 		</tr>
 	</tbody>

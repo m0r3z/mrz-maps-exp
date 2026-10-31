@@ -63,7 +63,7 @@ final class Plugin {
 		}
 		printf(
 			'<div class="notice notice-error"><p>%s</p></div>',
-			esc_html__( 'mrz-maps-exp nécessite Advanced Custom Fields (Pro recommandé) pour fonctionner.', 'mrz-maps-exp' )
+			esc_html__( 'mrz-maps-exp requires Advanced Custom Fields (Pro recommended) to work.', 'mrz-maps-exp' )
 		);
 	}
 }

@@ -4,6 +4,22 @@
 	var pickerMap = null;
 	var pickerMarker = null;
 
+	// Chaînes traduites fournies par wp_localize_script (mrzMapsExpAdmin.i18n).
+	function tr(key, fallback) {
+		var i18n = (window.mrzMapsExpAdmin && window.mrzMapsExpAdmin.i18n) || {};
+		return i18n[key] || fallback;
+	}
+
+	// Remplace le contenu d'un conteneur par un paragraphe texte (échappé via textContent).
+	function setMessage(container, text, className) {
+		var p = document.createElement('p');
+		if (className) { p.className = className; }
+		p.textContent = text;
+		container.innerHTML = '';
+		container.appendChild(p);
+		return p;
+	}
+
 	function currentPostType() {
 		var sel = document.getElementById('mrzme_source_pt');
 		return sel ? sel.value : '';
@@ -170,10 +186,10 @@
 				e.preventDefault();
 				if (frame) { frame.open(); return; }
 				frame = wp.media({
-					title: 'Choisir une image',
+					title: tr('chooseImage', 'Choose an image'),
 					multiple: false,
 					library: { type: 'image' },
-					button: { text: 'Utiliser cette image' }
+					button: { text: tr('useImage', 'Use this image') }
 				});
 				frame.on('select', function () {
 					var a = frame.state().get('selection').first().toJSON();
@@ -241,9 +257,9 @@
 
 		sel.addEventListener('change', function () {
 			var tax = sel.value;
-			container.innerHTML = '<p>Chargement…</p>';
+			setMessage(container, tr('loading', 'Loading…'));
 			if (!tax) {
-				container.innerHTML = '<p class="description">Sélectionnez d\'abord une taxonomie ci-dessus.</p>';
+				setMessage(container, tr('selectTaxFirst', 'Select a taxonomy above first.'), 'description');
 				return;
 			}
 			var form = new FormData();
@@ -256,12 +272,12 @@
 				.then(function (json) {
 					container.innerHTML = '';
 					if (!json || !json.success) {
-						container.innerHTML = '<p class="description">Erreur de chargement.</p>';
+						setMessage(container, tr('loadError', 'Loading error.'), 'description');
 						return;
 					}
 					var terms = json.data || [];
 					if (!terms.length) {
-						container.innerHTML = '<p class="description">Aucun terme disponible dans cette taxonomie.</p>';
+						setMessage(container, tr('noTerms', 'No terms available in this taxonomy.'), 'description');
 						return;
 					}
 					terms.forEach(function (t) {
@@ -271,7 +287,7 @@
 					});
 				})
 				.catch(function () {
-					container.innerHTML = '<p class="description">Erreur réseau.</p>';
+					setMessage(container, tr('networkError', 'Network error.'), 'description');
 				});
 		});
 	}
@@ -290,9 +306,9 @@
 		if (window.mrzMapsExpAdmin && !window.mrzMapsExpAdmin.hasApiKey) {
 			var el = document.getElementById('mrzme_picker');
 			if (el) {
-				el.innerHTML = '<p style="padding:10px;color:#666;">' +
-					'Clé Google Maps API manquante — la mini-carte est désactivée. Ajoutez la clé via le filtre mrzme_api_key.' +
-					'</p>';
+				var msg = setMessage(el, tr('missingApiKey', 'Missing Google Maps API key — the mini map is disabled. Add the key with the mrzme_api_key filter.'));
+				msg.style.padding = '10px';
+				msg.style.color = '#666';
 			}
 		}
 	});
