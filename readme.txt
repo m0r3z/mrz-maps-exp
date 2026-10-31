@@ -108,7 +108,14 @@ The plugin does not send any data to Morez.co or to any other third-party servic
 
 It is the responsibility of site administrators to obtain a valid Google Maps API key, accept Google's Terms of Service for the project that key belongs to, and disclose the use of Google Maps in their own site's privacy policy where required.
 
+== Changelog ==
 
+= 1.1.0 =
+* Internal prefix refactor for wordpress.org compliance (prefixes must be at least 4 characters): constants `MRZ_MAPS_EXP_*` → `MRZME_*`, functions / filters / actions `mrz_maps_exp_*` → `mrzme_*`, post_meta and term_meta keys `_mrz_maps_exp_*` → `_mrzme_*`, CPT `mrz_maps_exp_map` → `mrzme_map`, PHP namespace `MrzMapsExp\` → `Mrzme\`, canonical shortcode `[mrz_maps_exp]` → `[mrzme]`.
+* New one-shot data migrator (`class-migrator.php`): converts post_meta, term_meta, CPT posts and transients from the old `_gmaps_aa_` / `_mrz_maps_exp_` prefixes to `_mrzme_`, guarded by the `mrzme_data_migration_v1_1_done` option.
+* Backward compatibility: the `[mrz_maps_exp]` shortcode is kept as an alias of `[mrzme]`; CSS class names (`.mrz-maps-exp-*`), the `data-mrz-maps-exp` attribute, the text domain and the plugin slug are unchanged.
+* `uninstall.php` now also cleans up leftovers from the old prefixes.
+* Breaking change for theme integrators: filter names such as `mrz_maps_exp_api_key` must be renamed (e.g. `mrzme_api_key`).
 
 = 1.0.8 =
 * Ownership transferred to the wp.org account `m0r3z` (was `mrzxp`). Same Morez agency behind the plugin — the `mrzxp` account was a temporary workaround while access to `m0r3z` was being recovered. GitHub Action's SVN credentials updated accordingly.
