@@ -4,7 +4,7 @@ Tags: google maps, map, acf, taxonomy, custom post type
 Requires at least: 6.3
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -110,6 +110,12 @@ It is the responsibility of site administrators to obtain a valid Google Maps AP
 
 == Changelog ==
 
+= 1.1.1 =
+* Restored the Changelog section of the readme, lost in 1.1.0.
+* Declared Advanced Custom Fields as a required plugin (`Requires Plugins` header, WordPress 6.5+).
+* All source strings (admin, front end, JavaScript and plugin description) are now in English, as expected by translate.wordpress.org. French is provided as a fr_FR translation.
+* Hard-coded JavaScript strings (media frame, popup close button, loading and error messages) are now translatable.
+
 = 1.1.0 =
 * Internal prefix refactor for wordpress.org compliance (prefixes must be at least 4 characters): constants `MRZ_MAPS_EXP_*` → `MRZME_*`, functions / filters / actions `mrz_maps_exp_*` → `mrzme_*`, post_meta and term_meta keys `_mrz_maps_exp_*` → `_mrzme_*`, CPT `mrz_maps_exp_map` → `mrzme_map`, PHP namespace `MrzMapsExp\` → `Mrzme\`, canonical shortcode `[mrz_maps_exp]` → `[mrzme]`.
 * New one-shot data migrator (`class-migrator.php`): converts post_meta, term_meta, CPT posts and transients from the old `_gmaps_aa_` / `_mrz_maps_exp_` prefixes to `_mrzme_`, guarded by the `mrzme_data_migration_v1_1_done` option.
@@ -153,6 +159,9 @@ It is the responsibility of site administrators to obtain a valid Google Maps AP
   * Added a dedicated `== External services ==` section in the readme documenting the use of the Google Maps JavaScript API, what data is sent, and links to Google's Terms of Service and Privacy Policy.
 
 == Upgrade Notice ==
+
+= 1.1.1 =
+English source strings and translatable JavaScript messages. No data change.
 
 = 1.1.0 =
 Internal prefix refactor for wordpress.org compliance (`mrz_maps_exp_*` → `mrzme_*`). Existing map data is migrated automatically on the first admin page load. The old `[mrz_maps_exp]` shortcode still works as an alias. Theme code using the old filter names (`mrz_maps_exp_api_key`, etc.) must be updated to the new names.
