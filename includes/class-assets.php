@@ -11,10 +11,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 final class Assets {
 
-	const HANDLE_GMAPS      = 'mrz-maps-exp-gmaps';
-	const HANDLE_SPIDERFIER = 'mrz-maps-exp-spiderfier';
-	const HANDLE_SCRIPT     = 'mrz-maps-exp';
-	const HANDLE_STYLE      = 'mrz-maps-exp';
+	const HANDLE_GMAPS  = 'mrz-maps-exp-gmaps';
+	const HANDLE_SCRIPT = 'mrz-maps-exp';
+	const HANDLE_STYLE  = 'mrz-maps-exp';
 
 	public function register() {
 		add_action( 'wp_enqueue_scripts', array( $this, 'register_assets' ) );
@@ -33,22 +32,21 @@ final class Assets {
 		);
 
 		wp_register_script(
-			self::HANDLE_SPIDERFIER,
-			apply_filters(
-				'mrzme_spiderfier_url',
-				MRZME_URL . 'assets/vendor/oms.min.js'
-			),
+			self::HANDLE_SCRIPT,
+			MRZME_URL . 'public/js/mrz-maps-exp.js',
 			array(),
-			'1.0.1',
+			MRZME_VERSION,
 			true
 		);
 
-		wp_register_script(
+		// OMS lit google.maps dès son chargement : il ne peut pas être mis en
+		// file avant l'API Google (chargée en async). Le JS du plugin l'injecte
+		// lui-même dans le callback Google, à partir de cette URL.
+		$spiderfier_url = apply_filters( 'mrzme_spiderfier_url', MRZME_URL . 'assets/vendor/oms.min.js?ver=1.0.1' );
+		wp_add_inline_script(
 			self::HANDLE_SCRIPT,
-			MRZME_URL . 'public/js/mrz-maps-exp.js',
-			array( self::HANDLE_SPIDERFIER ),
-			MRZME_VERSION,
-			true
+			'window.mrzMapsExpSpiderfierUrl = ' . wp_json_encode( esc_url_raw( $spiderfier_url ) ) . ';',
+			'before'
 		);
 	}
 
@@ -101,7 +99,6 @@ final class Assets {
 			);
 		}
 
-		wp_enqueue_script( self::HANDLE_SPIDERFIER );
 		wp_enqueue_script( self::HANDLE_SCRIPT );
 		wp_enqueue_style( self::HANDLE_STYLE );
 

@@ -16,10 +16,27 @@
 		});
 	}
 
+	// OMS lit google.maps dès son chargement : on l'injecte une fois Google prêt.
+	// En cas d'échec, les cartes démarrent quand même, sans spiderfier.
+	function loadSpiderfier(done) {
+		var url = window.mrzMapsExpSpiderfierUrl;
+		if (typeof OverlappingMarkerSpiderfier !== 'undefined' || !url) {
+			done();
+			return;
+		}
+		var script = document.createElement('script');
+		script.src = url;
+		script.async = true;
+		script.onload = script.onerror = function () { done(); };
+		document.head.appendChild(script);
+	}
+
 	// Callback Google Maps JS.
 	window.mrzMapsExpBoot = function () {
-		googleReady = true;
-		bootAll();
+		loadSpiderfier(function () {
+			googleReady = true;
+			bootAll();
+		});
 	};
 
 	document.addEventListener('DOMContentLoaded', function () {
