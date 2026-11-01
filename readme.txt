@@ -4,7 +4,7 @@ Tags: google maps, map, acf, taxonomy, custom post type
 Requires at least: 6.3
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -110,6 +110,9 @@ It is the responsibility of site administrators to obtain a valid Google Maps AP
 
 == Changelog ==
 
+= 1.1.2 =
+* Fixed: the overlapping-marker spiderfier (OverlappingMarkerSpiderfier) never loaded. The library reads `google.maps` as soon as it loads, but it was enqueued before the asynchronous Google Maps API and crashed with "google is not defined". It is now loaded from the Google Maps callback, right before the maps start. The `mrzme_spiderfier_url` filter still applies.
+
 = 1.1.1 =
 * Restored the Changelog section of the readme, lost in 1.1.0.
 * Declared Advanced Custom Fields as a required plugin (`Requires Plugins` header, WordPress 6.5+).
@@ -160,6 +163,9 @@ It is the responsibility of site administrators to obtain a valid Google Maps AP
   * Added a dedicated `== External services ==` section in the readme documenting the use of the Google Maps JavaScript API, what data is sent, and links to Google's Terms of Service and Privacy Policy.
 
 == Upgrade Notice ==
+
+= 1.1.2 =
+Fixes the overlapping-marker spiderfier, which never loaded. No data change.
 
 = 1.1.1 =
 English source strings and translatable JavaScript messages. No data change.
