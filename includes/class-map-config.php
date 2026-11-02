@@ -427,9 +427,17 @@ final class MapConfig {
 	public static function allowed_html_for_templates() {
 		$allowed = wp_kses_allowed_html( 'post' );
 
-		// Ajoute les attributs class/id/data-* sur les balises courantes.
 		// 'style' est volontairement exclu (défense en profondeur : évite le
 		// CSS tracking type background:url(...) par un éditeur hostile).
+		// L'allowlist 'post' de WordPress l'autorise sur la plupart des
+		// balises, on le retire donc partout. Réactivable via le filtre.
+		foreach ( $allowed as $tag => $attrs ) {
+			if ( is_array( $attrs ) ) {
+				unset( $allowed[ $tag ]['style'] );
+			}
+		}
+
+		// Ajoute les attributs class/id/data-* sur les balises courantes.
 		$common_attrs = array(
 			'class'    => true,
 			'id'       => true,
