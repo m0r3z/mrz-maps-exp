@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<label for="mrzme_snazzy"><?php esc_html_e( 'Snazzy Maps JSON', 'mrz-maps-exp' ); ?></label>
 			</th>
 			<td>
-				<textarea name="mrz_maps_exp[snazzy]" id="mrzme_snazzy" rows="8" class="large-text code" placeholder="[ { &quot;featureType&quot;: &quot;all&quot;, ... } ]"><?php echo esc_textarea( $values['snazzy'] ); ?></textarea>
+				<textarea name="mrzme[snazzy]" id="mrzme_snazzy" rows="8" class="large-text code" placeholder="[ { &quot;featureType&quot;: &quot;all&quot;, ... } ]"><?php echo esc_textarea( $values['snazzy'] ); ?></textarea>
 				<p class="description">
 					<?php
 					echo wp_kses(

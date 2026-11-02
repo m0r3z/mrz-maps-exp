@@ -18,7 +18,7 @@ $public_pts = get_post_types( array( 'public' => true ), 'objects' );
 				<label for="mrzme_source_pt"><?php esc_html_e( 'Source post type', 'mrz-maps-exp' ); ?></label>
 			</th>
 			<td>
-				<select name="mrz_maps_exp[source_pt]" id="mrzme_source_pt" class="mrz-maps-exp-source-pt">
+				<select name="mrzme[source_pt]" id="mrzme_source_pt" class="mrz-maps-exp-source-pt">
 					<?php foreach ( $public_pts as $pt ) : ?>
 						<option value="<?php echo esc_attr( $pt->name ); ?>" <?php selected( $values['source_pt'], $pt->name ); ?>>
 							<?php echo esc_html( $pt->labels->singular_name . ' (' . $pt->name . ')' ); ?>
@@ -33,7 +33,7 @@ $public_pts = get_post_types( array( 'public' => true ), 'objects' );
 				<label for="mrzme_acf_field"><?php esc_html_e( 'ACF coordinates field', 'mrz-maps-exp' ); ?></label>
 			</th>
 			<td>
-				<input type="text" name="mrz_maps_exp[acf_field]" id="mrzme_acf_field" value="<?php echo esc_attr( $values['acf_field'] ); ?>" class="regular-text" />
+				<input type="text" name="mrzme[acf_field]" id="mrzme_acf_field" value="<?php echo esc_attr( $values['acf_field'] ); ?>" class="regular-text" />
 				<p class="description"><?php esc_html_e( 'Name of the ACF “Google Map” field that holds the coordinates.', 'mrz-maps-exp' ); ?></p>
 			</td>
 		</tr>
@@ -42,7 +42,7 @@ $public_pts = get_post_types( array( 'public' => true ), 'objects' );
 				<label for="mrzme_limit"><?php esc_html_e( 'Maximum number of posts', 'mrz-maps-exp' ); ?></label>
 			</th>
 			<td>
-				<input type="number" name="mrz_maps_exp[limit]" id="mrzme_limit" value="<?php echo esc_attr( $values['limit'] ); ?>" min="0" step="1" />
+				<input type="number" name="mrzme[limit]" id="mrzme_limit" value="<?php echo esc_attr( $values['limit'] ); ?>" min="0" step="1" />
 				<p class="description"><?php esc_html_e( 'Server-side loading limit. 0 = unlimited.', 'mrz-maps-exp' ); ?></p>
 			</td>
 		</tr>
@@ -51,7 +51,7 @@ $public_pts = get_post_types( array( 'public' => true ), 'objects' );
 				<label for="mrzme_per_page"><?php esc_html_e( 'Posts per page (list)', 'mrz-maps-exp' ); ?></label>
 			</th>
 			<td>
-				<input type="number" name="mrz_maps_exp[per_page]" id="mrzme_per_page" value="<?php echo esc_attr( $values['per_page'] ); ?>" min="0" step="1" />
+				<input type="number" name="mrzme[per_page]" id="mrzme_per_page" value="<?php echo esc_attr( $values['per_page'] ); ?>" min="0" step="1" />
 				<p class="description"><?php esc_html_e( 'Client-side pagination: number of posts shown per page in the list. 0 = no pagination (all shown). The map always shows all markers.', 'mrz-maps-exp' ); ?></p>
 			</td>
 		</tr>

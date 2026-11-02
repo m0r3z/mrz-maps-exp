@@ -1,6 +1,6 @@
 <?php
 /**
- * Wrapper HTML du shortcode [mrz_maps_exp].
+ * Wrapper HTML du shortcode [mrzme].
  *
  * @var string $uid
  * @var array  $data

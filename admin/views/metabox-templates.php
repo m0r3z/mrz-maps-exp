@@ -38,7 +38,7 @@ $allowed_code = array( 'code' => array() );
 				<label for="mrzme_tpl_tooltip"><?php esc_html_e( 'Tooltip template', 'mrz-maps-exp' ); ?></label>
 			</th>
 			<td>
-				<textarea name="mrz_maps_exp[tpl_tooltip]" id="mrzme_tpl_tooltip" rows="8" class="large-text code"><?php echo esc_textarea( $values['tpl_tooltip'] ); ?></textarea>
+				<textarea name="mrzme[tpl_tooltip]" id="mrzme_tpl_tooltip" rows="8" class="large-text code"><?php echo esc_textarea( $values['tpl_tooltip'] ); ?></textarea>
 				<p class="description"><?php esc_html_e( 'HTML displayed in each marker\'s tooltip.', 'mrz-maps-exp' ); ?></p>
 			</td>
 		</tr>
@@ -47,7 +47,7 @@ $allowed_code = array( 'code' => array() );
 				<label for="mrzme_tpl_list"><?php esc_html_e( 'List template', 'mrz-maps-exp' ); ?></label>
 			</th>
 			<td>
-				<textarea name="mrz_maps_exp[tpl_list]" id="mrzme_tpl_list" rows="8" class="large-text code"><?php echo esc_textarea( $values['tpl_list'] ); ?></textarea>
+				<textarea name="mrzme[tpl_list]" id="mrzme_tpl_list" rows="8" class="large-text code"><?php echo esc_textarea( $values['tpl_list'] ); ?></textarea>
 				<p class="description"><?php esc_html_e( 'HTML displayed for each list/grid entry.', 'mrz-maps-exp' ); ?></p>
 			</td>
 		</tr>

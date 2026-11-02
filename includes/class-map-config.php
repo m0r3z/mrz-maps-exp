@@ -168,8 +168,8 @@ final class MapConfig {
 			return;
 		}
 
-		$raw = isset( $_POST['mrz_maps_exp'] ) && is_array( $_POST['mrz_maps_exp'] )
-			? wp_unslash( $_POST['mrz_maps_exp'] )
+		$raw = isset( $_POST['mrzme'] ) && is_array( $_POST['mrzme'] )
+			? wp_unslash( $_POST['mrzme'] )
 			: array();
 
 		$clean = array();
@@ -298,7 +298,7 @@ final class MapConfig {
 			if ( null === $decoded && json_last_error() !== JSON_ERROR_NONE ) {
 				// JSON invalide : on stocke vide et on signale.
 				$clean['snazzy'] = '';
-				add_settings_error( 'mrz_maps_exp', 'snazzy_invalid', __( 'Snazzy Maps: invalid JSON, the style was ignored.', 'mrz-maps-exp' ), 'error' );
+				add_settings_error( 'mrzme', 'snazzy_invalid', __( 'Snazzy Maps: invalid JSON, the style was ignored.', 'mrz-maps-exp' ), 'error' );
 			} else {
 				$clean['snazzy'] = wp_json_encode( $decoded );
 			}

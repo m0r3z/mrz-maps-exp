@@ -26,13 +26,13 @@ $acf_filters = (array) $values['acf_filters'];
 <h3 class="mrz-maps-exp-section-title"><?php esc_html_e( 'Search field', 'mrz-maps-exp' ); ?></h3>
 <p>
 	<label>
-		<input type="checkbox" name="mrz_maps_exp[search_enabled]" value="1" <?php checked( ! empty( $values['search_enabled'] ) ); ?> />
+		<input type="checkbox" name="mrzme[search_enabled]" value="1" <?php checked( ! empty( $values['search_enabled'] ) ); ?> />
 		<?php esc_html_e( 'Show a search field.', 'mrz-maps-exp' ); ?>
 	</label>
 </p>
 <p>
 	<label>
-		<input type="checkbox" name="mrz_maps_exp[search_local_match]" value="1" <?php checked( ! empty( $values['search_local_match'] ) ); ?> />
+		<input type="checkbox" name="mrzme[search_local_match]" value="1" <?php checked( ! empty( $values['search_local_match'] ) ); ?> />
 		<?php esc_html_e( 'Also suggest posts whose title matches the input (in addition to Google addresses).', 'mrz-maps-exp' ); ?>
 	</label>
 </p>
@@ -46,7 +46,7 @@ $acf_filters = (array) $values['acf_filters'];
 	foreach ( $search_layouts_labels as $val => $label ) :
 		?>
 		<label style="margin-right:16px;">
-			<input type="radio" name="mrz_maps_exp[search_layout]" value="<?php echo esc_attr( $val ); ?>" <?php checked( $values['search_layout'], $val ); ?> />
+			<input type="radio" name="mrzme[search_layout]" value="<?php echo esc_attr( $val ); ?>" <?php checked( $values['search_layout'], $val ); ?> />
 			<?php echo esc_html( $label ); ?>
 		</label>
 	<?php endforeach; ?>
@@ -56,20 +56,20 @@ $acf_filters = (array) $values['acf_filters'];
 <p>
 	<label>
 		<?php esc_html_e( 'Default radius (km):', 'mrz-maps-exp' ); ?>
-		<input type="number" name="mrz_maps_exp[search_radius]" value="<?php echo esc_attr( $values['search_radius'] ); ?>" min="1" max="500" step="1" />
+		<input type="number" name="mrzme[search_radius]" value="<?php echo esc_attr( $values['search_radius'] ); ?>" min="1" max="500" step="1" />
 	</label>
 	<span class="description"><?php esc_html_e( 'Only applied when the user selects an address.', 'mrz-maps-exp' ); ?></span>
 </p>
 <p>
 	<label>
 		<?php esc_html_e( 'Label shown above the field:', 'mrz-maps-exp' ); ?>
-		<input type="text" name="mrz_maps_exp[search_label]" value="<?php echo esc_attr( $values['search_label'] ); ?>" class="regular-text" placeholder="<?php esc_attr_e( 'Search', 'mrz-maps-exp' ); ?>" />
+		<input type="text" name="mrzme[search_label]" value="<?php echo esc_attr( $values['search_label'] ); ?>" class="regular-text" placeholder="<?php esc_attr_e( 'Search', 'mrz-maps-exp' ); ?>" />
 	</label>
 </p>
 <p>
 	<label>
 		<?php esc_html_e( 'Field placeholder:', 'mrz-maps-exp' ); ?>
-		<input type="text" name="mrz_maps_exp[search_placeholder]" value="<?php echo esc_attr( $values['search_placeholder'] ); ?>" class="regular-text" placeholder="<?php esc_attr_e( 'Search for an address…', 'mrz-maps-exp' ); ?>" />
+		<input type="text" name="mrzme[search_placeholder]" value="<?php echo esc_attr( $values['search_placeholder'] ); ?>" class="regular-text" placeholder="<?php esc_attr_e( 'Search for an address…', 'mrz-maps-exp' ); ?>" />
 	</label>
 </p>
 
@@ -78,13 +78,13 @@ $acf_filters = (array) $values['acf_filters'];
 <h3 class="mrz-maps-exp-section-title"><?php esc_html_e( 'Global options', 'mrz-maps-exp' ); ?></h3>
 <p>
 	<label>
-		<input type="checkbox" name="mrz_maps_exp[show_filter_counts]" value="1" <?php checked( ! empty( $values['show_filter_counts'] ) ); ?> />
+		<input type="checkbox" name="mrzme[show_filter_counts]" value="1" <?php checked( ! empty( $values['show_filter_counts'] ) ); ?> />
 		<?php esc_html_e( 'Show the number of results next to each filter option.', 'mrz-maps-exp' ); ?>
 	</label>
 </p>
 <p>
 	<label>
-		<input type="checkbox" name="mrz_maps_exp[url_filters_enabled]" value="1" <?php checked( ! empty( $values['url_filters_enabled'] ) ); ?> />
+		<input type="checkbox" name="mrzme[url_filters_enabled]" value="1" <?php checked( ! empty( $values['url_filters_enabled'] ) ); ?> />
 		<?php esc_html_e( 'Sync filters with the URL (shareable link).', 'mrz-maps-exp' ); ?>
 	</label>
 	<br />
@@ -109,17 +109,17 @@ $acf_filters = (array) $values['acf_filters'];
 			<label class="mrz-maps-exp-taxo-col mrz-maps-exp-taxo-col-activate">
 				<span><?php esc_html_e( 'Taxonomy', 'mrz-maps-exp' ); ?></span>
 				<span class="mrz-maps-exp-taxo-activate-row">
-					<input type="checkbox" name="mrz_maps_exp[taxonomies][]" value="<?php echo esc_attr( $slug ); ?>" <?php checked( $checked ); ?> />
+					<input type="checkbox" name="mrzme[taxonomies][]" value="<?php echo esc_attr( $slug ); ?>" <?php checked( $checked ); ?> />
 					<span class="mrz-maps-exp-taxo-name"><?php echo esc_html( $tax->labels->singular_name . ' (' . $slug . ')' ); ?></span>
 				</span>
 			</label>
 			<label class="mrz-maps-exp-taxo-col">
 				<span><?php esc_html_e( 'Display label', 'mrz-maps-exp' ); ?></span>
-				<input type="text" name="mrz_maps_exp[taxo_labels][<?php echo esc_attr( $slug ); ?>]" value="<?php echo esc_attr( $custom_label ); ?>" class="regular-text" placeholder="<?php echo esc_attr( $tax->labels->singular_name ); ?>" />
+				<input type="text" name="mrzme[taxo_labels][<?php echo esc_attr( $slug ); ?>]" value="<?php echo esc_attr( $custom_label ); ?>" class="regular-text" placeholder="<?php echo esc_attr( $tax->labels->singular_name ); ?>" />
 			</label>
 			<label class="mrz-maps-exp-taxo-col">
 				<span><?php esc_html_e( 'Filter type', 'mrz-maps-exp' ); ?></span>
-				<select name="mrz_maps_exp[taxo_modes][<?php echo esc_attr( $slug ); ?>]" class="mrz-maps-exp-taxo-mode">
+				<select name="mrzme[taxo_modes][<?php echo esc_attr( $slug ); ?>]" class="mrz-maps-exp-taxo-mode">
 					<?php foreach ( $modes_labels as $value => $label ) : ?>
 						<option value="<?php echo esc_attr( $value ); ?>" <?php selected( $mode, $value ); ?>>
 							<?php echo esc_html( $label ); ?>
@@ -129,7 +129,7 @@ $acf_filters = (array) $values['acf_filters'];
 			</label>
 			<label class="mrz-maps-exp-taxo-col">
 				<span><?php esc_html_e( 'Logic', 'mrz-maps-exp' ); ?></span>
-				<select name="mrz_maps_exp[taxo_logic][<?php echo esc_attr( $slug ); ?>]" class="mrz-maps-exp-taxo-logic" title="<?php esc_attr_e( 'How checked boxes are combined', 'mrz-maps-exp' ); ?>">
+				<select name="mrzme[taxo_logic][<?php echo esc_attr( $slug ); ?>]" class="mrz-maps-exp-taxo-logic" title="<?php esc_attr_e( 'How checked boxes are combined', 'mrz-maps-exp' ); ?>">
 					<?php foreach ( $logic_labels as $value => $label ) : ?>
 						<option value="<?php echo esc_attr( $value ); ?>" <?php selected( $logic, $value ); ?>>
 							<?php echo esc_html( $label ); ?>
@@ -160,15 +160,15 @@ $acf_filters = (array) $values['acf_filters'];
 		<div class="mrz-maps-exp-acf-row" data-index="<?php echo (int) $i; ?>">
 			<label class="mrz-maps-exp-acf-col">
 				<span><?php esc_html_e( 'ACF field name', 'mrz-maps-exp' ); ?></span>
-				<input type="text" name="mrz_maps_exp[acf_filters][<?php echo (int) $i; ?>][field]" value="<?php echo esc_attr( $field ); ?>" class="regular-text" placeholder="type_annonce" />
+				<input type="text" name="mrzme[acf_filters][<?php echo (int) $i; ?>][field]" value="<?php echo esc_attr( $field ); ?>" class="regular-text" placeholder="type_annonce" />
 			</label>
 			<label class="mrz-maps-exp-acf-col">
 				<span><?php esc_html_e( 'Display label', 'mrz-maps-exp' ); ?></span>
-				<input type="text" name="mrz_maps_exp[acf_filters][<?php echo (int) $i; ?>][label]" value="<?php echo esc_attr( $label ); ?>" class="regular-text" placeholder="<?php esc_attr_e( 'Listing type', 'mrz-maps-exp' ); ?>" />
+				<input type="text" name="mrzme[acf_filters][<?php echo (int) $i; ?>][label]" value="<?php echo esc_attr( $label ); ?>" class="regular-text" placeholder="<?php esc_attr_e( 'Listing type', 'mrz-maps-exp' ); ?>" />
 			</label>
 			<label class="mrz-maps-exp-acf-col">
 				<span><?php esc_html_e( 'Filter type', 'mrz-maps-exp' ); ?></span>
-				<select name="mrz_maps_exp[acf_filters][<?php echo (int) $i; ?>][mode]">
+				<select name="mrzme[acf_filters][<?php echo (int) $i; ?>][mode]">
 					<?php foreach ( $modes_labels as $value => $mlabel ) : ?>
 						<option value="<?php echo esc_attr( $value ); ?>" <?php selected( $mode, $value ); ?>>
 							<?php echo esc_html( $mlabel ); ?>
@@ -178,7 +178,7 @@ $acf_filters = (array) $values['acf_filters'];
 			</label>
 			<label class="mrz-maps-exp-acf-col">
 				<span><?php esc_html_e( 'Logic', 'mrz-maps-exp' ); ?></span>
-				<select name="mrz_maps_exp[acf_filters][<?php echo (int) $i; ?>][logic]" title="<?php esc_attr_e( 'How checked boxes are combined (no effect in dropdown/radio mode)', 'mrz-maps-exp' ); ?>">
+				<select name="mrzme[acf_filters][<?php echo (int) $i; ?>][logic]" title="<?php esc_attr_e( 'How checked boxes are combined (no effect in dropdown/radio mode)', 'mrz-maps-exp' ); ?>">
 					<?php foreach ( $logic_labels as $value => $llabel ) : ?>
 						<option value="<?php echo esc_attr( $value ); ?>" <?php selected( $row_logic, $value ); ?>>
 							<?php echo esc_html( $llabel ); ?>
@@ -199,15 +199,15 @@ $acf_filters = (array) $values['acf_filters'];
 	<div class="mrz-maps-exp-acf-row" data-index="__INDEX__">
 		<label class="mrz-maps-exp-acf-col">
 			<span><?php esc_html_e( 'ACF field name', 'mrz-maps-exp' ); ?></span>
-			<input type="text" name="mrz_maps_exp[acf_filters][__INDEX__][field]" value="" class="regular-text" placeholder="type_annonce" />
+			<input type="text" name="mrzme[acf_filters][__INDEX__][field]" value="" class="regular-text" placeholder="type_annonce" />
 		</label>
 		<label class="mrz-maps-exp-acf-col">
 			<span><?php esc_html_e( 'Display label', 'mrz-maps-exp' ); ?></span>
-			<input type="text" name="mrz_maps_exp[acf_filters][__INDEX__][label]" value="" class="regular-text" placeholder="<?php esc_attr_e( 'Listing type', 'mrz-maps-exp' ); ?>" />
+			<input type="text" name="mrzme[acf_filters][__INDEX__][label]" value="" class="regular-text" placeholder="<?php esc_attr_e( 'Listing type', 'mrz-maps-exp' ); ?>" />
 		</label>
 		<label class="mrz-maps-exp-acf-col">
 			<span><?php esc_html_e( 'Filter type', 'mrz-maps-exp' ); ?></span>
-			<select name="mrz_maps_exp[acf_filters][__INDEX__][mode]">
+			<select name="mrzme[acf_filters][__INDEX__][mode]">
 				<?php foreach ( $modes_labels as $value => $mlabel ) : ?>
 					<option value="<?php echo esc_attr( $value ); ?>"><?php echo esc_html( $mlabel ); ?></option>
 				<?php endforeach; ?>
@@ -215,7 +215,7 @@ $acf_filters = (array) $values['acf_filters'];
 		</label>
 		<label class="mrz-maps-exp-acf-col">
 			<span><?php esc_html_e( 'Logic', 'mrz-maps-exp' ); ?></span>
-			<select name="mrz_maps_exp[acf_filters][__INDEX__][logic]">
+			<select name="mrzme[acf_filters][__INDEX__][logic]">
 				<?php foreach ( $logic_labels as $value => $llabel ) : ?>
 					<option value="<?php echo esc_attr( $value ); ?>"><?php echo esc_html( $llabel ); ?></option>
 				<?php endforeach; ?>

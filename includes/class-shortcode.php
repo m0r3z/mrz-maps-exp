@@ -33,7 +33,7 @@ final class Shortcode {
 				'hide_forced_filter' => 'false',
 			),
 			$atts,
-			'mrz_maps_exp'
+			self::CANONICAL_TAG
 		);
 
 		$map_id = absint( $atts['id'] );

@@ -38,8 +38,8 @@ if ( '' !== $primary_tax && taxonomy_exists( $primary_tax ) ) {
 			<th scope="row"><?php esc_html_e( 'Default marker', 'mrz-maps-exp' ); ?></th>
 			<td>
 				<div class="mrz-maps-exp-media-picker">
-					<input type="hidden" name="mrz_maps_exp[marker_default_id]" class="mrz-maps-exp-media-id" value="<?php echo esc_attr( $default_id ); ?>" />
-					<input type="text" name="mrz_maps_exp[marker_default_url]" class="mrz-maps-exp-media-url regular-text" value="<?php echo esc_attr( $default_url ); ?>" placeholder="https://…/marker.svg" />
+					<input type="hidden" name="mrzme[marker_default_id]" class="mrz-maps-exp-media-id" value="<?php echo esc_attr( $default_id ); ?>" />
+					<input type="text" name="mrzme[marker_default_url]" class="mrz-maps-exp-media-url regular-text" value="<?php echo esc_attr( $default_url ); ?>" placeholder="https://…/marker.svg" />
 					<button type="button" class="button mrz-maps-exp-media-choose"><?php esc_html_e( 'Choose an image', 'mrz-maps-exp' ); ?></button>
 					<button type="button" class="button mrz-maps-exp-media-clear"><?php esc_html_e( 'Remove', 'mrz-maps-exp' ); ?></button>
 					<div class="mrz-maps-exp-media-preview">
@@ -56,7 +56,7 @@ if ( '' !== $primary_tax && taxonomy_exists( $primary_tax ) ) {
 				<label for="mrzme_marker_default_width"><?php esc_html_e( 'Marker width (px)', 'mrz-maps-exp' ); ?></label>
 			</th>
 			<td>
-				<input type="number" name="mrz_maps_exp[marker_default_width]" id="mrzme_marker_default_width" value="<?php echo esc_attr( $width ); ?>" min="8" max="128" step="1" />
+				<input type="number" name="mrzme[marker_default_width]" id="mrzme_marker_default_width" value="<?php echo esc_attr( $width ); ?>" min="8" max="128" step="1" />
 				<p class="description"><?php esc_html_e( 'Applies to all markers (default and per-term markers).', 'mrz-maps-exp' ); ?></p>
 			</td>
 		</tr>
@@ -64,7 +64,7 @@ if ( '' !== $primary_tax && taxonomy_exists( $primary_tax ) ) {
 			<th scope="row"><?php esc_html_e( 'Spiderfier effect', 'mrz-maps-exp' ); ?></th>
 			<td>
 				<label>
-					<input type="checkbox" name="mrz_maps_exp[spiderfier]" value="1" <?php checked( ! empty( $values['spiderfier'] ) ); ?> />
+					<input type="checkbox" name="mrzme[spiderfier]" value="1" <?php checked( ! empty( $values['spiderfier'] ) ); ?> />
 					<?php esc_html_e( 'Fan out overlapping markers when a group is clicked (useful when several posts share the same coordinates).', 'mrz-maps-exp' ); ?>
 				</label>
 			</td>
@@ -74,7 +74,7 @@ if ( '' !== $primary_tax && taxonomy_exists( $primary_tax ) ) {
 				<label for="mrzme_primary_taxonomy"><?php esc_html_e( 'Marker taxonomy', 'mrz-maps-exp' ); ?></label>
 			</th>
 			<td>
-				<select name="mrz_maps_exp[primary_taxonomy]" id="mrzme_primary_taxonomy">
+				<select name="mrzme[primary_taxonomy]" id="mrzme_primary_taxonomy">
 					<option value=""><?php esc_html_e( '— None —', 'mrz-maps-exp' ); ?></option>
 					<?php foreach ( $all_tax as $tax ) : ?>
 						<option value="<?php echo esc_attr( $tax->name ); ?>" <?php selected( $primary_tax, $tax->name ); ?>>
@@ -105,8 +105,8 @@ if ( '' !== $primary_tax && taxonomy_exists( $primary_tax ) ) {
 							<div class="mrz-maps-exp-term-row" data-term-id="<?php echo (int) $term->term_id; ?>">
 								<span class="mrz-maps-exp-term-name"><?php echo esc_html( $term->name ); ?></span>
 								<div class="mrz-maps-exp-media-picker">
-									<input type="hidden" name="mrz_maps_exp[term_icons][<?php echo (int) $term->term_id; ?>][id]" class="mrz-maps-exp-media-id" value="<?php echo esc_attr( $icon_id ); ?>" />
-									<input type="text" name="mrz_maps_exp[term_icons][<?php echo (int) $term->term_id; ?>][url]" class="mrz-maps-exp-media-url regular-text" value="<?php echo esc_attr( $icon_url ); ?>" />
+									<input type="hidden" name="mrzme[term_icons][<?php echo (int) $term->term_id; ?>][id]" class="mrz-maps-exp-media-id" value="<?php echo esc_attr( $icon_id ); ?>" />
+									<input type="text" name="mrzme[term_icons][<?php echo (int) $term->term_id; ?>][url]" class="mrz-maps-exp-media-url regular-text" value="<?php echo esc_attr( $icon_url ); ?>" />
 									<button type="button" class="button mrz-maps-exp-media-choose"><?php esc_html_e( 'Choose', 'mrz-maps-exp' ); ?></button>
 									<button type="button" class="button mrz-maps-exp-media-clear"><?php esc_html_e( 'Remove', 'mrz-maps-exp' ); ?></button>
 									<div class="mrz-maps-exp-media-preview">
@@ -128,8 +128,8 @@ if ( '' !== $primary_tax && taxonomy_exists( $primary_tax ) ) {
 	<div class="mrz-maps-exp-term-row" data-term-id="__TERM_ID__">
 		<span class="mrz-maps-exp-term-name">__TERM_NAME__</span>
 		<div class="mrz-maps-exp-media-picker">
-			<input type="hidden" name="mrz_maps_exp[term_icons][__TERM_ID__][id]" class="mrz-maps-exp-media-id" value="__ICON_ID__" />
-			<input type="text" name="mrz_maps_exp[term_icons][__TERM_ID__][url]" class="mrz-maps-exp-media-url regular-text" value="__ICON_URL__" />
+			<input type="hidden" name="mrzme[term_icons][__TERM_ID__][id]" class="mrz-maps-exp-media-id" value="__ICON_ID__" />
+			<input type="text" name="mrzme[term_icons][__TERM_ID__][url]" class="mrz-maps-exp-media-url regular-text" value="__ICON_URL__" />
 			<button type="button" class="button mrz-maps-exp-media-choose"><?php esc_html_e( 'Choose', 'mrz-maps-exp' ); ?></button>
 			<button type="button" class="button mrz-maps-exp-media-clear"><?php esc_html_e( 'Remove', 'mrz-maps-exp' ); ?></button>
 			<div class="mrz-maps-exp-media-preview"></div>
