@@ -4,7 +4,7 @@ Tags: google maps, map, acf, taxonomy, custom post type
 Requires at least: 6.3
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.1.2
+Stable tag: 1.1.3
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -110,6 +110,14 @@ It is the responsibility of site administrators to obtain a valid Google Maps AP
 
 == Changelog ==
 
+= 1.1.3 =
+* Security: `style` attributes are now stripped from the tooltip and list templates, as documented. Templates that relied on inline styles lose them on their next save; move them to your theme's CSS, or re-enable `style` with the `mrzme_template_kses_allowed` filter.
+* Changed: the map settings form now posts its fields under the `mrzme` prefix (was `mrz_maps_exp`). Stored settings are unchanged, so existing maps keep their configuration.
+* Changed: the Shortcode box now shows the canonical `[mrzme id="X"]` tag. The `[mrz_maps_exp]` alias still works.
+* Changed: the shortcode attributes filter is now `shortcode_atts_mrzme` (was `shortcode_atts_mrz_maps_exp`). Rename it if your theme hooks into it.
+* Documented the intentional direct database queries of the one-shot migrator and of the uninstall routine (Plugin Check).
+* Tested up to WordPress 7.1.
+
 = 1.1.2 =
 * Fixed: the overlapping-marker spiderfier (OverlappingMarkerSpiderfier) never loaded. The library reads `google.maps` as soon as it loads, but it was enqueued before the asynchronous Google Maps API and crashed with "google is not defined". It is now loaded from the Google Maps callback, right before the maps start. The `mrzme_spiderfier_url` filter still applies.
 
@@ -163,6 +171,9 @@ It is the responsibility of site administrators to obtain a valid Google Maps AP
   * Added a dedicated `== External services ==` section in the readme documenting the use of the Google Maps JavaScript API, what data is sent, and links to Google's Terms of Service and Privacy Policy.
 
 == Upgrade Notice ==
+
+= 1.1.3 =
+Security fix (inline styles are stripped from templates) and internal prefix cleanup. No data change. If your theme uses the `shortcode_atts_mrz_maps_exp` filter, rename it to `shortcode_atts_mrzme`.
 
 = 1.1.2 =
 Fixes the overlapping-marker spiderfier, which never loaded. No data change.
