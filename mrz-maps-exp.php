@@ -3,7 +3,7 @@
  * Plugin Name:       MRZ Maps Exp
  * Plugin URI:        https://github.com/m0r3z/mrz-maps-exp
  * Description:       Display custom posts on a Google Map using ACF-based coordinates, with taxonomy and ACF filters, hybrid search and customizable markers.
- * Version:           1.1.3
+ * Version:           1.1.4
  * Requires at least: 6.3
  * Requires PHP:      7.4
  * Requires Plugins:  advanced-custom-fields
@@ -26,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'MRZME_VERSION', '1.1.3' );
+define( 'MRZME_VERSION', '1.1.4' );
 define( 'MRZME_FILE', __FILE__ );
 define( 'MRZME_DIR', plugin_dir_path( __FILE__ ) );
 define( 'MRZME_URL', plugin_dir_url( __FILE__ ) );

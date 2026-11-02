@@ -4,7 +4,7 @@ Tags: google maps, map, acf, taxonomy, custom post type
 Requires at least: 6.3
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.1.3
+Stable tag: 1.1.4
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -110,6 +110,12 @@ It is the responsibility of site administrators to obtain a valid Google Maps AP
 
 == Changelog ==
 
+= 1.1.4 =
+* Fixed: the Shortcode box no longer relies on the global `$post`, which raised PHP warnings when the box was rendered outside the post edit screen.
+* Plugin Check: fixed a malformed `phpcs:ignore` and documented the remaining intentional cases (local variables in view files, per-field sanitization, Google Maps API script version).
+* Shortened the 1.1.0 upgrade notice to the 300-character limit.
+* Translation files now carry the current plugin version.
+
 = 1.1.3 =
 * Security: `style` attributes are now stripped from the tooltip and list templates, as documented. Templates that relied on inline styles lose them on their next save; move them to your theme's CSS, or re-enable `style` with the `mrzme_template_kses_allowed` filter.
 * Changed: the map settings form now posts its fields under the `mrzme` prefix (was `mrz_maps_exp`). Stored settings are unchanged, so existing maps keep their configuration.
@@ -171,6 +177,9 @@ It is the responsibility of site administrators to obtain a valid Google Maps AP
   * Added a dedicated `== External services ==` section in the readme documenting the use of the Google Maps JavaScript API, what data is sent, and links to Google's Terms of Service and Privacy Policy.
 
 == Upgrade Notice ==
+
+= 1.1.4 =
+Maintenance release: Plugin Check cleanup and a minor admin fix. No data or behavior change.
 
 = 1.1.3 =
 Security fix (inline styles are stripped from templates) and internal prefix cleanup. No data change. If your theme uses the `shortcode_atts_mrz_maps_exp` filter, rename it to `shortcode_atts_mrzme`.
