@@ -72,8 +72,10 @@ final class Migrator {
 			// UPDATE ... SET meta_key = CONCAT('_mrzme_', SUBSTRING(meta_key, N))
 			// où N = position du 1er caractère qui suit le vieux préfixe.
 			$offset = strlen( $old ) + 1; // MySQL SUBSTRING est 1-indexé.
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Migration one-shot : renommage en masse des clés meta, sans équivalent dans l'API WP.
 			$wpdb->query(
 				$wpdb->prepare(
+					// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- $table_name vaut $wpdb->postmeta ou $wpdb->termmeta.
 					"UPDATE {$table_name} SET meta_key = CONCAT( '_mrzme_', SUBSTRING( meta_key, %d ) ) WHERE meta_key LIKE %s",
 					$offset,
 					$old_like
@@ -88,6 +90,7 @@ final class Migrator {
 	private static function migrate_cpt_posts() {
 		global $wpdb;
 		foreach ( self::old_cpt_slugs() as $old_slug ) {
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Migration one-shot : changement de post_type en masse, sans équivalent dans l'API WP.
 			$wpdb->update(
 				$wpdb->posts,
 				array( 'post_type' => 'mrzme_map' ),
@@ -111,6 +114,7 @@ final class Migrator {
 				$full_new  = $wp_prefix . 'mrzme_map_';
 				$old_like  = $wpdb->esc_like( $full_old ) . '%';
 				$offset    = strlen( $full_old ) + 1;
+				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Migration one-shot : renommage en masse des transients, sans équivalent dans l'API WP.
 				$wpdb->query(
 					$wpdb->prepare(
 						"UPDATE {$wpdb->options} SET option_name = CONCAT( %s, SUBSTRING( option_name, %d ) ) WHERE option_name LIKE %s",
