@@ -10,6 +10,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Vue incluse depuis MapConfig::render() : variables locales à la méthode.
+
 global $post;
 
 $default_url = (string) $values['marker_default_url'];

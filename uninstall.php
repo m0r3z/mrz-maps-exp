@@ -12,6 +12,8 @@ global $wpdb;
 // Désinstallation : suppressions en masse par préfixe, sans équivalent dans
 // l'API WP, et aucun cache à préserver puisque le plugin disparaît.
 // phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+// Fichier inclus par uninstall_plugin() : ses variables sont locales à la fonction.
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 
 // On nettoie à la fois les données au préfixe courant (`mrzme_`) et celles
 // issues des versions précédentes (`mrz_maps_exp_`, `gmaps_aa_`) au cas où
@@ -24,7 +26,7 @@ $cpt_slugs = array( 'mrzme_map', 'mrz_maps_exp_map', 'gmaps_aa_map' );
 $placeholders = implode( ',', array_fill( 0, count( $cpt_slugs ), '%s' ) );
 $map_ids = $wpdb->get_col(
 	$wpdb->prepare(
-		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- $placeholders ne contient que des %s, générés par array_fill().
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- $placeholders ne contient que des %s, générés par array_fill().
 		"SELECT ID FROM {$wpdb->posts} WHERE post_type IN ( {$placeholders} )",
 		$cpt_slugs
 	)

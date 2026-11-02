@@ -91,7 +91,7 @@ final class Assets {
 					'https://maps.googleapis.com/maps/api/js'
 				),
 				array(),
-				null,
+				null, // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- API Google Maps externe, versionnée par le paramètre v=weekly de son URL.
 				array(
 					'strategy'  => 'async',
 					'in_footer' => true,

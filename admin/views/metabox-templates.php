@@ -8,6 +8,8 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Vue incluse depuis MapConfig::render() : variables locales à la méthode.
 ?>
 <?php
 $allowed_code = array( 'code' => array() );

@@ -9,6 +9,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Vue incluse depuis MapConfig::render() : variables locales à la méthode.
+
 $all_tax      = get_taxonomies( array( 'public' => true ), 'objects' );
 $modes_labels = array(
 	'dropdown' => __( 'Dropdown', 'mrz-maps-exp' ),

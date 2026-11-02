@@ -169,7 +169,7 @@ final class MapConfig {
 		}
 
 		$raw = isset( $_POST['mrzme'] ) && is_array( $_POST['mrzme'] )
-			? wp_unslash( $_POST['mrzme'] )
+			? wp_unslash( $_POST['mrzme'] ) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Sanitisé champ par champ ci-dessous.
 			: array();
 
 		$clean = array();
@@ -494,7 +494,7 @@ final class MapConfig {
 					'https://maps.googleapis.com/maps/api/js'
 				),
 				array(),
-				null,
+				null, // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- API Google Maps externe, versionnée par le paramètre v=weekly de son URL.
 				array(
 					'strategy'  => 'async',
 					'in_footer' => true,

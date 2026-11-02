@@ -182,7 +182,7 @@ Fixes the overlapping-marker spiderfier, which never loaded. No data change.
 English source strings and translatable JavaScript messages. No data change.
 
 = 1.1.0 =
-Internal prefix refactor for wordpress.org compliance (`mrz_maps_exp_*` → `mrzme_*`). Existing map data is migrated automatically on the first admin page load. The old `[mrz_maps_exp]` shortcode still works as an alias. Theme code using the old filter names (`mrz_maps_exp_api_key`, etc.) must be updated to the new names.
+Internal prefix renamed to `mrzme_`. Existing maps are migrated automatically and `[mrz_maps_exp]` still works. Theme code using the old filter names (e.g. `mrz_maps_exp_api_key`) must be updated.
 
 = 1.0.8 =
 Internal ownership transfer within the Morez agency (mrzxp → m0r3z). No functional change, no data migration.

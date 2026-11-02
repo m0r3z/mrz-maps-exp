@@ -9,6 +9,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Vue incluse depuis MapConfig::render() : variables locales à la méthode.
+
 $public_pts = get_post_types( array( 'public' => true ), 'objects' );
 ?>
 <table class="form-table mrz-maps-exp-table">

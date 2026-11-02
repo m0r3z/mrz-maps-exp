@@ -10,6 +10,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Vue incluse depuis Shortcode::render() : variables locales à la méthode.
+
 $config      = $data['config'];
 $filters     = $data['filters'];
 $forced      = isset( $data['forced'] ) ? $data['forced'] : null;
@@ -130,7 +132,7 @@ $render_search_field = static function () use ( $config, $dropdown_id ) {
 					<div class="mrz-maps-exp-filter-label"><?php echo esc_html( $filter['label'] ); ?></div>
 
 					<?php if ( 'dropdown' === $filter['mode'] ) : ?>
-						<select class="mrz-maps-exp-filter-input" <?php echo $dattr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped — attributs déjà échappés ?>>
+						<select class="mrz-maps-exp-filter-input" <?php echo $dattr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- attributs déjà échappés par esc_attr() dans $filter_data_attrs. ?>>
 							<option value=""><?php esc_html_e( 'All', 'mrz-maps-exp' ); ?></option>
 							<?php foreach ( $filter['options'] as $opt ) : ?>
 								<?php

@@ -10,6 +10,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Vue incluse depuis MapConfig::render() : variables locales à la méthode.
+
 $shortcode = '[mrzme id="' . (int) $post->ID . '"]';
 ?>
 <p><?php esc_html_e( 'Paste this shortcode into your content:', 'mrz-maps-exp' ); ?></p>
