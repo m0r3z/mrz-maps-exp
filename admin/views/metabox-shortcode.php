@@ -10,7 +10,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-global $post;
 $shortcode = '[mrzme id="' . (int) $post->ID . '"]';
 ?>
 <p><?php esc_html_e( 'Paste this shortcode into your content:', 'mrz-maps-exp' ); ?></p>
