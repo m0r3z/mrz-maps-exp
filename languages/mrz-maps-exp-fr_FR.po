@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: MRZ Maps Exp 1.1.5\n"
+"Project-Id-Version: MRZ Maps Exp 1.1.6\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/mrz-maps-exp\n"
 "Last-Translator: Morez.co <hello@morez.co>\n"
 "Language-Team: French\n"
