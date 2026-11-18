@@ -90,7 +90,9 @@ final class Assets {
 					),
 					'https://maps.googleapis.com/maps/api/js'
 				),
-				array(),
+				// Dépend du script du plugin pour être imprimé après lui : sinon,
+				// si Google répond vite, mrzMapsExpBoot n'existe pas encore.
+				array( self::HANDLE_SCRIPT ),
 				null, // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- API Google Maps externe, versionnée par le paramètre v=weekly de son URL.
 				array(
 					'strategy'  => 'async',

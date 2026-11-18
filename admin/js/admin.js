@@ -41,7 +41,7 @@
 
 	function initPicker() {
 		var el = document.getElementById('mrzme_picker');
-		if (!el || typeof google === 'undefined' || !google.maps) { return; }
+		if (pickerMap || !el || typeof google === 'undefined' || !google.maps || !google.maps.Map) { return; }
 
 		var latEl = document.getElementById('mrzme_center_lat');
 		var lngEl = document.getElementById('mrzme_center_lng');
@@ -87,6 +87,11 @@
 
 	// Callback global déclenché par le loader Google Maps.
 	window.mrzMapsExpAdminBoot = initPicker;
+
+	// Google Maps déjà chargé (par un autre plugin, par exemple) : la mini-carte
+	// démarre sans attendre le callback. initPicker() ignore les appels en double.
+	initPicker();
+	document.addEventListener('DOMContentLoaded', initPicker);
 
 	// Le sélecteur OU/ET n'a de sens qu'en mode « Cases à cocher ». On le masque
 	// pour les autres modes, en ligne taxonomie et en ligne filtre ACF.

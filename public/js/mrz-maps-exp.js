@@ -31,17 +31,34 @@
 		document.head.appendChild(script);
 	}
 
-	// Callback Google Maps JS.
+	var bootStarted = false;
+
+	// Callback Google Maps JS. Peut aussi être appelé par bootIfGoogleLoaded() :
+	// le drapeau évite un double démarrage.
 	window.mrzMapsExpBoot = function () {
+		if (bootStarted) { return; }
+		bootStarted = true;
 		loadSpiderfier(function () {
 			googleReady = true;
 			bootAll();
 		});
 	};
 
+	// Google Maps déjà disponible (autre loader, ex. Salient, ou filtre
+	// mrzme_skip_gmaps_enqueue) : on démarre sans attendre notre callback.
+	function bootIfGoogleLoaded() {
+		if (typeof google !== 'undefined' && google.maps && google.maps.Map) {
+			window.mrzMapsExpBoot();
+		}
+	}
+
+	bootIfGoogleLoaded();
+
 	document.addEventListener('DOMContentLoaded', function () {
-		if (googleReady) { bootAll(); }
+		if (googleReady) { bootAll(); } else { bootIfGoogleLoaded(); }
 	});
+
+	window.addEventListener('load', bootIfGoogleLoaded);
 
 	function readData(wrapper) {
 		var node = wrapper.querySelector('.mrz-maps-exp-data');

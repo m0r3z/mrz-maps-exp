@@ -493,7 +493,8 @@ final class MapConfig {
 					),
 					'https://maps.googleapis.com/maps/api/js'
 				),
-				array(),
+				// Imprimé après admin.js, qui définit le callback mrzMapsExpAdminBoot.
+				array( 'mrz-maps-exp-admin' ),
 				null, // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- API Google Maps externe, versionnée par le paramètre v=weekly de son URL.
 				array(
 					'strategy'  => 'async',
