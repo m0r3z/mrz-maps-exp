@@ -4,7 +4,7 @@ Tags: google maps, map, acf, taxonomy, custom post type
 Requires at least: 6.3
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.1.6
+Stable tag: 1.1.7
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -110,6 +110,10 @@ It is the responsibility of site administrators to obtain a valid Google Maps AP
 
 == Changelog ==
 
+= 1.1.7 =
+* Fixed: maps sometimes did not start when Google Maps loaded faster than the plugin script (front and map edit screen).
+* Fixed: maps now also start when Google Maps is loaded by another plugin or theme, or skipped with the `mrzme_skip_gmaps_enqueue` filter.
+
 = 1.1.6 =
 * Added the low-resolution plugin banner, required by wordpress.org to display the banner. No code change.
 
@@ -183,6 +187,9 @@ It is the responsibility of site administrators to obtain a valid Google Maps AP
   * Added a dedicated `== External services ==` section in the readme documenting the use of the Google Maps JavaScript API, what data is sent, and links to Google's Terms of Service and Privacy Policy.
 
 == Upgrade Notice ==
+
+= 1.1.7 =
+Fixes maps that sometimes did not start.
 
 = 1.1.6 =
 wordpress.org banner fix. No code change.
