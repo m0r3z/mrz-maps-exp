@@ -82,6 +82,11 @@
 		return R * c;
 	}
 
+	// Les titres WordPress arrivent avec des entités HTML (apostrophes…).
+	function decodeHtml(html) {
+		return new DOMParser().parseFromString(html || '', 'text/html').body.textContent;
+	}
+
 	function deg2rad(d) { return d * Math.PI / 180; }
 
 	// Popup personnalisée basée sur google.maps.OverlayView (DOM sous notre contrôle).
@@ -238,7 +243,56 @@
 		// On remonte la popup de (hauteur du marker) + un petit écart.
 		popup.setPixelOffset({ x: 0, y: -(markerW + 8) });
 
+		// Fenêtre par-dessus la page (<dialog> natif : focus piégé, Échap, focus rendu).
+		var modal = null;
+
+		function createModal() {
+			modal = document.createElement('dialog');
+			modal.className = 'mrz-maps-exp-modal';
+
+			var panel = document.createElement('div');
+			panel.className = 'mrz-maps-exp-modal-panel';
+
+			var closeBtn = document.createElement('button');
+			closeBtn.type = 'button';
+			closeBtn.className = 'mrz-maps-exp-modal-close';
+			closeBtn.setAttribute('aria-label', (data.i18n && data.i18n.close) || 'Close');
+			closeBtn.innerHTML = '&times;';
+			closeBtn.addEventListener('click', function () { modal.close(); });
+
+			modal.bodyEl = document.createElement('div');
+			modal.bodyEl.className = 'mrz-maps-exp-modal-body';
+
+			panel.appendChild(closeBtn);
+			panel.appendChild(modal.bodyEl);
+			modal.appendChild(panel);
+
+			// Clic sur le fond : fermeture.
+			modal.addEventListener('click', function (e) {
+				if (e.target === modal) { modal.close(); }
+			});
+			modal.addEventListener('close', function () {
+				document.documentElement.classList.remove('mrz-maps-exp-modal-open');
+				wrapper.dispatchEvent(new CustomEvent('mrzme:modal-close', { bubbles: true, detail: { modal: modal } }));
+			});
+			wrapper.appendChild(modal);
+		}
+
+		function openModal(point) {
+			if (!modal) { createModal(); }
+			if (modal.open) { return; }
+			modal.setAttribute('aria-label', decodeHtml(point.title));
+			modal.bodyEl.innerHTML = point.tooltip || '';
+			modal.showModal();
+			document.documentElement.classList.add('mrz-maps-exp-modal-open');
+			wrapper.dispatchEvent(new CustomEvent('mrzme:modal-open', { bubbles: true, detail: { modal: modal, point: point } }));
+		}
+
 		function openPopupOn(marker, point) {
+			if (config.detailsDisplay === 'modal') {
+				openModal(point);
+				return;
+			}
 			popup.setContent(point.tooltip || '');
 			popup.open({ map: map, anchor: marker });
 			// Deux rAF pour laisser Google Maps positionner la popup et le
@@ -367,7 +421,13 @@
 				w.innerHTML = p.listItem || '';
 
 				if (clickAction === 'tooltip') {
-					w.addEventListener('click', function () {
+					w.addEventListener('click', function (e) {
+						// Un lien du gabarit (téléphone, itinéraire…) garde son propre clic.
+						if (e.target.closest('a[href]')) { return; }
+						if (config.detailsDisplay === 'modal') {
+							openModal(p);
+							return;
+						}
 						map.panTo({ lat: p.lat, lng: p.lng });
 						map.setZoom(Math.max(map.getZoom(), 14));
 						var m = markers.find(function (mm) { return mm.__point.id === p.id; });

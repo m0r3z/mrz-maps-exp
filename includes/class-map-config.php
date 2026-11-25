@@ -29,6 +29,9 @@ final class MapConfig {
 	public static function list_click_actions() {
 		return array( 'tooltip', 'none', 'link' );
 	}
+	public static function details_displays() {
+		return array( 'tooltip', 'modal' );
+	}
 	public static function search_layouts() {
 		return array( 'inline', 'top' );
 	}
@@ -108,6 +111,7 @@ final class MapConfig {
 			'layout_list'        => 'below',
 			'list_format'        => 'list',
 			'list_click_action'  => 'tooltip',
+			'details_display'    => 'tooltip',
 			'tpl_tooltip'        => "<div class=\"mrz-maps-exp-tooltip\">\n  <h6>{post_title}</h6>\n</div>",
 			'tpl_list'           => "<div class=\"mrz-maps-exp-list-item\">\n  <h6>{post_title}</h6>\n</div>",
 			'snazzy'               => '',
@@ -285,6 +289,8 @@ final class MapConfig {
 		$clean['layout_list']    = ( isset( $raw['layout_list'] ) && in_array( $raw['layout_list'], self::layouts_list(), true ) ) ? $raw['layout_list'] : 'below';
 		$clean['list_format']       = ( isset( $raw['list_format'] ) && in_array( $raw['list_format'], self::list_formats(), true ) ) ? $raw['list_format'] : 'list';
 		$clean['list_click_action'] = ( isset( $raw['list_click_action'] ) && in_array( $raw['list_click_action'], self::list_click_actions(), true ) ) ? $raw['list_click_action'] : 'tooltip';
+
+		$clean['details_display']   = ( isset( $raw['details_display'] ) && in_array( $raw['details_display'], self::details_displays(), true ) ) ? $raw['details_display'] : 'tooltip';
 
 		// Templates.
 		$allowed = self::allowed_html_for_templates();

@@ -175,11 +175,29 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</td>
 		</tr>
 		<tr>
+			<th scope="row"><?php esc_html_e( 'Open details in', 'mrz-maps-exp' ); ?></th>
+			<td>
+				<?php
+				$details_displays = array(
+					'tooltip' => __( 'A tooltip on the map', 'mrz-maps-exp' ),
+					'modal'   => __( 'A pop-up window over the page', 'mrz-maps-exp' ),
+				);
+				foreach ( $details_displays as $val => $label ) :
+					?>
+					<label style="display:block;margin-bottom:4px;">
+						<input type="radio" name="mrzme[details_display]" value="<?php echo esc_attr( $val ); ?>" <?php checked( $values['details_display'], $val ); ?> />
+						<?php echo esc_html( $label ); ?>
+					</label>
+				<?php endforeach; ?>
+				<p class="description"><?php esc_html_e( 'Both use the tooltip template. Applies to markers, the list and the search field.', 'mrz-maps-exp' ); ?></p>
+			</td>
+		</tr>
+		<tr>
 			<th scope="row"><?php esc_html_e( 'List item click', 'mrz-maps-exp' ); ?></th>
 			<td>
 				<?php
 				$click_actions = array(
-					'tooltip' => __( 'Show the tooltip on the map', 'mrz-maps-exp' ),
+					'tooltip' => __( 'Show the details', 'mrz-maps-exp' ),
 					'none'    => __( 'Do nothing', 'mrz-maps-exp' ),
 					'link'    => __( 'Open the post page', 'mrz-maps-exp' ),
 				);

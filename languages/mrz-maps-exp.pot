@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv3 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: MRZ Maps Exp 1.1.7\n"
+"Project-Id-Version: MRZ Maps Exp 1.2.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/mrz-maps-exp\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-31T16:39:07+00:00\n"
+"POT-Creation-Date: 2026-11-25T14:51:21+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: mrz-maps-exp\n"
@@ -39,431 +39,447 @@ msgstr ""
 msgid "https://morez.co"
 msgstr ""
 
-#: admin/views/metabox-cosmetic.php:38
+#: admin/views/metabox-cosmetic.php:40
 msgid "Default marker"
 msgstr ""
 
-#: admin/views/metabox-cosmetic.php:43
-#: includes/class-map-config.php:511
+#: admin/views/metabox-cosmetic.php:45
+#: includes/class-map-config.php:526
 #: includes/class-taxonomy-markers.php:41
 #: includes/class-taxonomy-markers.php:63
 #: includes/class-taxonomy-markers.php:123
 msgid "Choose an image"
 msgstr ""
 
-#: admin/views/metabox-cosmetic.php:44
-#: admin/views/metabox-cosmetic.php:111
-#: admin/views/metabox-cosmetic.php:134
-#: admin/views/metabox-filters.php:189
-#: admin/views/metabox-filters.php:224
+#: admin/views/metabox-cosmetic.php:46
+#: admin/views/metabox-cosmetic.php:113
+#: admin/views/metabox-cosmetic.php:136
+#: admin/views/metabox-filters.php:191
+#: admin/views/metabox-filters.php:226
 #: includes/class-taxonomy-markers.php:42
 #: includes/class-taxonomy-markers.php:64
 msgid "Remove"
 msgstr ""
 
-#: admin/views/metabox-cosmetic.php:51
+#: admin/views/metabox-cosmetic.php:53
 msgid "SVG or PNG image used as the marker for posts without a term icon. Leave empty to use the marker bundled with the plugin."
 msgstr ""
 
-#: admin/views/metabox-cosmetic.php:56
+#: admin/views/metabox-cosmetic.php:58
 msgid "Marker width (px)"
 msgstr ""
 
-#: admin/views/metabox-cosmetic.php:60
+#: admin/views/metabox-cosmetic.php:62
 msgid "Applies to all markers (default and per-term markers)."
 msgstr ""
 
-#: admin/views/metabox-cosmetic.php:64
+#: admin/views/metabox-cosmetic.php:66
 msgid "Spiderfier effect"
 msgstr ""
 
-#: admin/views/metabox-cosmetic.php:68
+#: admin/views/metabox-cosmetic.php:70
 msgid "Fan out overlapping markers when a group is clicked (useful when several posts share the same coordinates)."
 msgstr ""
 
-#: admin/views/metabox-cosmetic.php:74
+#: admin/views/metabox-cosmetic.php:76
 msgid "Marker taxonomy"
 msgstr ""
 
-#: admin/views/metabox-cosmetic.php:78
+#: admin/views/metabox-cosmetic.php:80
 msgid "— None —"
 msgstr ""
 
-#: admin/views/metabox-cosmetic.php:85
+#: admin/views/metabox-cosmetic.php:87
 msgid "Each term in this taxonomy can have its own marker (takes precedence over filter taxonomy icons)."
 msgstr ""
 
-#: admin/views/metabox-cosmetic.php:89
+#: admin/views/metabox-cosmetic.php:91
 msgid "Per-term markers"
 msgstr ""
 
-#: admin/views/metabox-cosmetic.php:96
-#: includes/class-map-config.php:514
+#: admin/views/metabox-cosmetic.php:98
+#: includes/class-map-config.php:529
 msgid "Select a taxonomy above first."
 msgstr ""
 
-#: admin/views/metabox-cosmetic.php:98
-#: includes/class-map-config.php:516
+#: admin/views/metabox-cosmetic.php:100
+#: includes/class-map-config.php:531
 msgid "No terms available in this taxonomy."
 msgstr ""
 
-#: admin/views/metabox-cosmetic.php:110
-#: admin/views/metabox-cosmetic.php:133
+#: admin/views/metabox-cosmetic.php:112
+#: admin/views/metabox-cosmetic.php:135
 msgid "Choose"
 msgstr ""
 
-#: admin/views/metabox-display.php:16
+#: admin/views/metabox-display.php:18
 msgid "Height (px)"
 msgstr ""
 
-#: admin/views/metabox-display.php:24
+#: admin/views/metabox-display.php:26
 msgid "Initial zoom"
 msgstr ""
 
-#: admin/views/metabox-display.php:28
+#: admin/views/metabox-display.php:30
 msgid "Zoom level when the page loads, from 1 (world) to 22 (building)."
 msgstr ""
 
-#: admin/views/metabox-display.php:33
+#: admin/views/metabox-display.php:35
 msgid "Minimum zoom"
 msgstr ""
 
-#: admin/views/metabox-display.php:37
+#: admin/views/metabox-display.php:39
 msgid "Maximum zoom-out level allowed for users."
 msgstr ""
 
-#: admin/views/metabox-display.php:42
+#: admin/views/metabox-display.php:44
 msgid "Maximum zoom"
 msgstr ""
 
-#: admin/views/metabox-display.php:46
+#: admin/views/metabox-display.php:48
 msgid "Maximum zoom-in level allowed for users."
 msgstr ""
 
-#: admin/views/metabox-display.php:51
+#: admin/views/metabox-display.php:53
 msgid "Zoom after search"
 msgstr ""
 
-#: admin/views/metabox-display.php:55
+#: admin/views/metabox-display.php:57
 msgid "Zoom level applied after an address is selected in the search bar."
 msgstr ""
 
-#: admin/views/metabox-display.php:59
+#: admin/views/metabox-display.php:61
 msgid "Desktop scroll-wheel zoom"
 msgstr ""
 
-#: admin/views/metabox-display.php:63
+#: admin/views/metabox-display.php:65
 msgid "Require Ctrl/Cmd + scroll wheel to zoom (shows a help message otherwise)."
 msgstr ""
 
-#: admin/views/metabox-display.php:65
+#: admin/views/metabox-display.php:67
 msgid "Uncheck to zoom directly with the scroll wheel, without a message. Touch behavior (mobile/tablet) is not affected: one finger to pan, pinch to zoom."
 msgstr ""
 
-#: admin/views/metabox-display.php:69
+#: admin/views/metabox-display.php:71
 msgid "Close tooltip on map click"
 msgstr ""
 
-#: admin/views/metabox-display.php:73
+#: admin/views/metabox-display.php:75
 msgid "Close the open tooltip when the user clicks elsewhere on the map."
 msgstr ""
 
-#: admin/views/metabox-display.php:78
+#: admin/views/metabox-display.php:80
 msgid "Center on current post"
 msgstr ""
 
-#: admin/views/metabox-display.php:82
+#: admin/views/metabox-display.php:84
 msgid "When the shortcode is rendered on a single page of the source post type, automatically center the map on the current post's coordinates (zoom = “Zoom after search”)."
 msgstr ""
 
-#: admin/views/metabox-display.php:87
+#: admin/views/metabox-display.php:89
 msgid "Fit bounds after filtering"
 msgstr ""
 
-#: admin/views/metabox-display.php:91
+#: admin/views/metabox-display.php:93
 msgid "Automatically adjust the center and zoom to fit the visible markers after each filter change."
 msgstr ""
 
-#: admin/views/metabox-display.php:96
+#: admin/views/metabox-display.php:98
 msgid "Reset button"
 msgstr ""
 
-#: admin/views/metabox-display.php:101
+#: admin/views/metabox-display.php:103
 msgid "Show a button that resets all filters."
 msgstr ""
 
-#: admin/views/metabox-display.php:106
+#: admin/views/metabox-display.php:108
 msgid "Button text:"
 msgstr ""
 
-#: admin/views/metabox-display.php:107
+#: admin/views/metabox-display.php:109
 #: includes/class-data-provider.php:42
 #: includes/class-data-provider.php:71
 msgid "Clear"
 msgstr ""
 
-#: admin/views/metabox-display.php:113
+#: admin/views/metabox-display.php:115
 msgid "Map center"
 msgstr ""
 
-#: admin/views/metabox-display.php:116
+#: admin/views/metabox-display.php:118
 msgid "Latitude:"
 msgstr ""
 
-#: admin/views/metabox-display.php:120
+#: admin/views/metabox-display.php:122
 msgid "Longitude:"
 msgstr ""
 
-#: admin/views/metabox-display.php:123
+#: admin/views/metabox-display.php:125
 msgid "Click the map below to set the center."
 msgstr ""
 
-#: admin/views/metabox-display.php:128
+#: admin/views/metabox-display.php:130
 msgid "Filters layout"
 msgstr ""
 
-#: admin/views/metabox-display.php:132
+#: admin/views/metabox-display.php:134
 msgid "Above"
 msgstr ""
 
-#: admin/views/metabox-display.php:133
-#: admin/views/metabox-display.php:151
+#: admin/views/metabox-display.php:135
+#: admin/views/metabox-display.php:153
 msgid "Left side"
 msgstr ""
 
-#: admin/views/metabox-display.php:134
-#: admin/views/metabox-display.php:152
+#: admin/views/metabox-display.php:136
+#: admin/views/metabox-display.php:154
 msgid "Right side"
 msgstr ""
 
-#: admin/views/metabox-display.php:146
+#: admin/views/metabox-display.php:148
 msgid "List layout"
 msgstr ""
 
-#: admin/views/metabox-display.php:150
+#: admin/views/metabox-display.php:152
 msgid "Below"
 msgstr ""
 
-#: admin/views/metabox-display.php:153
+#: admin/views/metabox-display.php:155
 msgid "Hidden"
 msgstr ""
 
-#: admin/views/metabox-display.php:165
+#: admin/views/metabox-display.php:167
 msgid "List format"
 msgstr ""
 
-#: admin/views/metabox-display.php:167
+#: admin/views/metabox-display.php:169
 msgid "List"
 msgstr ""
 
-#: admin/views/metabox-display.php:167
+#: admin/views/metabox-display.php:169
 msgid "Grid"
 msgstr ""
 
-#: admin/views/metabox-display.php:176
-msgid "List item click"
-msgstr ""
-
-#: admin/views/metabox-display.php:180
-msgid "Show the tooltip on the map"
-msgstr ""
-
-#: admin/views/metabox-display.php:181
-msgid "Do nothing"
+#: admin/views/metabox-display.php:178
+msgid "Open details in"
 msgstr ""
 
 #: admin/views/metabox-display.php:182
+msgid "A tooltip on the map"
+msgstr ""
+
+#: admin/views/metabox-display.php:183
+msgid "A pop-up window over the page"
+msgstr ""
+
+#: admin/views/metabox-display.php:192
+msgid "Both use the tooltip template. Applies to markers, the list and the search field."
+msgstr ""
+
+#: admin/views/metabox-display.php:196
+msgid "List item click"
+msgstr ""
+
+#: admin/views/metabox-display.php:200
+msgid "Show the details"
+msgstr ""
+
+#: admin/views/metabox-display.php:201
+msgid "Do nothing"
+msgstr ""
+
+#: admin/views/metabox-display.php:202
 msgid "Open the post page"
 msgstr ""
 
-#: admin/views/metabox-filters.php:14
+#: admin/views/metabox-filters.php:16
 msgid "Dropdown"
 msgstr ""
 
-#: admin/views/metabox-filters.php:15
+#: admin/views/metabox-filters.php:17
 msgid "Radio buttons"
 msgstr ""
 
-#: admin/views/metabox-filters.php:16
+#: admin/views/metabox-filters.php:18
 msgid "Checkboxes"
 msgstr ""
 
-#: admin/views/metabox-filters.php:19
+#: admin/views/metabox-filters.php:21
 msgid "OR"
 msgstr ""
 
-#: admin/views/metabox-filters.php:20
+#: admin/views/metabox-filters.php:22
 msgid "AND"
 msgstr ""
 
-#: admin/views/metabox-filters.php:26
+#: admin/views/metabox-filters.php:28
 msgid "Search field"
 msgstr ""
 
-#: admin/views/metabox-filters.php:30
+#: admin/views/metabox-filters.php:32
 msgid "Show a search field."
 msgstr ""
 
-#: admin/views/metabox-filters.php:36
+#: admin/views/metabox-filters.php:38
 msgid "Also suggest posts whose title matches the input (in addition to Google addresses)."
 msgstr ""
 
-#: admin/views/metabox-filters.php:40
+#: admin/views/metabox-filters.php:42
 msgid "Field position:"
 msgstr ""
 
-#: admin/views/metabox-filters.php:43
+#: admin/views/metabox-filters.php:45
 msgid "Inside the filters block"
 msgstr ""
 
-#: admin/views/metabox-filters.php:44
+#: admin/views/metabox-filters.php:46
 msgid "Top, full width"
 msgstr ""
 
-#: admin/views/metabox-filters.php:54
+#: admin/views/metabox-filters.php:56
 msgid "In “Top” mode, the field is moved out of the filters block and spans the full width. Useful when the filters are placed on the side."
 msgstr ""
 
-#: admin/views/metabox-filters.php:58
+#: admin/views/metabox-filters.php:60
 msgid "Default radius (km):"
 msgstr ""
 
-#: admin/views/metabox-filters.php:61
+#: admin/views/metabox-filters.php:63
 msgid "Only applied when the user selects an address."
 msgstr ""
 
-#: admin/views/metabox-filters.php:65
+#: admin/views/metabox-filters.php:67
 msgid "Label shown above the field:"
 msgstr ""
 
-#: admin/views/metabox-filters.php:66
+#: admin/views/metabox-filters.php:68
 #: includes/class-data-provider.php:100
 msgid "Search"
 msgstr ""
 
-#: admin/views/metabox-filters.php:71
+#: admin/views/metabox-filters.php:73
 msgid "Field placeholder:"
 msgstr ""
 
-#: admin/views/metabox-filters.php:72
+#: admin/views/metabox-filters.php:74
 #: includes/class-data-provider.php:40
 #: includes/class-data-provider.php:103
 msgid "Search for an address…"
 msgstr ""
 
-#: admin/views/metabox-filters.php:78
+#: admin/views/metabox-filters.php:80
 msgid "Global options"
 msgstr ""
 
-#: admin/views/metabox-filters.php:82
+#: admin/views/metabox-filters.php:84
 msgid "Show the number of results next to each filter option."
 msgstr ""
 
-#: admin/views/metabox-filters.php:88
+#: admin/views/metabox-filters.php:90
 msgid "Sync filters with the URL (shareable link)."
 msgstr ""
 
-#: admin/views/metabox-filters.php:91
+#: admin/views/metabox-filters.php:93
 msgid "Format: ?gm_ID_tax_slug=12,34&gm_ID_acf_field=value. The URL updates automatically when the user changes a filter."
 msgstr ""
 
-#: admin/views/metabox-filters.php:96
+#: admin/views/metabox-filters.php:98
 msgid "Taxonomy filters"
 msgstr ""
 
-#: admin/views/metabox-filters.php:110
+#: admin/views/metabox-filters.php:112
 msgid "Taxonomy"
 msgstr ""
 
-#: admin/views/metabox-filters.php:117
-#: admin/views/metabox-filters.php:166
-#: admin/views/metabox-filters.php:205
+#: admin/views/metabox-filters.php:119
+#: admin/views/metabox-filters.php:168
+#: admin/views/metabox-filters.php:207
 msgid "Display label"
 msgstr ""
 
-#: admin/views/metabox-filters.php:121
-#: admin/views/metabox-filters.php:170
-#: admin/views/metabox-filters.php:209
+#: admin/views/metabox-filters.php:123
+#: admin/views/metabox-filters.php:172
+#: admin/views/metabox-filters.php:211
 msgid "Filter type"
 msgstr ""
 
-#: admin/views/metabox-filters.php:131
-#: admin/views/metabox-filters.php:180
-#: admin/views/metabox-filters.php:217
+#: admin/views/metabox-filters.php:133
+#: admin/views/metabox-filters.php:182
+#: admin/views/metabox-filters.php:219
 msgid "Logic"
 msgstr ""
 
-#: admin/views/metabox-filters.php:132
+#: admin/views/metabox-filters.php:134
 msgid "How checked boxes are combined"
 msgstr ""
 
-#: admin/views/metabox-filters.php:143
+#: admin/views/metabox-filters.php:145
 msgid "Only taxonomies attached to the selected post type are listed. The label replaces the taxonomy name displayed above the filter on the site."
 msgstr ""
 
-#: admin/views/metabox-filters.php:147
+#: admin/views/metabox-filters.php:149
 msgid "ACF field filters"
 msgstr ""
 
-#: admin/views/metabox-filters.php:149
+#: admin/views/metabox-filters.php:151
 msgid "For Select, Radio Button, Checkbox or True / False fields, options are detected automatically from the ACF configuration. For other types (text, number), distinct values are collected dynamically from the posts."
 msgstr ""
 
-#: admin/views/metabox-filters.php:162
-#: admin/views/metabox-filters.php:201
+#: admin/views/metabox-filters.php:164
+#: admin/views/metabox-filters.php:203
 msgid "ACF field name"
 msgstr ""
 
-#: admin/views/metabox-filters.php:167
-#: admin/views/metabox-filters.php:206
+#: admin/views/metabox-filters.php:169
+#: admin/views/metabox-filters.php:208
 msgid "Listing type"
 msgstr ""
 
-#: admin/views/metabox-filters.php:181
+#: admin/views/metabox-filters.php:183
 msgid "How checked boxes are combined (no effect in dropdown/radio mode)"
 msgstr ""
 
-#: admin/views/metabox-filters.php:195
+#: admin/views/metabox-filters.php:197
 msgid "Add ACF filter"
 msgstr ""
 
-#: admin/views/metabox-shortcode.php:16
+#: admin/views/metabox-shortcode.php:17
 msgid "Paste this shortcode into your content:"
 msgstr ""
 
-#: admin/views/metabox-shortcode.php:18
+#: admin/views/metabox-shortcode.php:19
 msgid "Example with a forced filter:"
 msgstr ""
 
-#: admin/views/metabox-source.php:18
+#: admin/views/metabox-source.php:20
 msgid "Source post type"
 msgstr ""
 
-#: admin/views/metabox-source.php:28
+#: admin/views/metabox-source.php:30
 msgid "The post type whose entries are displayed on the map."
 msgstr ""
 
-#: admin/views/metabox-source.php:33
+#: admin/views/metabox-source.php:35
 msgid "ACF coordinates field"
 msgstr ""
 
-#: admin/views/metabox-source.php:37
+#: admin/views/metabox-source.php:39
 msgid "Name of the ACF “Google Map” field that holds the coordinates."
 msgstr ""
 
-#: admin/views/metabox-source.php:42
+#: admin/views/metabox-source.php:44
 msgid "Maximum number of posts"
 msgstr ""
 
-#: admin/views/metabox-source.php:46
+#: admin/views/metabox-source.php:48
 msgid "Server-side loading limit. 0 = unlimited."
 msgstr ""
 
-#: admin/views/metabox-source.php:51
+#: admin/views/metabox-source.php:53
 msgid "Posts per page (list)"
 msgstr ""
 
-#: admin/views/metabox-source.php:55
+#: admin/views/metabox-source.php:57
 msgid "Client-side pagination: number of posts shown per page in the list. 0 = no pagination (all shown). The map always shows all markers."
 msgstr ""
 
@@ -475,27 +491,27 @@ msgstr ""
 msgid "Paste the JSON of a <a href=\"https://snazzymaps.com/\" target=\"_blank\" rel=\"noopener\">Snazzy Maps</a> style. Leave empty for the default style."
 msgstr ""
 
-#: admin/views/metabox-templates.php:16
+#: admin/views/metabox-templates.php:18
 msgid "Available placeholders:"
 msgstr ""
 
-#: admin/views/metabox-templates.php:25
+#: admin/views/metabox-templates.php:27
 msgid "Conditionals:"
 msgstr ""
 
-#: admin/views/metabox-templates.php:38
+#: admin/views/metabox-templates.php:40
 msgid "Tooltip template"
 msgstr ""
 
-#: admin/views/metabox-templates.php:42
+#: admin/views/metabox-templates.php:44
 msgid "HTML displayed in each marker's tooltip."
 msgstr ""
 
-#: admin/views/metabox-templates.php:47
+#: admin/views/metabox-templates.php:49
 msgid "List template"
 msgstr ""
 
-#: admin/views/metabox-templates.php:51
+#: admin/views/metabox-templates.php:53
 msgid "HTML displayed for each list/grid entry."
 msgstr ""
 
@@ -565,7 +581,7 @@ msgid "No maps found in Trash."
 msgstr ""
 
 #: includes/class-cpt.php:97
-#: includes/class-map-config.php:57
+#: includes/class-map-config.php:60
 msgid "Shortcode"
 msgstr ""
 
@@ -585,81 +601,81 @@ msgstr ""
 msgid "Addresses"
 msgstr ""
 
-#: includes/class-data-provider.php:378
+#: includes/class-data-provider.php:379
 msgid "Yes"
 msgstr ""
 
-#: includes/class-data-provider.php:379
+#: includes/class-data-provider.php:380
 msgid "No"
 msgstr ""
 
-#: includes/class-map-config.php:51
+#: includes/class-map-config.php:54
 msgid "Data source"
 msgstr ""
 
-#: includes/class-map-config.php:52
+#: includes/class-map-config.php:55
 msgid "HTML templates"
 msgstr ""
 
-#: includes/class-map-config.php:53
-#: public/views/map-wrapper.php:110
+#: includes/class-map-config.php:56
+#: public/views/map-wrapper.php:112
 msgid "Filters"
 msgstr ""
 
-#: includes/class-map-config.php:54
+#: includes/class-map-config.php:57
 msgid "Display"
 msgstr ""
 
-#: includes/class-map-config.php:55
+#: includes/class-map-config.php:58
 msgid "Appearance"
 msgstr ""
 
-#: includes/class-map-config.php:56
+#: includes/class-map-config.php:59
 msgid "Map style"
 msgstr ""
 
-#: includes/class-map-config.php:301
+#: includes/class-map-config.php:307
 msgid "Snazzy Maps: invalid JSON, the style was ignored."
 msgstr ""
 
-#: includes/class-map-config.php:384
+#: includes/class-map-config.php:390
 msgid "Access denied."
 msgstr ""
 
-#: includes/class-map-config.php:389
+#: includes/class-map-config.php:395
 msgid "Invalid taxonomy."
 msgstr ""
 
-#: includes/class-map-config.php:512
+#: includes/class-map-config.php:527
 #: includes/class-taxonomy-markers.php:124
 msgid "Use this image"
 msgstr ""
 
-#: includes/class-map-config.php:513
+#: includes/class-map-config.php:528
 msgid "Loading…"
 msgstr ""
 
-#: includes/class-map-config.php:515
+#: includes/class-map-config.php:530
 msgid "Loading error."
 msgstr ""
 
-#: includes/class-map-config.php:517
+#: includes/class-map-config.php:532
 msgid "Network error."
 msgstr ""
 
-#: includes/class-map-config.php:518
+#: includes/class-map-config.php:533
 msgid "Missing Google Maps API key — the mini map is disabled. Add the key with the mrzme_api_key filter."
 msgstr ""
 
-#: includes/class-map-config.php:537
+#: includes/class-map-config.php:552
 msgid "mrz-maps-exp: missing Google Maps API key."
 msgstr ""
 
-#: includes/class-map-config.php:539
+#: includes/class-map-config.php:554
 msgid "Add this to your theme's functions.php:"
 msgstr ""
 
-#: includes/class-plugin.php:66
+#: includes/class-plugin.php:73
 msgid "mrz-maps-exp requires Advanced Custom Fields (Pro recommended) to work."
 msgstr ""
 
@@ -673,15 +689,15 @@ msgstr ""
 msgid "Image used as the map marker for posts assigned to this term."
 msgstr ""
 
-#: public/views/map-wrapper.php:134
-#: public/views/map-wrapper.php:150
+#: public/views/map-wrapper.php:136
+#: public/views/map-wrapper.php:152
 msgid "All"
 msgstr ""
 
-#: public/views/map-wrapper.php:200
+#: public/views/map-wrapper.php:202
 msgid "Previous page"
 msgstr ""
 
-#: public/views/map-wrapper.php:206
+#: public/views/map-wrapper.php:208
 msgid "Next page"
 msgstr ""

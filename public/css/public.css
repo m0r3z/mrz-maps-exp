@@ -210,3 +210,12 @@ a.mrz-maps-exp-list-item-wrap { display: block; color: inherit; text-decoration:
 		gap: 12px;
 	}
 }
+
+/* Fenêtre par-dessus la page (details_display = modal) */
+.mrz-maps-exp-modal { width: 100%; max-width: 100%; height: 100%; max-height: 100%; margin: 0; padding: 16px; border: 0; background: transparent; overflow: auto; }
+.mrz-maps-exp-modal[open] { display: grid; place-items: center; }
+.mrz-maps-exp-modal-panel { position: relative; box-sizing: border-box; width: 100%; max-width: var(--mrzme-modal-width, 440px); padding: 24px; background: Canvas; color: CanvasText; }
+.mrz-maps-exp-modal-close { position: absolute; top: 24px; right: 24px; width: 44px; height: 44px; padding: 0; cursor: pointer; }
+.mrz-maps-exp-modal-body > *:first-child { margin-top: 0; }
+.mrz-maps-exp-modal-body > *:last-child { margin-bottom: 0; }
+html.mrz-maps-exp-modal-open { overflow: hidden; }
