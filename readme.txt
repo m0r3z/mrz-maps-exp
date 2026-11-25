@@ -4,7 +4,7 @@ Tags: google maps, map, acf, taxonomy, custom post type
 Requires at least: 6.3
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.1.7
+Stable tag: 1.2.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -22,6 +22,7 @@ MRZ Maps Exp is a generic, minimalist plugin to display any custom post type on 
 * Optional URL filter synchronization — share a pre-filtered link.
 * Customizable markers: default icon, or per-term taxonomy icon.
 * 100% custom tooltip via OverlayView (not the native InfoWindow), fully overridable in CSS.
+* Or open the details in a pop-up window over the page, from a marker, the list or the search field.
 * Configurable HTML templates for the tooltip and the list, with ACF / taxonomy placeholders.
 * Front pagination, automatic fit bounds after filtering, recenter on the current post in single template.
 * Overlapping marker spiderfier (OverlappingMarkerSpiderfier).
@@ -110,6 +111,11 @@ It is the responsibility of site administrators to obtain a valid Google Maps AP
 
 == Changelog ==
 
+= 1.2.0 =
+* New: "Open details in" setting. Details can now open in an accessible pop-up window over the page (native `<dialog>`) instead of the tooltip on the map. The tooltip stays the default.
+* New: `mrzme:modal-open` and `mrzme:modal-close` JavaScript events, to hook into the pop-up window from a theme.
+* Changed: a link inside a list item (phone, directions) now only follows its link and no longer opens the details.
+
 = 1.1.7 =
 * Fixed: maps sometimes did not start when Google Maps loaded faster than the plugin script (front and map edit screen).
 * Fixed: maps now also start when Google Maps is loaded by another plugin or theme, or skipped with the `mrzme_skip_gmaps_enqueue` filter.
@@ -187,6 +193,9 @@ It is the responsibility of site administrators to obtain a valid Google Maps AP
   * Added a dedicated `== External services ==` section in the readme documenting the use of the Google Maps JavaScript API, what data is sent, and links to Google's Terms of Service and Privacy Policy.
 
 == Upgrade Notice ==
+
+= 1.2.0 =
+Adds a pop-up window as an alternative to the tooltip.
 
 = 1.1.7 =
 Fixes maps that sometimes did not start.
